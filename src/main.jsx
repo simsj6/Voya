@@ -40,7 +40,7 @@ const navItems = [
   { key: "profile", label: "User Profile" },
 ];
 
-const wireframes: { title: string; activeNav?: string; content: React.ReactNode }[] = [
+const wireframes = [
   { title: "Voya Home", activeNav: "home", content: <Home /> },
   { title: "Activity", content: <Activity /> },
   { title: "Plan A Trip", activeNav: "plan", content: <PlanTrip /> },
@@ -66,7 +66,7 @@ function App() {
   );
 }
 
-function Wireframe({ title, children }: { title: string; children: React.ReactNode }) {
+function Wireframe({ title, children }) {
   return (
     <section className="wireframe-frame">
       <div className="wireframe-title">{title}</div>
@@ -75,7 +75,7 @@ function Wireframe({ title, children }: { title: string; children: React.ReactNo
   );
 }
 
-function Nav({ active }: { active?: string }) {
+function Nav({ active }) {
   return (
     <header className="nav">
       <button className="brand">VOYA</button>
@@ -175,7 +175,7 @@ function Home() {
   );
 }
 
-function SectionHeading({ title, text }: { title: string; text?: string }) {
+function SectionHeading({ title, text }) {
   return (
     <div className="section-heading">
       <div><h2>{title}</h2><span /></div>
@@ -184,7 +184,7 @@ function SectionHeading({ title, text }: { title: string; text?: string }) {
   );
 }
 
-function Card({ title, image, tall }: { title: string; image: string; tall?: boolean }) {
+function Card({ title, image, tall }) {
   return (
     <article className={tall ? "card tall" : "card"}>
       <img src={image} alt="" />
@@ -254,7 +254,7 @@ function Destinations() {
   );
 }
 
-function TourCard({ title, image, price }: { title: string; image: string; price: string }) {
+function TourCard({ title, image, price }) {
   return (
     <article className="tour-card">
       <img src={image} alt="" />
@@ -266,7 +266,7 @@ function TourCard({ title, image, price }: { title: string; image: string; price
   );
 }
 
-function ImageOverlay({ image, title, text, large }: { image: string; title: string; text: string; large?: boolean }) {
+function ImageOverlay({ image, title, text, large }) {
   return (
     <article className={large ? "overlay-card large" : "overlay-card"}>
       <img src={image} alt="" />
@@ -325,7 +325,7 @@ function Activity() {
   );
 }
 
-function Auth({ title, button, fields }: { title: string; button: string; fields: string[] }) {
+function Auth({ title, button, fields }) {
   return (
     <main className="page auth-page">
       <section className="form-card auth-card">
@@ -355,7 +355,7 @@ function AddTrip() {
   );
 }
 
-function Field({ label, value }: { label: string; value: string }) {
+function Field({ label, value }) {
   return (
     <label className="field">
       <span>{label}</span>
@@ -395,7 +395,7 @@ function Profile() {
   );
 }
 
-function ProfilePanel({ title, children }: { title: string; children: React.ReactNode }) {
+function ProfilePanel({ title, children }) {
   return (
     <section className="profile-panel">
       <h2>{title}</h2>
@@ -404,7 +404,7 @@ function ProfilePanel({ title, children }: { title: string; children: React.Reac
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
