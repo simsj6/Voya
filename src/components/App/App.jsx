@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
+import Footer from '../Footer/Footer';
 import HomePage from '../../pages/HomePage/HomePage';
 import PopularDestinations from '../../pages/PopularDestinations/PopularDestinations';
 import PlanTrip from '../../pages/PlanTrip/PlanTrip';
@@ -21,6 +22,8 @@ export default function App() {
                 <Route path="/profile" element={<Profile />}/>
                 <Route path="/signin" element={<SignInForm />}/>
             </Routes>
+
+            <Footer />
         </div>
     )
 }

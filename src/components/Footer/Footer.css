@@ -1,0 +1,51 @@
+.footer {
+    background: var(--footer);
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 1fr auto;
+    padding: 40px;
+    position: relative;
+}
+
+.footer h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+    letter-spacing: 3px;
+}
+
+.footer p {
+    color: var(--dark);
+    line-height: 1.8;
+    max-width: 340px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 90px;
+}
+
+.footer-links h3 {
+    color: var(--teal);
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+}
+
+.footer-links a {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 16px 0;
+    text-decoration: none;
+    color: var(--dark);
+}
+
+.footer-bottom {
+    align-items: center;
+    border-top: 1px solid rgba(51, 51, 51, 0.12);
+    display: flex;
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    padding-top: 28px;
+}
