@@ -1,0 +1,48 @@
+.nav {
+    align-items: center;
+    background: rgba(255, 248, 245, 0.94);
+    display: flex;
+    justify-content: space-between;
+    left: 0;
+    padding: 32px 40px;
+    position: relative;
+    top: 0;
+    z-index: 10;
+}
+
+.brand {
+    background: transparent;
+    border: 0;
+    color: var(--dark);
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.nav-links {
+    align-items: center;
+    display: flex;
+    gap: 34px;
+}
+
+.nav-links button,
+.screen-picker button {
+    background: transparent;
+    border: 0;
+    color: var(--dark);
+    font-size: 14px;
+    padding: 4px 0;
+}
+
+.nav-links .active {
+    color: var(--teal);
+    font-weight: 700;
+}
+
+.nav-links .signin {
+    background: var(--gold);
+    border-radius: 4px;
+    font-weight: 700;
+    padding: 12px 32px;
+}
