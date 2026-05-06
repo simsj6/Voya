@@ -12,7 +12,7 @@ export default function Navigation({ active }) {
                 <Link to="/plan-a-trip">Plan A Trip</Link>
                 <Link to="/map">Map</Link>
                 <Link to="/profile">User Profile</Link>
-                <Link to="/signin">Sign In</Link>
+                <Link className="signin" to="/signin">Sign In</Link>
             </nav>
         </header>
     );

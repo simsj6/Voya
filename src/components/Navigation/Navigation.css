@@ -26,13 +26,14 @@
     gap: 34px;
 }
 
-.nav-links button,
-.screen-picker button {
+.nav-links a,
+.screen-picker a {
     background: transparent;
     border: 0;
     color: var(--dark);
     font-size: 14px;
     padding: 4px 0;
+    text-decoration: none;
 }
 
 .nav-links .active {
