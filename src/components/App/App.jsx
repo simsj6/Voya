@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import Footer from '../Footer/Footer';
 import HomePage from '../../pages/HomePage/HomePage';
@@ -12,9 +12,10 @@ import SignupForm from '../../forms/SignupForm';
 import AddTrip from '../../pages/AddTrip/AddTrip';
 
 export default function App() {
+    const location = useLocation();
     return (
         <div className="App">
-            <Navigation />
+            <Navigation active={location.pathname}/>
 
             <Routes>
                 <Route path="/" element={<HomePage />}/>
