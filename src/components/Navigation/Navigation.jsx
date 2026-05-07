@@ -5,7 +5,7 @@ import './Navigation.css';
 export default function Navigation({ active }) {
     return (
         <header className="nav">
-            <button className="brand">VOYA</button>
+            <Link className="brand" to="/">VOYA</Link>
             <nav className="nav-links" aria-label="Main navigation">
                 <Link to="/">Home</Link>
                 <Link to="/popular-destinations">Popular Destinations</Link>

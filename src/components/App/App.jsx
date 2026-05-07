@@ -8,6 +8,7 @@ import PlanTrip from '../../pages/PlanTrip/PlanTrip';
 import Map from '../../pages/Map/Map';
 import Profile from '../../pages/Profile/Profile';
 import SignInForm from '../../forms/SignInForm';
+import SignupForm from '../../forms/SignupForm';
 import AddTrip from '../../pages/AddTrip/AddTrip';
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
                 <Route path="/map" element={<Map />}/>
                 <Route path="/profile" element={<Profile />}/>
                 <Route path="/signin" element={<SignInForm />}/>
+                <Route path="/signup" element={<SignupForm />}/>
                 <Route path="/add-trip" element={<AddTrip />}/>
             </Routes>
 
