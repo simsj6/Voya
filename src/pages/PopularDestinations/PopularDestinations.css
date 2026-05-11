@@ -1,0 +1,124 @@
+.page {
+  min-height: 760px;
+}
+
+.destination-hero p {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.destination-hero h1 {
+  font-family: "Noto Serif", serif;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.destination-hero {
+  align-items: end;
+  background: #f5ece7;
+  display: flex;
+  justify-content: space-between;
+  padding: 64px;
+}
+
+.destination-hero h1 {
+  color: var(--teal);
+}
+
+.destination-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.destination-grid.four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 28px;
+}
+
+.destination-grid.four .tour-card img {
+  height: 192px;
+}
+
+.chips button,
+.selects button {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 700;
+  min-height: 44px;
+  padding: 0 28px;
+}
+
+.selects {
+  display: flex;
+  gap: 8px;
+}
+
+.selects button {
+  background: var(--bg);
+  border-color: #bec8ca;
+  border-radius: 4px;
+  font-weight: 400;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chips {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  margin-top: 20px;
+  padding-top: 18px;
+}
+
+.chips strong {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.chips button {
+  background: transparent;
+  border-color: #bec8ca;
+  color: var(--muted);
+  min-height: 36px;
+  padding: 0 18px;
+}
+
+.chips .selected {
+  background: var(--line);
+  color: var(--ink);
+}
+
+.chips .teal {
+  background: var(--teal);
+  color: white;
+}
+
+@media (max-width: 980px) {
+  .nav {
+    align-items: flex-start;
+    gap: 18px;
+    padding: 24px;
+  }
+
+  .destination-hero {
+    flex-direction: column;
+  }
+
+  .destination-grid,
+  .destination-grid.four {
+    grid-template-columns: 1fr;
+  }
+
+  .section,
+  .destination-hero {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
