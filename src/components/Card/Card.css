@@ -1,0 +1,29 @@
+.card {
+  min-width: 0;
+}
+
+.card img {
+  aspect-ratio: 4 / 5;
+}
+
+.card.tall img {
+  aspect-ratio: 4 / 6;
+}
+
+.card h3,
+.tour-card h3 {
+  font-family: "Noto Serif", serif;
+  font-size: 20px;
+  line-height: 1.28;
+  margin: 16px 0 12px;
+}
+
+.card-meta {
+  color: var(--soft);
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  justify-content: space-between;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
