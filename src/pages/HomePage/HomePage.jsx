@@ -2,6 +2,7 @@ import React from 'react';
 import SectionHeading from '../../components/SectionHeading/SectionHeading';
 import Card from '../../components/Card/Card';
 import { assets } from '../../constants/assets';
+import { Link } from 'react-router-dom';
 
 export default function HomePage({ explorePopularCities }) {
     return (
@@ -11,8 +12,8 @@ export default function HomePage({ explorePopularCities }) {
                     <h1>Plan<br />Smoothly<br />With <em>VOYA</em></h1>
                     <br />
                     <div className="actions">
-                        <button className="primary">Start Planning</button>
-                        <button className="outline">Explore Map</button>
+                        <Link className="primary" to="/plan-a-trip">Start Planning</Link>
+                        <Link className="outline" to="/map">Explore Map</Link>
                     </div>
                 </div>
                 <div className="hero-image blob"><img src={assets.beach} alt="Beach sunset" /></div>

@@ -215,6 +215,8 @@ h3 {
 .gold,
 .chips button,
 .selects button {
+  display: inline-flex;
+  align-items: center;
   border-radius: 999px;
   border: 1px solid transparent;
   font-weight: 700;
@@ -223,14 +225,18 @@ h3 {
 }
 
 .primary {
+  display: inline-flex;
+  align-items: center;
   background: var(--teal);
   color: white;
+  text-decoration: none;
 }
 
 .outline {
   background: transparent;
   border-color: var(--dark);
   color: var(--dark);
+  text-decoration: none;
 }
 
 .gold {
