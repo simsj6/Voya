@@ -1,0 +1,43 @@
+.overlay-card::after {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent 60%);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.overlay-card {
+  border-radius: 16px;
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+.overlay-card > div {
+  bottom: 0;
+  color: white;
+  left: 0;
+  padding: 24px;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
+
+.overlay-card span {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 8px;
+}
+
+.overlay-card h3 {
+  font-family: "Noto Serif", serif;
+  font-size: 24px;
+  margin: 12px 0 4px;
+}
+
+.overlay-card p {
+  line-height: 1.5;
+  margin: 0;
+}
