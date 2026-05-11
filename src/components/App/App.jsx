@@ -10,6 +10,7 @@ import Profile from '../../pages/Profile/Profile';
 import SignInForm from '../../forms/SignInForm';
 import SignupForm from '../../forms/SignupForm';
 import AddTrip from '../../pages/AddTrip/AddTrip';
+import Activity from '../../pages/Activity/Activity';
 import { assets } from '../../constants/assets';
 
 const explorePopularCities = [
@@ -35,6 +36,7 @@ export default function App() {
                 <Route path="/signin" element={<SignInForm />}/>
                 <Route path="/signup" element={<SignupForm />}/>
                 <Route path="/add-trip" element={<AddTrip />}/>
+                <Route path="/activity" element={<Activity />} />
             </Routes>
 
             <Footer />
