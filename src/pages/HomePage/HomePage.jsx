@@ -4,7 +4,7 @@ import Card from '../../components/Card/Card';
 import { assets } from '../../constants/assets';
 import { Link } from 'react-router-dom';
 
-export default function HomePage({ explorePopularCities }) {
+export default function HomePage({ popularCities, featuredDestinations }) {
     return (
         <main className="page home">
             <section className="hero split">
@@ -22,19 +22,21 @@ export default function HomePage({ explorePopularCities }) {
             <section className="section">
                 <SectionHeading title="Explore Popular Cities" text="Curated experiences from around the world" />
                 <div className="city-grid staggered">
-                    {explorePopularCities.map(([title, image, time, price], index) => <Card key={title} title={title} image={image} tall={index % 2 === 1} time={time} price={price} />)}
+                    {popularCities.map(([title, image, time, price], index) => <Card key={title} title={title} image={image} tall={index % 2 === 1} time={time} price={price} />)}
                 </div>
             </section>
 
             <section className="section feature-strip">
                 <SectionHeading title="Featured Destinations" text="" />
                 <div className="wide-cards">
-                    {[assets.aurora, assets.alaskaView, assets.activity1].map((image, index) => (
-                        <article className="wide-card" key={image}>
-                            <img src={image} alt="" />
-                            <div><strong>Alaska: {["Westminster to Greenwich", "Vintage Double Decker", "Magic of London"][index]}</strong><span>$35.00 per person</span></div>
-                        </article>
-                    ))}
+                    {featuredDestinations.map(([title, image, price], index) => {
+                        return (
+                            <article className="wide-card" key={image}>
+                                <img src={image} alt="" />
+                                <div><strong>{title}</strong><span>{price} per person</span></div>
+                            </article>
+                        )
+                    })}
                 </div>
             </section>
 

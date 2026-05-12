@@ -13,11 +13,17 @@ import AddTrip from '../../pages/AddTrip/AddTrip';
 import Activity from '../../pages/Activity/Activity';
 import { assets } from '../../constants/assets';
 
-const explorePopularCities = [
+const popularCities = [
     ["Alaska: Westminster to Greenwich River Thames", assets.aurora, "2 Hours", "$35.00"],
     ["Alaska: Vintage Double Decker Bus Tour & Thames", assets.alaska, "4 Hours", "$12.00"],
     ["Alaska: Magic of London Tour with Afternoon Tea", assets.lake, "1 Hour", "$40.00"],
     ["Alaska: Volcanic Landscapes", assets.trees, "30 Minutes", "$5.00"],
+];
+
+const featuredDestinations = [
+    ["Alaska: Westminster to Greenwich", assets.aurora, "$35.00"],
+    ["Alaska: Vintage Double Decker", assets.alaskaView, "$35.00"],
+    ["Alaska: Magic of London", assets.activity1, "$35.00"],
 ];
 
 export default function App() {
@@ -28,8 +34,8 @@ export default function App() {
             <Navigation active={location.pathname}/>
 
             <Routes>
-                <Route path="/" element={<HomePage explorePopularCities={explorePopularCities} />}/>
-                <Route path="/popular-destinations" element={<PopularDestinations cards={explorePopularCities} />}/>
+                <Route path="/" element={<HomePage popularCities={popularCities} featuredDestinations={featuredDestinations} />}/>
+                <Route path="/popular-destinations" element={<PopularDestinations cards={popularCities} />}/>
                 <Route path="/plan-a-trip" element={<PlanTrip />}/>
                 <Route path="/map" element={<Map />}/>
                 <Route path="/profile" element={<Profile />}/>
