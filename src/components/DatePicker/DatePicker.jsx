@@ -14,15 +14,15 @@ export default function DatePicker({ label }) {
                 <DateInput slot="end">
                     {(segment) => <DateSegment segment={segment} />}
                 </DateInput>
-                <Button className="calender">Calender</Button>
+                <Button className="calender">▾</Button>
             </Group>
             <Popover>
                 <Dialog>
                     <RangeCalendar>
                         <header>
-                            <Button className="previous" slot="previous">Previous</Button>
+                            <Button className="previous" slot="previous">◀</Button>
                             <Heading />
-                            <Button className="next" slot="next">Next</Button>
+                            <Button className="next" slot="next">▶</Button>
                         </header>
                         <CalendarGrid>
                             {(date) => <CalendarCell date={date} />}

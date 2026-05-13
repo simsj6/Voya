@@ -29,7 +29,7 @@
 .previous {
     margin-left: auto;
     border-radius: 8px;
-    border: 1px solid #bec8ca;
+    border: 0px solid #bec8ca;
     background: var(--bg);
     color: var(--muted);
 }
@@ -37,9 +37,153 @@
 .next {
     margin-left: auto;
     border-radius: 8px;
-    border: 1px solid #bec8ca;
+    border: 0px solid #bec8ca;
     background: var(--bg);
     color: var(--muted);
+}
+
+header {
+  display: flex;
+}
+
+.react-aria-RangeCalendar {
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid #bec8ca;
+  margin-top: 3px;
+  width: 279.62px;
+
+  --highlight-background: slateblue;
+  --highlight-foreground: white;
+  --button-background: var(--spectrum-global-color-gray-50);
+  --button-background-pressed: var(--spectrum-global-color-gray-100);
+  --button-border: var(--spectrum-global-color-gray-400);
+  --text-color: var(--spectrum-alias-text-color);
+  --text-color-disabled: var(--spectrum-alias-text-color-disabled);
+  --text-color-invalid: var(--spectrum-global-color-red-600);
+  --pressed-color: var(--spectrum-global-color-gray-200);
+  --unavailable-color: var(--spectrum-global-color-red-600);
+  --invalid-color: var(--spectrum-global-color-static-red-600);
+
+  color: var(--text-color);
+
+  & header {
+    display: flex;
+    align-items: center;
+    margin: 3px 4px .5rem 4px;
+
+    .react-aria-Heading {
+      flex: 1;
+      margin: 0;
+      text-align: center;
+      font-size: 1.375rem;
+    }
+
+    .react-aria-Button {
+      background: var(--bg);
+      border: 1px solid var(--button-border);
+      color: var(--text-color);
+      box-shadow: 0 1px 2px rgba(0 0 0 / 0.1);
+      border-radius: 4px;
+      appearance: none;
+      vertical-align: middle;
+      font-size: 1rem;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      text-align: center;
+      margin: 0;
+      outline: none;
+
+      &[data-focus-visible] {
+        border-color: var(--highlight-background);
+        box-shadow: 0 0 0 1px var(--highlight-background);
+      }
+
+      &[data-pressed] {
+        background: var(--button-background-pressed);
+      }
+    }
+  }
+
+  & table {
+    border-collapse: collapse;
+
+    & td {
+      padding: 2px 0;
+    }
+  }
+
+  .react-aria-CalendarGrid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .react-aria-CalendarGridHeader {
+    display: table-header-group;
+    vertical-align: middle;
+  }
+
+  .react-aria-CalendarCell {
+    width: 2.286rem;
+    line-height: 2.286rem;
+    text-align: center;
+    border-radius: 6px;
+    cursor: default;
+    outline: none;
+
+    &[data-outside-month] {
+      display: none;
+    }
+
+    &[data-pressed] {
+      background: var(--pressed-color);
+    }
+
+    &[data-focus-visible] {
+      box-shadow: inset 0 0 0 2px var(--highlight-background);
+    }
+
+    &[data-selected] {
+      background: var(--highlight-background);
+      color: var(--highlight-foreground);
+      border-radius: 0;
+
+      &[data-focus-visible] {
+        box-shadow: inset 0 0 0 1px var(--highlight-background), inset 0 0 0 3px var(--highlight-foreground);
+      }
+    }
+
+    &[data-selection-start] {
+      border-start-start-radius: 6px;
+      border-end-start-radius: 6px;
+    }
+
+    &[data-selection-end] {
+      border-start-end-radius: 6px;
+      border-end-end-radius: 6px;
+    }
+
+    &[data-disabled] {
+      color: var(--text-color-disabled);
+    }
+
+    &[data-unavailable] {
+      text-decoration: line-through;
+      color: var(--unavailable-color);
+    }
+
+    &[aria-invalid] {
+      background: var(--invalid-color);
+      color: var(--highlight-foreground);
+    }
+  }
+
+  & [slot=errorMessage] {
+    font-size: 12px;
+    color: var(--text-color-invalid);
+  }
 }
 
 /*Given css*/
