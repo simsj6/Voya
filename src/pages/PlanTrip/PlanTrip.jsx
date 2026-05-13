@@ -1,10 +1,25 @@
-import React from "react";
+import { React, useState } from "react";
 import Field from "../../components/Field/Field";
 import SectionHeading from "../../components/SectionHeading/SectionHeading";
 import ImageOverlay from "../../components/ImageOverlay/ImageOverlay";
 import { assets } from "../../constants/assets";
+import DatePicker from "../../components/DatePicker/DatePicker";
 
 export default function PlanTrip() {
+  const [destination, setDestination] = useState("");
+  const [dates, setDates] = useState({
+    arrive: "",
+    depart: "",
+  });
+  const [travelers, setTravelers] = useState({
+    adults: 0,
+    children: 0,
+  });
+
+  const handleDestinationChange = (event) => {
+    setDestination(event.target.value)
+  }
+
   return (
     <main className="page">
       <section className="center-hero">
@@ -16,8 +31,9 @@ export default function PlanTrip() {
       </section>
       <section className="planner-panel">
         <div className="planner-grid">
-          <Field label="Destination" value="Where to?" />
-          <Field label="Dates" value="Select dates" />
+          <Field label="Destination" value={destination} onChange={(value) => handleDestinationChange(event)} />
+          {/* <Field label="Dates" value="Select dates" /> */}
+          <DatePicker label="Select dates"/>
           <Field label="Travelers" value="2 Adults" />
           <button className="primary">Find Your Next Adventure</button>
         </div>
