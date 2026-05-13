@@ -18,6 +18,29 @@
   text-transform: uppercase;
 }
 
+.calender {
+    margin-left: auto;
+    border-radius: 8px;
+    border: 1px solid #bec8ca;
+    background: var(--bg);
+    color: var(--muted);
+}
+
+.previous {
+    margin-left: auto;
+    border-radius: 8px;
+    border: 1px solid #bec8ca;
+    background: var(--bg);
+    color: var(--muted);
+}
+
+.next {
+    margin-left: auto;
+    border-radius: 8px;
+    border: 1px solid #bec8ca;
+    background: var(--bg);
+    color: var(--muted);
+}
 
 /*Given css*/
 /* .react-aria-DateRangePicker {
