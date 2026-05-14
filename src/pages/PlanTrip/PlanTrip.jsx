@@ -15,6 +15,7 @@ export default function PlanTrip() {
   });
   const [travelers, setTravelers] = useState(1);
   const [pace, setPace] = useState("Balanced");
+  const [itineraries, setItineraries] = useState([]);
 
   const handleDestinationChange = (event) => {
     setDestination(event.target.value);
@@ -39,6 +40,23 @@ export default function PlanTrip() {
     console.log(date.end);
     console.log(travelers);
     console.log(pace);
+    setItineraries([
+      {
+        image: assets.amalfi,
+        duration: "2 Days",
+        title: "Amalfi Coast Serenity",
+        text: "A slow-paced journey through cliffside villages and pristine waters.",
+      },
+      {
+        image: assets.kyoto,
+        duration: "5 Days",
+        title: "Kyoto Retreat",
+        text: "Find balance in ancient temples and mindful traditions.",
+      }
+    ]);
+
+    // API call could look like ...
+    // setItineraries(apiCall(destination, date, travelers, pace))
   }
 
   return (
@@ -70,19 +88,8 @@ export default function PlanTrip() {
       <section className="section">
         <SectionHeading title="Suggested Itineraries" />
         <div className="itinerary-grid">
-          <ImageOverlay
-            image={assets.amalfi}
-            duration="2 Days"
-            title="Amalfi Coast Serenity"
-            text="A slow-paced journey through cliffside villages and pristine waters."
-            large
-          />
-          <ImageOverlay
-            image={assets.kyoto}
-            duration="5 Days"
-            title="Kyoto Retreat"
-            text="Find balance in ancient temples and mindful traditions."
-          />
+          {itineraries.map((itinerary) => 
+            <ImageOverlay image={itinerary.image} duration={itinerary.duration} title={itinerary.title} text={itinerary.text} />)}
         </div>
       </section>
     </main>
