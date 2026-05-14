@@ -14,6 +14,7 @@ export default function PlanTrip() {
     end: parseDate('2026-05-16'),
   });
   const [travelers, setTravelers] = useState(1);
+  const [pace, setPace] = useState("Balanced");
 
   const handleDestinationChange = (event) => {
     setDestination(event.target.value);
@@ -23,8 +24,21 @@ export default function PlanTrip() {
     setTravelers(event);
   }
 
-  const handleOnSubmit = () => {
+  const handlePaceChange = (value) => {
+    setPace(value);
+  }
 
+  const handleOnSubmit = () => {
+    // If there is no destination set, don't do anything
+    if (destination === "") {
+      return ;
+    }
+    // This is where data would be given to an api
+    console.log(destination);
+    console.log(date.start);
+    console.log(date.end);
+    console.log(travelers);
+    console.log(pace);
   }
 
   return (
@@ -48,9 +62,9 @@ export default function PlanTrip() {
         </div>
         <div className="chips">
           <strong>Pace & Budget:</strong>
-          <button>Relaxed</button>
-          <button className="selected">Balanced</button>
-          <button>Luxury</button>
+          <button className={pace === "Relaxed" ? "selected" : ""} onClick={() => handlePaceChange("Relaxed")}>Relaxed</button>
+          <button className={pace === "Balanced" ? "selected" : ""} onClick={() => handlePaceChange("Balanced")}>Balanced</button>
+          <button className={pace === "Luxury" ? "selected" : ""} onClick={() => handlePaceChange("Luxury")}>Luxury</button>
         </div>
       </section>
       <section className="section">
