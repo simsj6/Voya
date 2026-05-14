@@ -5,6 +5,7 @@ import ImageOverlay from "../../components/ImageOverlay/ImageOverlay";
 import { assets } from "../../constants/assets";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import { parseDate } from "@internationalized/date";
+import InputNumber from "@rc-component/input-number";
 
 export default function PlanTrip() {
   const [destination, setDestination] = useState("");
@@ -12,14 +13,18 @@ export default function PlanTrip() {
     start: parseDate('2026-05-13'),
     end: parseDate('2026-05-16'),
   });
-  const [travelers, setTravelers] = useState({
-    adults: 0,
-    children: 0,
-  });
+  const [travelers, setTravelers] = useState(1);
 
   const handleDestinationChange = (event) => {
-    console.log(date);
     setDestination(event.target.value);
+  }
+
+  const handleTravelerChange = (event) => {
+    setTravelers(event);
+  }
+
+  const handleOnSubmit = () => {
+
   }
 
   return (
@@ -34,9 +39,12 @@ export default function PlanTrip() {
       <section className="planner-panel">
         <div className="planner-grid">
           <Field label="Destination" value={destination} onChange={(value) => handleDestinationChange(event)} />
-          <DatePicker label="Select dates" value={date} onChange={setDate}/>
-          <Field label="Travelers" value="2 Adults" />
-          <button className="primary">Find Your Next Adventure</button>
+          <DatePicker label="Select dates" value={date} onChange={setDate} />
+          <label className="field">
+            <span>Travelers</span>
+            <InputNumber defaultValue={travelers} min={1} onChange={(event) => handleTravelerChange(event)} />
+          </label>
+          <button className="primary" onClick={handleOnSubmit}>Find Your Next Adventure</button>
         </div>
         <div className="chips">
           <strong>Pace & Budget:</strong>
