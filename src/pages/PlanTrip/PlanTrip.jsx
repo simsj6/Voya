@@ -4,12 +4,13 @@ import SectionHeading from "../../components/SectionHeading/SectionHeading";
 import ImageOverlay from "../../components/ImageOverlay/ImageOverlay";
 import { assets } from "../../constants/assets";
 import DatePicker from "../../components/DatePicker/DatePicker";
+import { parseDate } from "@internationalized/date";
 
 export default function PlanTrip() {
   const [destination, setDestination] = useState("");
-  const [dates, setDates] = useState({
-    arrive: "",
-    depart: "",
+  const [date, setDate] = useState({
+    start: parseDate('2026-05-13'),
+    end: parseDate('2026-05-16'),
   });
   const [travelers, setTravelers] = useState({
     adults: 0,
@@ -17,7 +18,8 @@ export default function PlanTrip() {
   });
 
   const handleDestinationChange = (event) => {
-    setDestination(event.target.value)
+    console.log(date);
+    setDestination(event.target.value);
   }
 
   return (
@@ -32,8 +34,7 @@ export default function PlanTrip() {
       <section className="planner-panel">
         <div className="planner-grid">
           <Field label="Destination" value={destination} onChange={(value) => handleDestinationChange(event)} />
-          {/* <Field label="Dates" value="Select dates" /> */}
-          <DatePicker label="Select dates"/>
+          <DatePicker label="Select dates" value={date} onChange={setDate}/>
           <Field label="Travelers" value="2 Adults" />
           <button className="primary">Find Your Next Adventure</button>
         </div>
