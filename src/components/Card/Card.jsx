@@ -13,7 +13,7 @@ export default function Card({ title, image, tall, time, price }) {
         <article className={tall ? "card tall" : "card"} onClick={handleClick}>
             <img src={image} alt="" />
             <h3>{title}</h3>
-            <div className="card-meta"><span>{time}</span><span>Starts at {price}</span></div>
+            <div className="card-meta"><span>{time} Minutes</span><span>Starts at ${price}</span></div>
         </article>
     );
 }

@@ -8,12 +8,12 @@ export default function TourCard({ title, image, duration, price }) {
       <div className="rating">4.8</div>
       <h3>{title}</h3>
       <div className="tags">
-        <span>{duration}</span>
+        <span>{duration} Minutes</span>
         <span>Walking</span>
         <span>Family Plan</span>
       </div>
       <p>
-        <strong>{price}</strong> per person
+        <strong>${price}</strong> per person
       </p>
     </article>
   );

@@ -14,17 +14,54 @@ import Activity from '../../pages/Activity/Activity';
 import { assets } from '../../constants/assets';
 
 const popularCities = [
-    ["Alaska: Westminster to Greenwich River Thames", assets.aurora, "2 Hours", "$35.00"],
-    ["Alaska: Vintage Double Decker Bus Tour & Thames", assets.alaska, "4 Hours", "$12.00"],
-    ["Alaska: Magic of London Tour with Afternoon Tea", assets.lake, "1 Hour", "$40.00"],
-    ["Alaska: Volcanic Landscapes", assets.trees, "30 Minutes", "$5.00"],
-];
+    {
+        title: "Alaska: Westminster to Greenwich River Thames",
+        image: assets.aurora,
+        timeMinutes: 120,
+        price: 35,
+    },
+    {
+        title: "Alaska: Vintage Double Decker Bus Tour & Thames",
+        image: assets.alaska,
+        timeMinutes: 240,
+        price: 12,
+    },
+    {
+        title: "Alaska: Magic of London Tour with Afternoon Tea",
+        image: assets.lake,
+        timeMinutes: 60,
+        price: 40,
+    },
+    {
+        title: "Alaska: Volcanic Landscapes",
+        image: assets.trees,
+        timeMinutes: 30,
+        price: 5,
+    },
+]
 
 const featuredDestinations = [
-    ["Alaska: Westminster to Greenwich", assets.aurora, "$35.00"],
-    ["Alaska: Vintage Double Decker", assets.alaskaView, "$35.00"],
-    ["Alaska: Magic of London", assets.activity1, "$35.00"],
+    {
+        title: "Alaska: Westminster to Greenwich",
+        image: assets.aurora,
+        price: 35,
+    },
+    {
+        title: "Alaska: Vintage Double Decker",
+        image: assets.alaskaView,
+        price: 35,
+    },
+    {
+        title: "Alaska: Magic of London",
+        image: assets.activity1,
+        price: 35,
+    },
 ];
+
+const destinationOverview = {
+    title: "Wildlife of Alaska",
+    text: "Amid misty ridgelines and crystalline lakes, Alaska offers a quiet, unforgettable journey through nature and open sky.",
+}
 
 export default function App() {
     const location = useLocation();
@@ -34,7 +71,7 @@ export default function App() {
             <Navigation active={location.pathname}/>
 
             <Routes>
-                <Route path="/" element={<HomePage popularCities={popularCities} featuredDestinations={featuredDestinations} />}/>
+                <Route path="/" element={<HomePage popularCities={popularCities} featuredDestinations={featuredDestinations} destinationOverview={destinationOverview} />}/>
                 <Route path="/popular-destinations" element={<PopularDestinations cards={popularCities} />}/>
                 <Route path="/plan-a-trip" element={<PlanTrip />}/>
                 <Route path="/map" element={<Map />}/>

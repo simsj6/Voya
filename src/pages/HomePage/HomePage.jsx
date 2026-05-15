@@ -5,7 +5,7 @@ import { assets } from '../../constants/assets';
 import { Link } from 'react-router-dom';
 import WideCard from '../../components/WideCard/WideCard';
 
-export default function HomePage({ popularCities, featuredDestinations }) {
+export default function HomePage({ popularCities, featuredDestinations, destinationOverview }) {
     return (
         <main className="page home">
             <section className="hero split">
@@ -23,23 +23,23 @@ export default function HomePage({ popularCities, featuredDestinations }) {
             <section className="section">
                 <SectionHeading title="Explore Popular Cities" text="Curated experiences from around the world" />
                 <div className="city-grid staggered">
-                    {popularCities.map(([title, image, time, price], index) => <Card key={title} title={title} image={image} tall={index % 2 === 1} time={time} price={price} />)}
+                    {popularCities.map((city, index) => <Card title={city.title} image={city.image} tall={index % 2 === 1} time={city.timeMinutes} price={city.price} />)}
                 </div>
             </section>
 
             <section className="section feature-strip">
                 <SectionHeading title="Featured Destinations" text="" />
                 <div className="wide-cards">
-                    {featuredDestinations.map(([title, image, price]) => <WideCard image={image} title={title} price={price} />)}
+                    {featuredDestinations.map((destination) => <WideCard image={destination.image} title={destination.title} price={destination.price} />)}
                 </div>
             </section>
 
             <section className="section split wildlife">
                 <div className="round-image"><img src={assets.alaskaView} alt="Wildlife view" /></div>
                 <div>
-                    <h2>Wildlife of Alaska</h2>
-                    <p>Amid misty ridgelines and crystalline lakes, Alaska offers a quiet, unforgettable journey through nature and open sky.</p>
-                    <button className="gold">Read More</button>
+                    <h2>{destinationOverview.title}</h2>
+                    <p>{destinationOverview.text}</p>
+                    {/* <button className="gold">Read More</button> */}
                 </div>
             </section>
         </main>

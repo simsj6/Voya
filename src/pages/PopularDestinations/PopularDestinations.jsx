@@ -25,8 +25,8 @@ export default function PopularDestinations( { cards }) {
         <SectionHeading title="Things To Do In London" />
         <div className="destination-grid">
           {/* shows first three cards */}
-          {cards.slice(0, 3).map(([title, image, duration, price]) => (
-            <TourCard key={title} title={title} image={image} duration={duration} price={price} />
+          {cards.slice(0, 3).map((city) => (
+            <TourCard key={city.title} title={city.title} image={city.image} duration={city.timeMinutes} price={city.price} />
           ))}
         </div>
       </section>
@@ -42,13 +42,13 @@ export default function PopularDestinations( { cards }) {
           {/* shows cards after first three */}
           {cards
             .slice(3)
-            .map(([title, image, duration, price], index) => (
+            .map((city, index) => (
               <TourCard
-                key={`${title}-${index}`}
-                title={title}
-                image={image}
-                duration={duration}
-                price={price}
+                key={`${city.title}-${index}`}
+                title={city.title}
+                image={city.image}
+                duration={city.timeMinutes}
+                price={city.price}
               />
             ))}
         </div>
