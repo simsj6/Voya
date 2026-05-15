@@ -306,6 +306,10 @@ h3 {
   min-width: 0;
 }
 
+.card:hover {
+  cursor: pointer;
+}
+
 .card img {
   aspect-ratio: 4 / 5;
 }
@@ -347,6 +351,10 @@ h3 {
   height: 450px;
   overflow: hidden;
   position: relative;
+}
+
+.wide-card:hover {
+  cursor: pointer;
 }
 
 .wide-card::after,

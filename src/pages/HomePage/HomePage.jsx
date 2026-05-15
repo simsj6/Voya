@@ -3,6 +3,7 @@ import SectionHeading from '../../components/SectionHeading/SectionHeading';
 import Card from '../../components/Card/Card';
 import { assets } from '../../constants/assets';
 import { Link } from 'react-router-dom';
+import WideCard from '../../components/WideCard/WideCard';
 
 export default function HomePage({ popularCities, featuredDestinations }) {
     return (
@@ -29,14 +30,7 @@ export default function HomePage({ popularCities, featuredDestinations }) {
             <section className="section feature-strip">
                 <SectionHeading title="Featured Destinations" text="" />
                 <div className="wide-cards">
-                    {featuredDestinations.map(([title, image, price], index) => {
-                        return (
-                            <article className="wide-card" key={image}>
-                                <img src={image} alt="" />
-                                <div><strong>{title}</strong><span>{price} per person</span></div>
-                            </article>
-                        )
-                    })}
+                    {featuredDestinations.map(([title, image, price]) => <WideCard image={image} title={title} price={price} />)}
                 </div>
             </section>
 
