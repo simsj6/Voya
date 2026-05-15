@@ -78,11 +78,13 @@ export default function Profile() {
         </ProfilePanel>
 
         <ProfilePanel title="Security">
-          <Field
-            label="Email Address"
-            value={profile.email}
-            onChange={(value) => handleChange("email", value)}
-          />
+          <div className="one-col">
+            <Field
+              label="Email Address"
+              value={profile.email}
+              onChange={(value) => handleChange("email", value)}
+            />
+          </div>
 
           <div className="two-col">
             <Field

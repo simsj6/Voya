@@ -1,6 +1,7 @@
 .profile-panel {
   margin-top: 36px;
   padding: 32px;
+  padding-bottom: 56px;
 }
 
 .profile-panel h2 {
@@ -10,6 +11,10 @@
   font-weight: 500;
   margin-bottom: 24px;
   padding-bottom: 16px;
+}
+
+.profile-panel .one-col {
+  margin-bottom: 16px;
 }
 
 .profile-panel .two-col {
