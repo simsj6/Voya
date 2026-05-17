@@ -4,4 +4,34 @@ We are implementing a collaborative travel planning website called Voya. Users w
 
 To run our project, run `npm install`, then `npm run dev` to see it locally.
 
-TODO: Add navigation/routes explanation
+## Routes:
+
+`/` - Home Page
+- The landing page of Voya
+
+`/popular-destinations` - Popular Destinations
+- Users can browse activities in various destinations
+
+`/plan-a-trip` - Plan A Trip
+- Users can search for destinations
+
+`/map` - Map
+- Users can browse destinations/activities in a map view
+
+`/profile` - Profile
+- Users can edit their profiles and see their itineraries
+
+`/signin` - Sign In
+- Users can sign in to their profile
+
+`/signup` - Sign Up
+- Users can create a new account
+
+`/add-trip` - Add Trip
+- Users can manually add a trip that they've found elsewhere
+
+`/activity` - Activity
+- The details page of an individual activity
+
+`*` - Page Not Found
+- A 404 page for any other URL
