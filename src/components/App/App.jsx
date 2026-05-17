@@ -11,6 +11,8 @@ import SignInForm from '../../forms/SignInForm';
 import SignupForm from '../../forms/SignupForm';
 import AddTrip from '../../pages/AddTrip/AddTrip';
 import Activity from '../../pages/Activity/Activity';
+import PageNotFound from '../../pages/PageNotFound/PageNotFound.jsx';
+import "./App.css";
 import { assets } from '../../constants/assets';
 
 const popularCities = [
@@ -70,17 +72,20 @@ export default function App() {
         <div className="App">
             <Navigation active={location.pathname}/>
 
-            <Routes>
-                <Route path="/" element={<HomePage popularCities={popularCities} featuredDestinations={featuredDestinations} destinationOverview={destinationOverview} />}/>
-                <Route path="/popular-destinations" element={<PopularDestinations cards={popularCities} />}/>
-                <Route path="/plan-a-trip" element={<PlanTrip />}/>
-                <Route path="/map" element={<Map />}/>
-                <Route path="/profile" element={<Profile />}/>
-                <Route path="/signin" element={<SignInForm />}/>
-                <Route path="/signup" element={<SignupForm />}/>
-                <Route path="/add-trip" element={<AddTrip />}/>
-                <Route path="/activity" element={<Activity />} />
-            </Routes>
+            <div className="content">
+                <Routes>
+                    <Route path="/" element={<HomePage popularCities={popularCities} featuredDestinations={featuredDestinations} destinationOverview={destinationOverview} />}/>
+                    <Route path="/popular-destinations" element={<PopularDestinations cards={popularCities} />}/>
+                    <Route path="/plan-a-trip" element={<PlanTrip />}/>
+                    <Route path="/map" element={<Map />}/>
+                    <Route path="/profile" element={<Profile />}/>
+                    <Route path="/signin" element={<SignInForm />}/>
+                    <Route path="/signup" element={<SignupForm />}/>
+                    <Route path="/add-trip" element={<AddTrip />}/>
+                    <Route path="/activity" element={<Activity />} />
+                    <Route path="*" element={<PageNotFound />} />
+                </Routes>
+            </div>
 
             <Footer />
         </div>
