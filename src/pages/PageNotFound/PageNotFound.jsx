@@ -3,11 +3,11 @@ import "./PageNotFound.css";
 
 export default function PageNotFound() {
   return (
-    <div className="not-found">
-      <h2>404 — Page Not Found</h2>
-      <button>
+    <main className="not-found form-card">
+      <h1>404 — Page Not Found</h1>
+      <button className="primary">
         <Link to="/" className="link">← Back home</Link>
       </button>
-    </div>
+    </main>
   );
 }

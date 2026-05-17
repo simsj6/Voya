@@ -1,20 +1,25 @@
 .not-found {
-    text-align: center;
-    padding: 5em;
+    margin: 2em auto;
+    align-items: center;
+    padding: 120px 24px 96px;
 }
 
-h2 {
-    padding-bottom: 2em;
+h1 {
+  color: #1c2b38;
+  font-family: Mulish, Inter, sans-serif;
+  font-size: 36px;
 }
 
 button {
-    border: none;
-    padding: 1em;
-    border-radius: 10px;
-    background-color: var(--footer);
+  border-radius: 3px;
+  margin-top: 18px;
+  min-width: 280px;
+  justify-content: center;
 }
 
 button .link {
-    color: black;
+    text-align: center;
+    color: white;
     text-decoration: none;
+    font-family: Mulish, Inter, sans-serif;
 }
