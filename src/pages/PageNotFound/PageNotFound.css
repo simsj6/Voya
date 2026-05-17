@@ -1,0 +1,20 @@
+.not-found {
+    text-align: center;
+    padding: 5em;
+}
+
+h2 {
+    padding-bottom: 2em;
+}
+
+button {
+    border: none;
+    padding: 1em;
+    border-radius: 10px;
+    background-color: var(--footer);
+}
+
+button .link {
+    color: black;
+    text-decoration: none;
+}
