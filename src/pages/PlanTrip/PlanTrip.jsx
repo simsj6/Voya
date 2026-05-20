@@ -6,6 +6,8 @@ import { assets } from "../../constants/assets";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import { parseDate } from "@internationalized/date";
 import InputNumber from "@rc-component/input-number";
+import "../../styles.css";
+import "./PlanTrip.css";
 
 export default function PlanTrip() {
   const [destination, setDestination] = useState("");
