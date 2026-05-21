@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Card.css';
+import styles from './Card.module.css';
 
 export default function Card({ title, image, tall, time, price }) {
     const navigate = useNavigate();
@@ -10,10 +10,10 @@ export default function Card({ title, image, tall, time, price }) {
     }
 
     return (
-        <article className={tall ? "card tall" : "card"} onClick={handleClick}>
+        <article className={tall ? `${styles.card} ${styles.tall}` : styles.card} onClick={handleClick}>
             <img src={image} alt="" />
             <h3>{title}</h3>
-            <div className="card-meta"><span>{time} Minutes</span><span>Starts at ${price}</span></div>
+            <div className={styles.cardMeta}><span>{time} Minutes</span><span>Starts at ${price}</span></div>
         </article>
     );
 }

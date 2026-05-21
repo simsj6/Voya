@@ -1,0 +1,30 @@
+.sectionHeading {
+  align-items: end;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 42px;
+  gap: 24px;
+}
+
+.sectionHeading h2 {
+  color: var(--ink);
+  font-family: "Noto Serif", "Playfair Display", serif;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.sectionHeading span {
+  background: var(--gold);
+  display: block;
+  height: 4px;
+  margin-top: 12px;
+  width: 96px;
+}
+
+.sectionHeading p {
+  color: var(--soft);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 420px;
+}

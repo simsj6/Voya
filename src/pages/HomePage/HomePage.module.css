@@ -1,0 +1,138 @@
+.page {
+  min-height: 760px;
+}
+
+.hero {
+  min-height: 920px;
+  padding-top: 120px;
+}
+
+.hero h1 {
+  color: var(--dark);
+  font-family: "Playfair Display", "Noto Serif", serif;
+  font-size: 72px;
+  line-height: 1;
+}
+
+.hero h1 em {
+  font-style: italic;
+  letter-spacing: 0;
+}
+
+.split {
+  align-items: center;
+  display: grid;
+  gap: 64px;
+  grid-template-columns: minmax(320px, 0.85fr) minmax(380px, 1fr);
+  padding-left: 64px;
+  padding-right: 64px;
+}
+
+.heroCopy {
+  max-width: 560px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primary {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 700;
+  min-height: 44px;
+  padding: 0 28px;
+}
+
+.primary {
+  display: inline-flex;
+  align-items: center;
+  background: var(--teal);
+  color: white;
+  text-decoration: none;
+}
+
+.outline {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 700;
+  min-height: 44px;
+  padding: 0 28px;
+}
+
+.outline {
+  background: transparent;
+  border-color: var(--dark);
+  color: var(--dark);
+  text-decoration: none;
+}
+
+.blob {
+  aspect-ratio: 1;
+  border-radius: 34% 42% 48% 37% / 31% 35% 46% 44%;
+  box-shadow: 0 28px 54px rgba(0, 0, 0, 0.26);
+  max-width: 672px;
+  overflow: hidden;
+  transform: rotate(7deg);
+}
+
+.blob img {
+  transform: rotate(-7deg) scale(1.12);
+}
+
+.section {
+  padding: 72px 64px;
+}
+
+.cityGrid {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.staggered .card:nth-child(even) {
+  margin-top: 48px;
+}
+
+.featureStrip {
+  background: white;
+}
+
+.wideCards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-left: -64px;
+  margin-right: -64px;
+}
+
+.wildlife {
+  background: var(--cream);
+  min-height: 460px;
+}
+
+.wildlife h2 {
+  font-family: "Noto Serif", serif;
+  font-size: 34px;
+}
+
+.wildlife p {
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 540px;
+}
+
+.roundImage {
+  aspect-ratio: 1;
+  border: 8px solid white;
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+  justify-self: center;
+  max-width: 280px;
+  overflow: hidden;
+}
