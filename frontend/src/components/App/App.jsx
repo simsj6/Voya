@@ -12,6 +12,7 @@ import SignupForm from '../../forms/SignupForm';
 import AddTrip from '../../pages/AddTrip/AddTrip';
 import Activity from '../../pages/Activity/Activity';
 import PageNotFound from '../../pages/PageNotFound/PageNotFound.jsx';
+import ProtectedRoute from '../ProtectedRoute';
 import "./App.css";
 import { assets } from '../../constants/assets';
 
@@ -78,7 +79,9 @@ export default function App() {
                     <Route path="/popular-destinations" element={<PopularDestinations cards={popularCities} />}/>
                     <Route path="/plan-a-trip" element={<PlanTrip />}/>
                     <Route path="/map" element={<Map />}/>
-                    <Route path="/profile" element={<Profile />}/>
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/profile" element={<Profile />}/>
+                    </Route>
                     <Route path="/signin" element={<SignInForm />}/>
                     <Route path="/signup" element={<SignupForm />}/>
                     <Route path="/add-trip" element={<AddTrip />}/>
