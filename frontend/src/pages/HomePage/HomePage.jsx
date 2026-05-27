@@ -1,13 +1,24 @@
-import React from 'react';
+import {React, useEffect, useState } from 'react';
 import SectionHeading from '../../components/SectionHeading/SectionHeading';
 import Card from '../../components/Card/Card';
 import { assets } from '../../constants/assets';
 import { Link } from 'react-router-dom';
 import WideCard from '../../components/WideCard/WideCard';
-
 import styles from './HomePage.module.css';
 
+import getDestinations from '../../utils/wikitravel';
+
 export default function HomePage({ popularCities, featuredDestinations, destinationOverview }) {
+    const [destinations, setDestinations] = useState([]);
+
+    useEffect(() => {
+        async function loadDestination() {
+            const destination = await getDestinations(null, 4);
+            setDestinations(destination);
+        };
+        loadDestination();
+    }, []);
+
     return (
         <main className={styles.page}>
             <section className={`${styles.hero} ${styles.split}`}>
@@ -25,7 +36,7 @@ export default function HomePage({ popularCities, featuredDestinations, destinat
             <section className={styles.section}>
                 <SectionHeading title="Explore Popular Cities" text="Curated experiences from around the world" />
                 <div className={`${styles.cityGrid} ${styles.staggered}`}>
-                    {popularCities.map((city, index) => <Card title={city.title} image={city.image} tall={index % 2 === 1} time={city.timeMinutes} price={city.price} />)}
+                    {destinations.map((city, index) => <Card title={city.title} image={city.thumbnail} tall={index % 2 === 1} time={0} price={0} />)}
                 </div>
             </section>
 
