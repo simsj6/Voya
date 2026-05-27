@@ -5,7 +5,7 @@ import Field from "../../components/Field/Field";
 import { assets } from "../../constants/assets";
 import "./Profile.css";
 
-export default function Profile({ active }) {
+export default function SharedTrips({ active }) {
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
     name: "",

@@ -7,6 +7,8 @@ import PopularDestinations from '../../pages/PopularDestinations/PopularDestinat
 import PlanTrip from '../../pages/PlanTrip/PlanTrip';
 import Map from '../../pages/Map/Map';
 import Profile from '../../pages/Profile/Profile';
+import Trips from '../../pages/Profile/Trips';
+import SharedTrips from '../../pages/Profile/SharedTrips';
 import SignInForm from '../../forms/SignInForm';
 import SignupForm from '../../forms/SignupForm';
 import AddTrip from '../../pages/AddTrip/AddTrip';
@@ -80,7 +82,9 @@ export default function App() {
                     <Route path="/plan-a-trip" element={<PlanTrip />}/>
                     <Route path="/map" element={<Map />}/>
                     <Route element={<ProtectedRoute />}>
-                        <Route path="/profile" element={<Profile />}/>
+                        <Route path="/profile" element={<Profile active={location.pathname} />}/>
+                        <Route path="/trips" element={<Trips active={location.pathname} />}/>
+                        <Route path="/shared-trips" element={<SharedTrips active={location.pathname} />}/>
                     </Route>
                     <Route path="/signin" element={<SignInForm />}/>
                     <Route path="/signup" element={<SignupForm />}/>
