@@ -75,7 +75,7 @@ export default function App() {
 
             <div className="content">
                 <Routes>
-                    <Route path="/" element={<HomePage popularCities={popularCities} featuredDestinations={featuredDestinations} destinationOverview={destinationOverview} />}/>
+                    <Route path="/" element={<HomePage featuredDestinations={featuredDestinations} destinationOverview={destinationOverview} />}/>
                     <Route path="/popular-destinations" element={<PopularDestinations cards={popularCities} />}/>
                     <Route path="/plan-a-trip" element={<PlanTrip />}/>
                     <Route path="/map" element={<Map />}/>

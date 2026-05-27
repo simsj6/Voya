@@ -1,6 +1,9 @@
 const RANDOM = "https://en.wikivoyage.org/api/rest_v1/page/random/summary/";
 const BASE = "https://en.wikivoyage.org/api/rest_v1/page/summary/";
 
+// List of popular cities and randomly pick from
+// Return country of origin and state
+
 export default async function getDestinations(city, requestedCities) {
     const cities = [];
     if (city == null) { // Give requestedCities number of random cities
@@ -25,7 +28,7 @@ export default async function getDestinations(city, requestedCities) {
             thumbnail: data.thumbnail.source,
             title: data.title,
         };
+        console.log(data);
     }
-    console.log("leaving getDest");
     return cities;
 }

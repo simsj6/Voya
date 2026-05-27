@@ -8,8 +8,9 @@ import styles from './HomePage.module.css';
 
 import getDestinations from '../../utils/wikitravel';
 
-export default function HomePage({ popularCities, featuredDestinations, destinationOverview }) {
+export default function HomePage({ featuredDestinations, destinationOverview }) {
     const [destinations, setDestinations] = useState([]);
+    getDestinations("Alaska");
 
     useEffect(() => {
         async function loadDestination() {
