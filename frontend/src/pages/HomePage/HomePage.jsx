@@ -36,7 +36,7 @@ export default function HomePage({ popularCities, featuredDestinations, destinat
             <section className={styles.section}>
                 <SectionHeading title="Explore Popular Cities" text="Curated experiences from around the world" />
                 <div className={`${styles.cityGrid} ${styles.staggered}`}>
-                    {destinations.map((city, index) => <Card title={city.title} image={city.thumbnail} tall={index % 2 === 1} time={0} price={0} />)}
+                    {destinations.map((city, index) => <Card index={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} time={0} price={0} />)}
                 </div>
             </section>
 
