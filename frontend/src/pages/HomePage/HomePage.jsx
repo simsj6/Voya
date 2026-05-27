@@ -8,17 +8,25 @@ import styles from './HomePage.module.css';
 
 import getDestinations from '../../utils/wikitravel';
 
-export default function HomePage({ featuredDestinations, destinationOverview }) {
-    const [destinations, setDestinations] = useState([]);
-    getDestinations("Alaska");
+export default function HomePage({ destinationOverview }) {
+    const [popularDestinations, setPopularDestinations] = useState([]);
+    const [featuredDestinations, setFeaturedDestinations] = useState([]);
 
     useEffect(() => {
         async function loadDestination() {
             const destination = await getDestinations(null, 4);
-            setDestinations(destination);
+            setPopularDestinations(destination);
+
+            const destinations = [3];
+            destinations[0] = await getDestinations("London", 0);
+            destinations[1] = await getDestinations("NYC", 0);
+            destinations[2] = await getDestinations("Tokyo", 0);
+            setFeaturedDestinations(destinations);
         };
         loadDestination();
     }, []);
+
+
 
     return (
         <main className={styles.page}>
@@ -37,16 +45,18 @@ export default function HomePage({ featuredDestinations, destinationOverview }) 
             <section className={styles.section}>
                 <SectionHeading title="Explore Popular Cities" text="Curated experiences from around the world" />
                 <div className={`${styles.cityGrid} ${styles.staggered}`}>
-                    {destinations.map((city, index) => <Card index={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} time={0} price={0} />)}
+                    {popularDestinations.map((city, index) => <Card index={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} time={0} price={0} />)}
                 </div>
             </section>
 
             <section className={`${styles.section} ${styles.featureStrip}`}>
                 <SectionHeading title="Featured Destinations" text="" />
                 <div className={styles.wideCards}>
-                    {featuredDestinations.map((destination) => <WideCard image={destination.image} title={destination.title} price={destination.price} />)}
+                    {featuredDestinations.map((city, index) => <WideCard index={index} title={city.title} image={city.thumbnail} price={0} />)}
                 </div>
             </section>
+
+            {/* Paragraph about random city */}
 
             <section className={`${styles.section} ${styles.split} ${styles.wildlife}`}>
                 <div className={styles.roundImage}><img src={assets.alaskaView} alt="Wildlife view" /></div>

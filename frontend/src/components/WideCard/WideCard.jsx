@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function WideCard({ image, title, price }) {
+export default function WideCard({ title, image, price }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
