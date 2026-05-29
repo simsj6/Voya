@@ -88,7 +88,6 @@ export default function Profile({ active }) {
         </Link>
         <button type="button" onClick={handleLogout}>Logout</button>
       </aside>
-{/* All the profile and field stuff was there already and I just made it more dynamic*/}
       <section className="profile-main">
         <h1>My Profile</h1>
         <p>Manage your travel preferences and personal details.</p>

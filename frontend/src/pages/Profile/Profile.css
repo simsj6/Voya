@@ -1,3 +1,36 @@
 .profile-link {
     text-decoration: none;
 }
+
+.travelers-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.travelers-row div {
+    white-space: nowrap;
+}
+
+.travelers-row label {
+    flex: 1;
+}
+
+.shared {
+    display: flex;
+    gap: 1rem;
+}
+
+.shared label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shared label input {
+    width: 4em;
+    text-align: center;
+}
+
+.activities {
+    margin-top: 1em;
+}

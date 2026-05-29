@@ -2,48 +2,77 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import ProfilePanel from "../../components/ProfilePanel/ProfilePanel";
 import Field from "../../components/Field/Field";
+import Trip from "../../components/Trip/Trip";
 import { assets } from "../../constants/assets";
 import "./Profile.css";
 
 export default function Trips({ active }) {
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
-    name: "",
-    location: "",
-    birthday: "",
-    dateOfBirth: "",
-    phone: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  useEffect(() => {
-    const raw = localStorage.getItem("User");
-    if (!raw) {
-      navigate("/signin");
-      return;
-    }
-
-    const user = JSON.parse(raw);
-    setProfile({
-      name: user.name || "",
-      location: user.location || "",
-      birthday: user.birthday || "",
-      dateOfBirth: user.dateOfBirth || "",
-      phone: user.phone || "",
-      email: user.email || "",
+      name: "",
+      location: "",
+      birthday: "",
+      dateOfBirth: "",
+      phone: "",
+      email: "",
       password: "",
       confirmPassword: "",
     });
-  }, [navigate]);
 
-  const handleChange = (key, value) => {
-    setProfile((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+  // use API to get user trips
+  const allTrips = [
+    {
+      "destination": "Alaska, USA",
+      "start": "1/1/2001",
+      "end": "1/2/2001",
+      "flight": "Alaska Airlines 227",
+      "hotel": "Holiday Inn",
+      "num_travelers": 2,
+      "is_shared": false,
+      "emails": "",
+      "activities": "sledding, hiking"
+    },
+    {
+      "destination": "Alaska, USA",
+      "start": "1/1/2001",
+      "end": "1/2/2001",
+      "flight": "Alaska Airlines 227",
+      "hotel": "Holiday Inn",
+      "num_travelers": 3,
+      "is_shared": true,
+      "emails": "email@gmail.com, email@gmail.com",
+      "activities": "sledding, hiking"
+    }
+  ]
+
+  const trips = allTrips.filter(trip => trip.is_shared === false);
+
+  // useEffect(() => {
+  //   const raw = localStorage.getItem("User");
+  //   if (!raw) {
+  //     navigate("/signin");
+  //     return;
+  //   }
+
+  //   const user = JSON.parse(raw);
+  //   setProfile({
+  //     name: user.name || "",
+  //     location: user.location || "",
+  //     birthday: user.birthday || "",
+  //     dateOfBirth: user.dateOfBirth || "",
+  //     phone: user.phone || "",
+  //     email: user.email || "",
+  //     password: "",
+  //     confirmPassword: "",
+  //   });
+  // }, [navigate]);
+
+  // const handleChange = (key, value) => {
+  //   setProfile((prev) => ({
+  //     ...prev,
+  //     [key]: value,
+  //   }));
+  // };
 
   const handleSave = () => {
     console.log("Saved profile:", profile);
@@ -88,68 +117,15 @@ export default function Trips({ active }) {
         </Link>
         <button type="button" onClick={handleLogout}>Logout</button>
       </aside>
-{/* All the profile and field stuff was there already and I just made it more dynamic*/}
       <section className="profile-main">
-        <h1>My Profile</h1>
-        <p>Manage your travel preferences and personal details.</p>
-        <ProfilePanel title="Personal Information">
-          <div className="two-col">
-            <Field
-              label="Name"
-              value={profile.name}
-              onChange={(value) => handleChange("name", value)}
-            />
-            <Field
-              label="Date of Birth"
-              value={profile.dateOfBirth}
-              onChange={(value) => handleChange("dateOfBirth", value)}
-            />
-          </div>
-
-          <div className="two-col">
-            <Field
-              label="Phone"
-              value={profile.phone}
-              onChange={(value) => handleChange("phone", value)}
-            />
-            <Field
-              label="Location"
-              value={profile.location}
-              onChange={(value) => handleChange("location", value)}
-            />
-          </div>
-
-          <button className="primary small" onClick={handleSave}>
-            Save
-          </button>
-        </ProfilePanel>
-
-        <ProfilePanel title="Security">
-          <div className="one-col">
-            <Field
-              label="Email Address"
-              value={profile.email}
-              onChange={(value) => handleChange("email", value)}
-            />
-          </div>
-
-          <div className="two-col">
-            <Field
-              label="Password"
-              value={profile.password}
-              onChange={(value) => handleChange("password", value)}
-            />
-            <Field
-              label="Confirm Password"
-              value={profile.confirmPassword}
-              onChange={(value) => handleChange("confirmPassword", value)}
-            />
-          </div>
-
-          <button className="primary small" onClick={handleSave}>
-            Save
-          </button>
-        </ProfilePanel>
+        <h1>Trips</h1>
+        <p>Manage your trips.</p>
+        {trips.map((trip) => {
+          console.log(trip)
+          return (
+            <Trip key={trip} trip={trip} />
+          )
+        })}
       </section>
     </main>
   );
