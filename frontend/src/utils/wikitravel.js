@@ -1,6 +1,70 @@
-const RANDOM = "https://en.wikivoyage.org/api/rest_v1/page/random/summary/"; // for getDestinations
-const CITY_BASE = "https://en.wikivoyage.org/api/rest_v1/page/summary/"; // for getDestinations
-const BASE_URL = "https://en.wikivoyage.org/w/api.php"; // for getCity
+/**
+ * List of "random" cities
+ * 
+ * Good cities
+ * 
+ * Linlithgow, UK
+ * Palisades, US
+ * Port au Port Peninsula, Canada
+ * Padua, Italy
+ * Biella, Italy
+ * Armstrong Redwoods State Natural Reserve, US
+ * Solingen, Germany
+ * Hartz Mountains National Park, Australia
+ * Wigan, UK
+ * Radal Siete Tazas National Park, Chile
+ * Stein Bei Nurnberg, Germany
+ * San Juan del Sur, Nicaragua
+ * Wells Gray Provincial Park, Canada
+ * Pembroke (Wales), UK
+ * Bobigny, France
+ * Oberursel, Germany
+ * Ballarat, Australia
+ * Pula, Croatia
+ * Eidfjord, Norway
+ * Lich, Germany
+ * Torotoro National Park, Bolivia
+ * Mannheim, Germany
+ * Canon del Sumidero, Mexico
+ * Sanremo, Italy
+ * Heppenheim, Germany
+ * Fuzhou, China
+ * Huashan National Park, China
+ * Jau, Brazil
+ * Aigues-Mortes, France
+ * Bad Wildbad, Germany
+ * Tay Ninh, Vietnam
+ * Crisana, Romania
+ * Bydgoszcz, Poland
+ * Costa Teguise, Spain
+ * Frejus, France
+ * Bihar, India
+ * Troyes, France
+ * Luray, US
+ * Tepic, Mexico
+ * Durham, UK
+ * Hradec Kralove, Czech Republic
+ * 
+ * Okay cities
+ * 
+ * Bedford (Virginia), US
+ * Karlskrona, Sweden
+ * Boxmeer, Netherlands
+ * Barnsley, UK
+ * Iasi, Romania
+ * Maryland, US
+ * Laufenburg, Germany
+ * Shimla, India
+ * Lubin, Poland
+ * Jvari, Georgia
+ * Capul, Philippines
+ * Asti, Italy
+ * Sassari, Italy
+ */
+
+const RANDOM = "https://en.wikivoyage.org/api/rest_v1/page/random/summary/";
+const CITY_BASE = "https://en.wikivoyage.org/api/rest_v1/page/summary/";
+const BASE_URL = "https://en.wikivoyage.org/w/api.php";
 
 export default async function getDestinations(cityName, requestedCities) {
     if (cityName == null) { // Give requestedCities number of random cities

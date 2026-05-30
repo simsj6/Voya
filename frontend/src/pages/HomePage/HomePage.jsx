@@ -26,6 +26,18 @@ export default function HomePage() {
     }, []);
 
 
+    // async function tmp() {
+    //     const first = Date.now();
+    //     const destOne = getDestinations(null, 1);
+    //     const destTwo = getDestinations(null, 1);
+    //     const destThree = getDestinations(null, 1);
+    //     const destFour = getDestinations(null, 1);
+    //     const second = Date.now();
+    //     console.log(second - first);
+    //     console.log(destFour);
+    // };
+    // tmp();
+
 
     return (
         <main className={styles.page}>
