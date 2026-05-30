@@ -52,7 +52,7 @@ export default function HomePage({ destinationOverview }) {
             <section className={`${styles.section} ${styles.featureStrip}`}>
                 <SectionHeading title="Featured Destinations" text="" />
                 <div className={styles.wideCards}>
-                    {featuredDestinations.map((city, index) => <WideCard index={index} title={city.title} image={city.thumbnail} country={city.country} />)}
+                    {featuredDestinations.map((city, index) => <WideCard key={index} title={city.title} image={city.thumbnail} country={city.country} />)}
                 </div>
             </section>
 
