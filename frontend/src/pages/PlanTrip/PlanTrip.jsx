@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Field from "../../components/Field/Field";
 import SectionHeading from "../../components/SectionHeading/SectionHeading";
 import ImageOverlay from "../../components/ImageOverlay/ImageOverlay";
@@ -10,7 +11,9 @@ import "../../styles.css";
 import "./PlanTrip.css";
 
 export default function PlanTrip() {
-  const [destination, setDestination] = useState("");
+  const location = useLocation();
+  const city = location?.state;
+  const [destination, setDestination] = useState(city || "");
   const [date, setDate] = useState({
     start: parseDate('2026-05-13'),
     end: parseDate('2026-05-16'),

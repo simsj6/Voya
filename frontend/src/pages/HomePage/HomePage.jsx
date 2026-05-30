@@ -5,10 +5,9 @@ import { assets } from '../../constants/assets';
 import { Link } from 'react-router-dom';
 import WideCard from '../../components/WideCard/WideCard';
 import styles from './HomePage.module.css';
-
 import getDestinations from '../../utils/wikitravel';
 
-export default function HomePage({ destinationOverview }) {
+export default function HomePage() {
     const [popularDestinations, setPopularDestinations] = useState([]);
     const [featuredDestinations, setFeaturedDestinations] = useState([]);
 

@@ -5,7 +5,7 @@ export default function WideCard({ title, image, country }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/plan-a-trip');
+        navigate('/plan-a-trip', {state: title});
     }
     return (
         <article className="wide-card" onClick={handleClick}>

@@ -18,56 +18,6 @@ import ProtectedRoute from '../ProtectedRoute';
 import "./App.css";
 import { assets } from '../../constants/assets';
 
-const popularCities = [
-    {
-        title: "Alaska: Westminster to Greenwich River Thames",
-        image: assets.aurora,
-        timeMinutes: 120,
-        price: 35,
-    },
-    {
-        title: "Alaska: Vintage Double Decker Bus Tour & Thames",
-        image: assets.alaska,
-        timeMinutes: 240,
-        price: 12,
-    },
-    {
-        title: "Alaska: Magic of London Tour with Afternoon Tea",
-        image: assets.lake,
-        timeMinutes: 60,
-        price: 40,
-    },
-    {
-        title: "Alaska: Volcanic Landscapes",
-        image: assets.trees,
-        timeMinutes: 30,
-        price: 5,
-    },
-]
-
-const featuredDestinations = [
-    {
-        title: "Alaska: Westminster to Greenwich",
-        image: assets.aurora,
-        price: 35,
-    },
-    {
-        title: "Alaska: Vintage Double Decker",
-        image: assets.alaskaView,
-        price: 35,
-    },
-    {
-        title: "Alaska: Magic of London",
-        image: assets.activity1,
-        price: 35,
-    },
-];
-
-const destinationOverview = {
-    title: "Wildlife of Alaska",
-    text: "Amid misty ridgelines and crystalline lakes, Alaska offers a quiet, unforgettable journey through nature and open sky.",
-}
-
 export default function App() {
     const location = useLocation();
     
@@ -77,8 +27,8 @@ export default function App() {
 
             <div className="content">
                 <Routes>
-                    <Route path="/" element={<HomePage featuredDestinations={featuredDestinations} destinationOverview={destinationOverview} />}/>
-                    <Route path="/popular-destinations" element={<PopularDestinations cards={popularCities} />}/>
+                    <Route path="/" element={<HomePage />}/>
+                    <Route path="/popular-destinations" element={<PopularDestinations />}/>
                     <Route path="/plan-a-trip" element={<PlanTrip />}/>
                     <Route path="/map" element={<Map />}/>
                     <Route element={<ProtectedRoute />}>
