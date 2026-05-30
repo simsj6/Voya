@@ -45,14 +45,14 @@ export default function HomePage({ destinationOverview }) {
             <section className={styles.section}>
                 <SectionHeading title="Explore Popular Cities" text="Curated experiences from around the world" />
                 <div className={`${styles.cityGrid} ${styles.staggered}`}>
-                    {popularDestinations.map((city, index) => <Card index={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} time={0} price={0} />)}
+                    {popularDestinations.map((city, index) => <Card index={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} country={city.country} />)}
                 </div>
             </section>
 
             <section className={`${styles.section} ${styles.featureStrip}`}>
                 <SectionHeading title="Featured Destinations" text="" />
                 <div className={styles.wideCards}>
-                    {featuredDestinations.map((city, index) => <WideCard index={index} title={city.title} image={city.thumbnail} price={0} />)}
+                    {featuredDestinations.map((city, index) => <WideCard index={index} title={city.title} image={city.thumbnail} country={city.country} />)}
                 </div>
             </section>
 
