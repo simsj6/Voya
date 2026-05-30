@@ -52,15 +52,13 @@ async function getCountry(city) {
     const cityId = Object.keys(data.entities)[0];
     const countryList = data.entities[Object.keys(data.entities)[0]].claims.P17;
     let countryId = null
-    if (countryList.length == 1) {
+    if (countryList?.length == 1) {
         countryId = countryList[0].mainsnak.datavalue.value.id;
     } else {
         countryId = countryList.find(country => country.rank === "preferred")?.mainsnak.datavalue.value.id;
     }
 
     if (countryId == null) {
-        console.log("country id is null...", city.title);
-        console.log(data);
         return {
             description: city.description,
             extract: city.extract,
@@ -83,9 +81,7 @@ async function getCountry(city) {
     res = await fetch(url);
     data = await res.json();
     const countryName = data.entities[Object.keys(data.entities)[0]].sitelinks.enwiki.title;
-
-    console.log(city);
-    console.log(countryName);
+    
     return {
         description: city.description,
         extract: city.extract,

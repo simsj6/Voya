@@ -45,7 +45,7 @@ export default function HomePage({ destinationOverview }) {
             <section className={styles.section}>
                 <SectionHeading title="Explore Popular Cities" text="Curated experiences from around the world" />
                 <div className={`${styles.cityGrid} ${styles.staggered}`}>
-                    {popularDestinations.map((city, index) => <Card index={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} country={city.country} />)}
+                    {popularDestinations.map((city, index) => <Card key={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} country={city.country} />)}
                 </div>
             </section>
 
@@ -61,8 +61,8 @@ export default function HomePage({ destinationOverview }) {
             <section className={`${styles.section} ${styles.split} ${styles.wildlife}`}>
                 <div className={styles.roundImage}><img src={assets.alaskaView} alt="Wildlife view" /></div>
                 <div>
-                    <h2>{destinationOverview.title}</h2>
-                    <p>{destinationOverview.text}</p>
+                    <h2>About {popularDestinations[0]?.title}</h2>
+                    <p>{popularDestinations[0]?.extract}</p>
                     <button className="gold">Read More</button>
                 </div>
             </section>
