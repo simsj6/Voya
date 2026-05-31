@@ -31,8 +31,6 @@ export default function HomePage() {
         loadDestination();
     }, []);
 
-    console.log(popularDestinations);
-
     return (
         <main className={styles.page}>
             <section className={`${styles.hero} ${styles.split}`}>
@@ -61,14 +59,10 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* Paragraph about random city */}
-
             <section className={`${styles.section} ${styles.split} ${styles.wildlife}`}>
-                <div className={styles.roundImage}><img src={assets.alaskaView} alt="Wildlife view" /></div>
                 <div>
                     <h2>About {popularDestinations[0]?.title}</h2>
                     <p>{popularDestinations[0]?.extract}</p>
-                    <button className="gold">Read More</button>
                 </div>
             </section>
         </main>

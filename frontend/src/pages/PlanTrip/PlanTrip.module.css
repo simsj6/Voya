@@ -1,0 +1,131 @@
+.page {
+    min-height: 760px;
+}
+
+.centerHero {
+    padding: 112px 24px 60px;
+    text-align: center;
+}
+
+.centerHero h1 {
+    font-family: "Noto Serif", serif;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.centerHero p {
+    margin: 12px auto 0;
+    max-width: 720px;
+}
+
+.plannerPanel {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+
+    margin: 0 auto 28px;
+    max-width: 1232px;
+    padding: 32px;
+}
+
+.plannerGrid {
+    align-items: end;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.field {
+    display: grid;
+    gap: 8px;
+}
+
+.field span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+.field input {
+    background: var(--bg);
+    border: 1px solid #bec8ca;
+    border-radius: 8px;
+    color: var(--muted);
+    min-height: 48px;
+    padding: 0 16px;
+    width: 100%;
+}
+
+.primary {
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    min-height: 48px;
+    padding: 0 28px;
+
+    align-items: center;
+    background: var(--teal);
+    color: white;
+    text-decoration: none;
+
+    border-radius: 8px;
+    justify-self: center;
+    margin-top: 18px;
+    min-width: 280px;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    align-items: center;
+    border-top: 1px solid var(--line);
+    margin-top: 20px;
+    padding-top: 18px;
+}
+
+.chips strong {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+.chips button {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    min-height: 44px;
+    padding: 0 28px;
+
+    background: transparent;
+    border-color: #bec8ca;
+    color: var(--muted);
+    min-height: 36px;
+    padding: 0 18px;
+}
+
+.chips .selected {
+    background: var(--line);
+    color: var(--ink);
+}
+
+.section {
+    padding: 72px 64px;
+
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.itineraryGrid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 2fr 1fr;
+}
