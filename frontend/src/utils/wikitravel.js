@@ -44,6 +44,26 @@
  * Tepic, Mexico
  * Durham, UK
  * Hradec Kralove, Czech Republic
+ * Rocky Mountaineer, Canada
+ * Bicester, UK
+ * Sakura, Japan
+ * Saltaire, UK
+ * Coolah Tops National Park, Australia
+ * Viseu de Sus, Romania
+ * Sombrerete, Mexico
+ * Papa, Hungary
+ * Canyoning
+ * Forli, Italy
+ * Hammarland, Finland
+ * Armenia, Armenia
+ * Franz Josef, New Zealand
+ * Darlington, UK
+ * Laufenberg, Germany
+ * Toyohashi, Japan
+ * Minsk Region, Belarus
+ * Machu Picchu, Peru
+ * Serrana (Rio de Janeiro), Brazil
+ * 
  * 
  * Okay cities
  * 
@@ -60,6 +80,7 @@
  * Capul, Philippines
  * Asti, Italy
  * Sassari, Italy
+ * Vernet-les-Bains, France
  */
 
 const RANDOM = "https://en.wikivoyage.org/api/rest_v1/page/random/summary/";
@@ -82,7 +103,11 @@ export default async function getDestinations(cityName, requestedCities) {
             };
             cities[i] = await getCountry(cities[i]);
         }
-        return cities;
+        if (requestedCities == 1) {
+            return cities[0];
+        } else {
+            return cities;
+        }
     } else { // Only give info on the specific city
         const search_path = CITY_BASE + cityName;
         const res = await fetch(search_path);

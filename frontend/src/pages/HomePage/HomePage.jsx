@@ -13,31 +13,25 @@ export default function HomePage() {
 
     useEffect(() => {
         async function loadDestination() {
-            const destination = await getDestinations(null, 4);
-            setPopularDestinations(destination);
+            const popular = await Promise.all([
+                getDestinations(null, 1),
+                getDestinations(null, 1),
+                getDestinations(null, 1),
+                getDestinations(null, 1)
+            ]);
+            setPopularDestinations(popular);
 
-            const destinations = [3];
-            destinations[0] = await getDestinations("London", 0);
-            destinations[1] = await getDestinations("NYC", 0);
-            destinations[2] = await getDestinations("Tokyo", 0);
+            const destinations = await Promise.all([
+                getDestinations("London", 0),
+                getDestinations("NYC", 0),
+                getDestinations("Tokyo", 0)
+            ]);
             setFeaturedDestinations(destinations);
         };
         loadDestination();
     }, []);
 
-
-    // async function tmp() {
-    //     const first = Date.now();
-    //     const destOne = getDestinations(null, 1);
-    //     const destTwo = getDestinations(null, 1);
-    //     const destThree = getDestinations(null, 1);
-    //     const destFour = getDestinations(null, 1);
-    //     const second = Date.now();
-    //     console.log(second - first);
-    //     console.log(destFour);
-    // };
-    // tmp();
-
+    console.log(popularDestinations);
 
     return (
         <main className={styles.page}>
