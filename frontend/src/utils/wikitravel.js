@@ -63,7 +63,59 @@
  * Minsk Region, Belarus
  * Machu Picchu, Peru
  * Serrana (Rio de Janeiro), Brazil
- * 
+ * Tumanyan, Armenia
+ * Buta, Indonesia
+ * Coburg, Germany
+ * Gualaca, Panama
+ * Friedberg (Hesse), Germany
+ * Folly Beach, US
+ * Southwestern Colorado, US
+ * Malinao, Philippines
+ * Boa Nova National Park, Brazil
+ * Malaysia, Malaysia
+ * Morpeth (England), UK
+ * Hluboka nad Vltavou, Czech Republic
+ * Ainsa, Spain
+ * Avallon, France
+ * Aculco, Mexico
+ * Lucca, Italy
+ * Mountain Pine Ridge, Belize
+ * Zhangjiajie National Forest Park, China
+ * Taroko Gorge, Taiwan
+ * The Horseshoe, Indonesia
+ * Aneho, Togo
+ * Ryde, UK
+ * Nakhon Si Thammarat, Thailand
+ * South Central Colorado, US
+ * Twante, Myanmar
+ * Torrevieja, Spain
+ * Burren, Republic of Ireland
+ * Carini, Italy
+ * Menghai, China
+ * Lucerne, Switzerland
+ * Antsiranana, Madagascar
+ * New Denver, Canada
+ * Portalington, Republic of Ireland
+ * Jeongdongjin, South Korea
+ * Rougemont, Canada
+ * Nakhon Pathom, Thailand
+ * Cologne Lowland, Germany
+ * Putrajaya, Malayasia
+ * Charleville-Mezieres, France
+ * Worms, Germany
+ * Chacaltaya, Bolivia
+ * Seligenstadt, Germany
+ * Saronno, Italy
+ * Slovak Paradise National Park, Slovakia
+ * Central Province (Sri Lanka), Sri Lanka
+ * Dawsonville, US
+ * Pantalica, Italy
+ * Pocono Mountains, US
+ * Araucania, Chile
+ * Chicopee, US
+ * Tsavo West National Park, Kenya
+ * Introdacqua, Italy
+ * East Midlands, UK
  * 
  * Okay cities
  * 
@@ -81,7 +133,24 @@
  * Asti, Italy
  * Sassari, Italy
  * Vernet-les-Bains, France
+ * Kvam, Norway
+ * Trbovlje, Slovenia
  */
+
+const randomCities = [
+    "Linlithgow", "Palisades", "Port au Port Peninsula", "Padua", "Biella", "Armstrong Redwoods State Natural Reserve", "Solingen", "Hartz Mountains National Park",
+    "Wigan", "Radal Siete Tazas National Park", "Stein Bei Nurnberg", "San Juan del Sur", "Wells Gray Provincial Park", "Pembroke (Wales)", "Bobigny", "Oberursel",
+    "Ballarat", "Pula", "Eidfjord", "Lich", "Torotoro National Park", "Mannheim", "Canon del Sumidero", "Sanremo", "Heppenheim", "Fuzhou", "Huashan National Park",
+    "Jau", "Aigues-Mortes", "Bad Wildbad", "Tay Ninh", "Crisana", "Bydgoszcz", "Costa Teguise", "Frejus", "Bihar", "Troyes", "Luray", "Tepic", "Durham", "Hradec Kralove",
+    "Rocky Mountaineer", "Bicester", "Sakura", "Saltaire", "Coolah Tops National Park", "Viseu de Sus", "Sombrerete", "Papa", "Canyoning", "Forli", "Hammarland", "Armenia",
+    "Franz Josef", "Darlington", "Laufenberg", "Toyohashi", "Minsk Region", "Machu Picchu", "Serrana (Rio de Janeiro)", "Tumanyan", "Buta", "Coburg", "Gualaca", "Friedberg (Hesse)",
+    "Folly Beach", "Southwestern Colorado", "Malinao", "Boa Nova National Park", "Malaysia", "Morpeth (England)", "Hluboká nad Vltavou", "Ainsa", "Avallon", "Aculco", "Lucca",
+    "Mountain Pine Ridge", "Zhangjiajie National Forest Park", "Taroko Gorge", "The Horseshoe", "Aneho", "Ryde", "Nakhon Si Thammarat", "South Central Colorado",
+    "Twante", "Torrevieja", "Burren", "Carini", "Menghai", "Lucerne", "Antsiranana", "New Denver", "Portalington", "Jeongdongjin", "Rougemont", "Nakhon Pathom", "Cologne Lowland",
+    "Putrajaya", "Charleville-Mezieres", "Worms", "Chacaltaya", "Seligenstadt", "Saronno", "Slovak Paradise National Park", "Central Province (Sri Lanka)", "Dawsonville",
+    "Pantalica", "Pocono Mountains", "Araucania", "Chicopee", "Tsavo West National Park", "Introdacqua", "East Midlands", "Bedford (Virginia)", "Karlskrona",
+    "Boxmeer", "Barnsley", "Iasi", "Maryland", "Laufenburg", "Shimla", "Lubin", "Jvari", "Capul", "Asti", "Sassari", "Vernet-les-Bains", "Kvam", "Trbovlje"
+];
 
 const RANDOM = "https://en.wikivoyage.org/api/rest_v1/page/random/summary/";
 const CITY_BASE = "https://en.wikivoyage.org/api/rest_v1/page/summary/";
@@ -91,7 +160,8 @@ export default async function getDestinations(cityName, requestedCities) {
     if (cityName == null) { // Give requestedCities number of random cities
         const cities = [];
         for (let i = 0; i < requestedCities; i++) {
-            const search_path = RANDOM;
+            // const search_path = RANDOM;
+            const search_path = CITY_BASE + randomCities[Math.floor(Math.random() * randomCities.length)];
             const res = await fetch(search_path);
             const data = await res.json();
             cities[i] = {
