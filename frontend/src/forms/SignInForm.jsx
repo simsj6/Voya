@@ -76,7 +76,7 @@ export default function SignInForm() {
                 </label>
                 <button className="primary" type="submit">Sign In</button>
                 <p className="form-link">
-                    No account? <Link to="/signup">Sign up</Link>
+                    No account? <Link className="sign" to="/signup">Sign up</Link>
                 </p>
             </form>
         </main>

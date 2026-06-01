@@ -38,3 +38,8 @@
   margin-top: 18px;
   min-width: 280px;
 }
+
+.sign {
+    color: var(--gold);
+    font-weight: 600;
+}

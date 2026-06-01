@@ -95,7 +95,7 @@ export default function SignupForm() {
                 </label>
                 <button className="primary" type="submit">Sign Up</button>
                 <p>
-                    Already have an account? <Link to="/signin">Sign in</Link>
+                    Already have an account? <Link className="sign" to="/signin">Sign in</Link>
                 </p>
             </form>
         </main>
