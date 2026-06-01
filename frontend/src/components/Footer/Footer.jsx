@@ -15,7 +15,7 @@ export default function Footer() {
                     <a>About Us</a>
                     <Link to="/popular-destinations">Popular Destinations</Link>
                     <Link to="/plan-a-trip">Plan A Trip</Link>
-                    <Link to="/map">Map</Link>
+                    <Link to="/add-trip">Add Trip</Link>
                 </div>
                 <div>
                     <h3>Support</h3>

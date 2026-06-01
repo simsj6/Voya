@@ -30,7 +30,7 @@ export default function App() {
                     <Route path="/" element={<HomePage />}/>
                     <Route path="/popular-destinations" element={<PopularDestinations />}/>
                     <Route path="/plan-a-trip" element={<PlanTrip />}/>
-                    <Route path="/map" element={<Map />}/>
+                    <Route path="/add-trip" element={<AddTrip />}/>
                     <Route element={<ProtectedRoute />}>
                         <Route path="/profile" element={<Profile active={location.pathname} />}/>
                         <Route path="/trips" element={<Trips active={location.pathname} />}/>
@@ -38,7 +38,6 @@ export default function App() {
                     </Route>
                     <Route path="/signin" element={<SignInForm />}/>
                     <Route path="/signup" element={<SignupForm />}/>
-                    <Route path="/add-trip" element={<AddTrip />}/>
                     <Route path="/activity" element={<Activity />} />
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
