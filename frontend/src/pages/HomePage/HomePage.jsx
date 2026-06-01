@@ -39,7 +39,7 @@ export default function HomePage() {
                     <br />
                     <div className={styles.actions}>
                         <Link className={styles.primary} to="/plan-a-trip">Start Planning</Link>
-                        <Link className={styles.outline} to="/map">Explore Map</Link>
+                        <Link className={styles.outline} to="/add-trip">Add Existing Trip</Link>
                     </div>
                 </div>
                 <div className={styles.blob}><img src={assets.beach} alt="Beach sunset" /></div>
