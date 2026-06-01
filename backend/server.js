@@ -8,7 +8,18 @@ const jwt = require("jsonwebtoken");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ------ Middleware ------
 app.use(cors());
+
+// app.use(cors({
+//   origin: [
+//     "http://localhost:5173",
+//     "http://voya.vercel.app",
+//     /\.vercel\.app$/,
+//   ],
+//   credentials: true,
+// }));
+
 app.use(express.json());
 
 mongoose
@@ -86,7 +97,7 @@ const tripSchema = new mongoose.Schema({
     type: Date
   },
   amtTravelers: {
-    type: Int32,
+    type: Number,
     default: null,
   },
   travelers: {
@@ -520,6 +531,17 @@ app.get("/api/profile/shared-itinerary", async (req, res) => { // Pulls all trip
     console.error("Profile - Shared Itinerary error:", error);
     return res.status(500).json({ error: "Server error." });
   }
+});
+
+// ============================================================
+// GET /api/health
+// ============================================================
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "ok",
+    time: new Date().toISOString(),
+    mongo: mongoose.connection.readState === 1,
+  });
 });
 
 // ------ 404 ROUTE -------
