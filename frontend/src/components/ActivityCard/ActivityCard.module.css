@@ -1,0 +1,51 @@
+.activityCard {
+  padding-left: 24px;
+  margin-bottom: 42px;
+}
+
+.activityCard h2 {
+    color: var(--ink);
+  font-family: "Noto Serif", "Playfair Display", serif;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.activityCard span {
+  background: var(--gold);
+  display: block;
+  height: 4px;
+  margin-top: 12px;
+  width: 96px;
+}
+
+.activityCard p {
+  color: var(--ink);
+  line-height: 1.5;
+  margin-top: 10;
+  max-width: 420px;
+}
+
+.split {
+  align-items: center;
+  display: grid;
+  gap: 64px;
+  grid-template-columns: minmax(320px, 0.85fr) minmax(380px, 1fr);
+  padding-left: 24px;
+  padding-right: 64px;
+}
+
+.wildlife {
+
+}
+
+.wildlife h2 {
+  font-family: "Noto Serif", serif;
+  font-size: 34px;
+}
+
+.wildlife p {
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 540px;
+}

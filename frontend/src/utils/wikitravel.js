@@ -160,7 +160,6 @@ export default async function getDestinations(cityName, requestedCities) {
     if (cityName == null) { // Give requestedCities number of random cities
         const cities = [];
         for (let i = 0; i < requestedCities; i++) {
-            // const search_path = RANDOM;
             const search_path = CITY_BASE + randomCities[Math.floor(Math.random() * randomCities.length)];
             const res = await fetch(search_path);
             const data = await res.json();

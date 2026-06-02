@@ -9,6 +9,8 @@ import { parseDate } from "@internationalized/date";
 import InputNumber from "@rc-component/input-number";
 import "../../styles.css";
 import styles from "./PlanTrip.module.css";
+import getActivities from "../../utils/activities";
+import ActivityCard from "../../components/ActivityCard/ActivityCard";
 
 export default function PlanTrip() {
   const location = useLocation();
@@ -21,6 +23,7 @@ export default function PlanTrip() {
   const [travelers, setTravelers] = useState(1);
   const [pace, setPace] = useState("Balanced");
   const [itineraries, setItineraries] = useState([]);
+  const [toDo, setToDo] = useState([]);
 
   const handleDestinationChange = (event) => {
     setDestination(event.target.value);
@@ -40,11 +43,8 @@ export default function PlanTrip() {
       return ;
     }
     // This is where data would be given to an api
-    console.log(destination);
-    console.log(date.start);
-    console.log(date.end);
-    console.log(travelers);
-    console.log(pace);
+    const activities = getActivities(destination);
+    setToDo(activities);
     setItineraries([
       {
         image: assets.amalfi,
@@ -59,9 +59,6 @@ export default function PlanTrip() {
         text: "Find balance in ancient temples and mindful traditions.",
       }
     ]);
-
-    // API call could look like ...
-    // setItineraries(apiCall(destination, date, travelers, pace))
   }
 
   return (
@@ -90,6 +87,10 @@ export default function PlanTrip() {
           <button className={pace === "Luxury" ? `${styles.selected}` : ""} onClick={() => handlePaceChange("Luxury")}>Luxury</button>
         </div>
       </section>
+
+      {toDo.map((activity) => 
+        <ActivityCard title={activity.title} body={activity.body} />)}
+
       <section className={styles.section}>
         <SectionHeading title="Suggested Itineraries" />
         <div className={styles.itineraryGrid}>
