@@ -13,10 +13,11 @@ import SignInForm from '../../forms/SignInForm';
 import SignupForm from '../../forms/SignupForm';
 import AddTrip from '../../pages/AddTrip/AddTrip';
 import Destination from '../../pages/Destination/Destination';
-import PageNotFound from '../../pages/PageNotFound/PageNotFound.jsx';
+import PageNotFound from '../../pages/PageNotFound/PageNotFound';
 import ProtectedRoute from '../ProtectedRoute';
 import "./App.css";
 import { assets } from '../../constants/assets';
+import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 export default function App() {
     const location = useLocation();
@@ -26,6 +27,7 @@ export default function App() {
             <Navigation active={location.pathname}/>
 
             <div className="content">
+                <ScrollToTop />
                 <Routes>
                     <Route path="/" element={<HomePage />}/>
                     <Route path="/popular-destinations" element={<PopularDestinations />}/>
