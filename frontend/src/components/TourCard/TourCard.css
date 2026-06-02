@@ -14,6 +14,7 @@
   padding-bottom: 16px;
   position: relative;
   transition: transform 0.5s ease;
+  cursor: pointer;
 }
 
 .tour-card:hover {

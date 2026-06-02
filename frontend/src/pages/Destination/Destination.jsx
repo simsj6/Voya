@@ -1,9 +1,10 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./Destination.css";
 import { assets } from "../../constants/assets";
 import SectionHeading from "../../components/SectionHeading/SectionHeading";
 import TourCard from "../../components/TourCard/TourCard";
+import getDestinations from '../../utils/wikitravel';
 
 // note: activities is just tours of destination page on wikitravel
 // this is just placeholder until we get api calls working
@@ -31,6 +32,21 @@ export default function Destination() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // // get random cities for bottom of page
+  const [randomDestinations, setRandomDestinations] = useState([]);
+  useEffect(() => {
+    async function loadDestination() {
+      const random = await Promise.all([
+        getDestinations(null, 1),
+        getDestinations(null, 1),
+        getDestinations(null, 1),
+        getDestinations(null, 1)
+      ]);
+      setRandomDestinations(random);
+    };
+    loadDestination();
+  }, [destinationId]);
+
   // get destination info from wikivoyage
   // useEffect(() => {
   //   const fetchDestination = async () => {
@@ -55,14 +71,6 @@ export default function Destination() {
     navigate('/plan-a-trip', {state: destination.title});
   }
 
-  // const gallery = [
-  //   assets.gallery1,
-  //   assets.gallery2,
-  //   assets.gallery3,
-  //   assets.gallery4,
-  //   assets.activity1,
-  // ];
-
   return (
     <main className="page activity">
       <section className="activity-header">
@@ -80,11 +88,6 @@ export default function Destination() {
           src={destination.image}
           alt="Mountain view"
         />
-        {/* <div>
-          {gallery.map((image) => (
-            <img key={image} src={image} alt="" />
-          ))}
-        </div> */}
       </section>
       <section className="article-copy">
         {
@@ -121,24 +124,12 @@ export default function Destination() {
             <></>
         }
       </section>
-      {/* <img className="activity-map" src={assets.basemap} alt="Route map" /> */}
       <section className="section related">
-        {/* just pick four random destinations */}
         <SectionHeading title="Other Destinations You May Enjoy" />
         <div className="destination-grid four">
-          {[
-            assets.activity1,
-            assets.activity2,
-            assets.activity3,
-            assets.activity4,
-          ].map((image, index) => (
-            <TourCard
-              key={image}
-              title={`Alaska: ${["Mountains to Oceans", "Popular Glacier Destination", "Magic of London Tour", "Magic of London Tour #2"][index]}`}
-              image={image}
-              country=""
-            />
-          ))}
+          {randomDestinations.map((city, index) => 
+            <TourCard key={index} title={city.title} image={city.thumbnail} country={city.country} />
+          )}
         </div>
       </section>
     </main>
