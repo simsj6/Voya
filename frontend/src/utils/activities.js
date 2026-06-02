@@ -23,6 +23,11 @@ function getSection(page, section) {
 }
 
 function parseDoSection(page) {
+    const doSection = getSection(page, "Do")[0];
+    console.log(doSection);
+    const regex = new RegExp("(?<====\\[\\[)[^\\]]*(?=\\]\\]===)");
+    const heading = doSection.match(regex);
+    console.log(heading[0]);
     return ([
         {
             title: "Beachcombing",
@@ -36,6 +41,7 @@ function parseDoSection(page) {
 }
 
 function parseSeeSection(page) {
+    const seeSection = getSection(page, "See");
     return ([
         {
             title: "Ocean",
