@@ -12,7 +12,7 @@ import SharedTrips from '../../pages/Profile/SharedTrips';
 import SignInForm from '../../forms/SignInForm';
 import SignupForm from '../../forms/SignupForm';
 import AddTrip from '../../pages/AddTrip/AddTrip';
-import Activity from '../../pages/Activity/Activity';
+import Destination from '../../pages/Destination/Destination';
 import PageNotFound from '../../pages/PageNotFound/PageNotFound.jsx';
 import ProtectedRoute from '../ProtectedRoute';
 import "./App.css";
@@ -38,7 +38,7 @@ export default function App() {
                     </Route>
                     <Route path="/signin" element={<SignInForm />}/>
                     <Route path="/signup" element={<SignupForm />}/>
-                    <Route path="/activity" element={<Activity />} />
+                    <Route path="/destination/:destinationId" element={<Destination />} />
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </div>

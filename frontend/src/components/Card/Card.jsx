@@ -6,7 +6,8 @@ export default function Card({ title, image, tall, country, state }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/plan-a-trip', {state: title});
+        navigate(`/destination/${title}`);
+        // navigate('/plan-a-trip', {state: title});
     }
 
     return (
