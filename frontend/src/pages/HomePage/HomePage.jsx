@@ -11,6 +11,10 @@ export default function HomePage() {
     const [popularDestinations, setPopularDestinations] = useState([]);
     const [featuredDestinations, setFeaturedDestinations] = useState([]);
 
+    // array of booleans to show popular destinations
+    // const [isHovered, setIsHovered] = useState(new Array(4).fill(false));
+    // setIsHovered()
+
     useEffect(() => {
         async function loadDestination() {
             const popular = await Promise.all([
@@ -32,8 +36,8 @@ export default function HomePage() {
     }, []);
 
     return (
-        <main className={styles.page}>
-            <section className={`${styles.hero} ${styles.split}`}>
+        <main className={styles.page} style={{backgroundColor: "white"}}>
+            <section className={`${styles.hero} ${styles.split}`} style={{backgroundColor: "var(--bg)"}}>
                 <div className={styles.heroCopy}>
                     <h1>Plan<br />Smoothly<br />With <em>VOYA</em></h1>
                     <br />
@@ -45,17 +49,10 @@ export default function HomePage() {
                 <div className={styles.blob}><img src={assets.beach} alt="Beach sunset" /></div>
             </section>
 
-            <section className={styles.section}>
+            <section className={styles.section} style={{marginBottom: "5em"}}>
                 <SectionHeading title="Explore Popular Cities" text="Curated experiences from around the world" />
                 <div className={`${styles.cityGrid} ${styles.staggered}`}>
                     {popularDestinations.map((city, index) => <Card key={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} country={city.country} />)}
-                </div>
-            </section>
-
-            <section className={`${styles.section} ${styles.featureStrip}`}>
-                <SectionHeading title="Featured Destinations" text="" />
-                <div className={styles.wideCards}>
-                    {featuredDestinations.map((city, index) => <WideCard key={index} title={city.title} image={city.thumbnail} country={city.country} />)}
                 </div>
             </section>
 
@@ -63,6 +60,13 @@ export default function HomePage() {
                 <div>
                     <h2>About {popularDestinations[0]?.title}</h2>
                     <p>{popularDestinations[0]?.extract}</p>
+                </div>
+            </section>
+
+            <section className={`${styles.section} ${styles.featureStrip}`} style={{marginBottom: "0"}}>
+                <SectionHeading title="Featured Destinations" text="" />
+                <div className={styles.wideCards}>
+                    {featuredDestinations.map((city, index) => <WideCard key={index} title={city.title} image={city.thumbnail} country={city.country} />)}
                 </div>
             </section>
         </main>
