@@ -9,12 +9,12 @@ export default async function getActivities(cityName) {
         origin: "*",
     });
 
-    console.log(url);
-
     const res = await fetch(url);
     const data = await res.json();
     const page = data.query.pages[Object.keys(data.query.pages)[0]].revisions[0]["*"];
-    const seeSection = parseDoSection(page);
+    
+    const sections = [parseDoSection(page), parseSeeSection(page)];
+    return sections;
 }
 
 function getSection(page, section) {
@@ -23,5 +23,27 @@ function getSection(page, section) {
 }
 
 function parseDoSection(page) {
-    console.log(getSection(page, "Do"));
+    return ([
+        {
+            title: "Beachcombing",
+            body: "They have a nice beach.",
+        },
+        {
+            title: "Camping",
+            body: "They have a nice campground.",
+        },
+    ]);
+}
+
+function parseSeeSection(page) {
+    return ([
+        {
+            title: "Ocean",
+            body: "They have good views of the ocean.",
+        },
+        {
+            title: "Forest",
+            body: "They forest is thick and pretty.",
+        },
+    ]);
 }

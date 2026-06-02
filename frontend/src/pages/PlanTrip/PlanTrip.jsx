@@ -23,7 +23,7 @@ export default function PlanTrip() {
   const [travelers, setTravelers] = useState(1);
   const [pace, setPace] = useState("Balanced");
   const [itineraries, setItineraries] = useState([]);
-  const [toDo, setToDo] = useState([]);
+  const [activities, setActivites] = useState([]);
 
   const handleDestinationChange = (event) => {
     setDestination(event.target.value);
@@ -43,22 +43,11 @@ export default function PlanTrip() {
       return ;
     }
     // This is where data would be given to an api
-    const activities = getActivities(destination);
-    setToDo(activities);
-    setItineraries([
-      {
-        image: assets.amalfi,
-        duration: "2 Days",
-        title: "Amalfi Coast Serenity",
-        text: "A slow-paced journey through cliffside villages and pristine waters.",
-      },
-      {
-        image: assets.kyoto,
-        duration: "5 Days",
-        title: "Kyoto Retreat",
-        text: "Find balance in ancient temples and mindful traditions.",
-      }
-    ]);
+    async function loadActivities() {
+      const returnedActivities = await getActivities(destination);
+      setActivites(returnedActivities);
+    };
+    loadActivities();
   }
 
   return (
@@ -88,8 +77,14 @@ export default function PlanTrip() {
         </div>
       </section>
 
-      {toDo.map((activity) => 
+      <section className={styles.section}>
+      <SectionHeading title="Things to do..." />
+      {activities[0].map((activity) => 
         <ActivityCard title={activity.title} body={activity.body} />)}
+      <SectionHeading title="Things to see..." />
+      {activities[1].map((activity) => 
+        <ActivityCard title={activity.title} body={activity.body} />)}
+      </section>
 
       <section className={styles.section}>
         <SectionHeading title="Suggested Itineraries" />
