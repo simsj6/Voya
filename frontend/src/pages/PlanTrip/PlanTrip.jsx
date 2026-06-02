@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { act, React, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Field from "../../components/Field/Field";
 import SectionHeading from "../../components/SectionHeading/SectionHeading";
@@ -23,7 +23,7 @@ export default function PlanTrip() {
   const [travelers, setTravelers] = useState(1);
   const [pace, setPace] = useState("Balanced");
   const [itineraries, setItineraries] = useState([]);
-  const [activities, setActivites] = useState([]);
+  const [activities, setActivites] = useState([[], []]);
 
   const handleDestinationChange = (event) => {
     setDestination(event.target.value);
@@ -78,10 +78,10 @@ export default function PlanTrip() {
       </section>
 
       <section className={styles.section}>
-      <SectionHeading title="Things to do..." />
+      {activities[0].length > 0 && <SectionHeading title="Things to do..." />}
       {activities[0].map((activity) => 
         <ActivityCard title={activity.title} body={activity.body} />)}
-      <SectionHeading title="Things to see..." />
+      {activities[1].length > 0 && <SectionHeading title="Things to see..." />}
       {activities[1].map((activity) => 
         <ActivityCard title={activity.title} body={activity.body} />)}
       </section>
