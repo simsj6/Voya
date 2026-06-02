@@ -34,18 +34,3 @@
   padding-left: 24px;
   padding-right: 64px;
 }
-
-.wildlife {
-
-}
-
-.wildlife h2 {
-  font-family: "Noto Serif", serif;
-  font-size: 34px;
-}
-
-.wildlife p {
-  color: var(--muted);
-  line-height: 1.7;
-  max-width: 540px;
-}
