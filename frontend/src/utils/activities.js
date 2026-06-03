@@ -15,8 +15,6 @@ export default async function getDestination(cityName) {
     const data = await res.json();
     const page = data.query.pages[Object.keys(data.query.pages)[0]].revisions[0]["*"];
 
-    console.log(page);
-
     const destination = {
         title: cityName,
         subtitle: getSubtitle(page),
@@ -25,8 +23,6 @@ export default async function getDestination(cityName) {
         activities: getActivities(page),
         safety: getSafety(page),
     };
-
-    console.log(destination);
 
     return destination;
 }
@@ -70,7 +66,7 @@ function getActivities(page) {
     const regex = /==\s*Do\s*==([\s\S]*?)(?=={2,}[^=]*?)/;
     const doSection = page.match(regex)[0];
 
-    const activitiesRegex = /(?<=\*)[^ ][\s\S]*?(?=[\n])/g;
+    const activitiesRegex = /(?<=\*)(?!\s*\{\{)[^\n]+/g;
     const activities = [...doSection.matchAll(activitiesRegex)];
 
     return activities;
@@ -78,10 +74,9 @@ function getActivities(page) {
 
 function getSafety(page) {
     const regex = /(?<==\s*Stay safe\s*==)[\s\S]*?(?===)/;
-    const safeSection = page.match(regex)[0];
-    console.log(safeSection);
-
+    const safeSection = page.match(regex);
+    if (safeSection == null) {
+        return null;
+    } 
     return safeSection;
-
-    return "tmp safety";
 }
