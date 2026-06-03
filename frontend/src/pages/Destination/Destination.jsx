@@ -5,7 +5,7 @@ import { assets } from "../../constants/assets";
 import SectionHeading from "../../components/SectionHeading/SectionHeading";
 import TourCard from "../../components/TourCard/TourCard";
 import getDestinations from '../../utils/wikitravel';
-import getActivities from "../../utils/activities";
+import getDestination from "../../utils/activities";
 
 // note: activities is just tours of destination page on wikitravel
 // this is just placeholder until we get api calls working
@@ -63,7 +63,7 @@ export default function Destination() {
       // } finally {
       //   setLoading(false);
       // }
-      setDestination(await getActivities(destinationId));
+      setDestination(await getDestination(destinationId));
     };
 
     fetchDestination();

@@ -1,6 +1,6 @@
 const IMAGE_NAME_PREFIX = "en.wikivoyage.org/wiki/File:";
 
-export default async function getActivities(cityName) {
+export default async function getDestination(cityName) {
     const url = new URL("https://en.wikivoyage.org/w/api.php");
     url.search = new URLSearchParams({
         action: "query",
@@ -22,11 +22,8 @@ export default async function getActivities(cityName) {
         subtitle: getSubtitle(page),
         image: await getImage(page),
         description: getDescription(page),
-        activities: [
-            "tmp activity1",
-            "tmp activity2",
-        ],
-        safety: "tmp safety",
+        activities: getActivities(page),
+        safety: getSafety(page),
     };
 
     console.log(destination);
@@ -35,7 +32,7 @@ export default async function getActivities(cityName) {
 }
 
 function getSection(page, section) {
-    const regex = new RegExp(`==\\s*${section}\\s*==([\\s\\S]*?)(?=\\n==[^=].*==|\\n$)`);
+    const regex = /==\s*${section}\s*==([\s\S]*?)(?=\n==[^=].*==|\n$)/;
     return page.match(regex);
 }
 
@@ -67,4 +64,22 @@ async function getImage(page) {
 function getDescription(page) {
     const regex = /'''[^']+'''([^\n]*)/;
     return page.match(regex);
+}
+
+function getActivities(page) {
+    const regex = /==\s*Do\s*==([\s\S]*?)(?=={2,}[^=]*?)/;
+    const doSection = page.match(regex)[0];
+
+    const activitiesRegex = /(?<=\*)[\s\S]*?(?=[\n])/g;
+    const activities = [...doSection.matchAll(activitiesRegex)];
+
+    return activities;
+    // return ([
+    //     "activity 1",
+    //     "activity 2",
+    // ]);
+}
+
+function getSafety(page) {
+    return "tmp safety";
 }
