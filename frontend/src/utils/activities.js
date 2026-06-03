@@ -14,8 +14,6 @@ export default async function getActivities(cityName) {
     const res = await fetch(url);
     const data = await res.json();
     const page = data.query.pages[Object.keys(data.query.pages)[0]].revisions[0]["*"];
-    
-    console.log(page);
 
     const destination = {
         title: cityName,
@@ -50,7 +48,7 @@ function getSubtitle(page) {
 }
 
 async function getImage(page) {
-    const regex = /(?<=\|)[\s\S]*?(?=\|)/;
+    const regex = /(?<=\|)[\s\S]*?(?=[\|}])/;
     const imageName = page.match(regex)[0];
 
     const url = new URL("https://www.wikidata.org/w/api.php");
@@ -64,7 +62,6 @@ async function getImage(page) {
     });
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data?.query?.pages[Object.keys(data.query.pages)[0]]?.imageinfo[0]?.url);
     return data?.query?.pages[Object.keys(data.query.pages)[0]]?.imageinfo[0]?.url;
 }
 

@@ -63,10 +63,7 @@ export default function Destination() {
       // } finally {
       //   setLoading(false);
       // }
-      const destination = await getActivities("Seattle");
-      const estination = await getActivities("Ocean City (Washington)");
-      console.log(destination);
-      setDestination(destination);
+      setDestination(await getActivities(destinationId));
     };
 
     fetchDestination();
@@ -88,7 +85,6 @@ export default function Destination() {
         </div>
       </section>
       <section className="gallery">
-        {console.log(destination.image)}
         <img
           className="main-photo"
           src={destination.image}
