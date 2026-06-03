@@ -93,6 +93,7 @@ function getActivities(page) {
 
     for (let i = 0; i < activities.length; i++) {
         activities[i] = activities[i][0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ");
+        activities[i] = activities[i].replaceAll(/(?<=\[)(http[^\s]+)/g, "").replaceAll("[", "").replaceAll("]", "");
     }
 
     return activities;
