@@ -79,7 +79,6 @@ const tripSchema = new mongoose.Schema({
   email: { // required for connecting a trip to a user.
     type: String,
     required: true,
-    unique: true,
     lowercase: true,
     trim: true,
   },
@@ -257,7 +256,7 @@ app.post("/api/add-trip", async (req, res) => {
       const token = req.headers.authorization.split(' ')[1];
       const decode = jwt.verify(token, process.env.JWT_SECRET);
 
-      if (!(user._id = decode.id)) { // User id is not the same as the one in the token given
+      if (user._id.toString() !== decode.id) { // User id is not the same as the one in the token given
         return res.status(401).json({ error: "Invalid token." }) // 401 or 409?
       }
     } catch (error) {

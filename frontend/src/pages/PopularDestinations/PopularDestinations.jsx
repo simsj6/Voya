@@ -33,7 +33,7 @@ export default function PopularDestinations() {
 				</div>
 			</section>
 			<section className="section">
-				<SectionHeading title="Things To Do In London" />
+				<SectionHeading title="Places To Go" />
 				<div className="destination-grid">
 					{/* shows first three cards */}
 					{popularDestinations.slice(0, 3).map((city, index) => (

@@ -1,6 +1,8 @@
 import { React, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddTrip() {
+    const navigate = useNavigate();
     const [destination, setDestination] = useState("");
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
@@ -11,6 +13,7 @@ export default function AddTrip() {
     const [hotel, setHotel] = useState("");
     const [activities, setActivities] = useState("");
     const [listActivities, setListActivities] = useState([]);
+    const [error, setError] = useState("");
 
     const validateInputs = () => {
         if (!destination) {
@@ -63,9 +66,19 @@ export default function AddTrip() {
 
         try {
             // use email to link to user as the creator of trip and get token to verify authentication
-            const user = localStorage.getItem("User");
+            const user = JSON.parse(localStorage.getItem("User"));
+            if (!user) {
+                setError("Please sign in before adding a trip.");
+                return;
+            }
             const email = user.email;
             const token = localStorage.getItem("token");
+            if (!token) {
+                setError("Please sign in before adding a trip.");
+                return;
+            }
+            const emails = travelers ? travelers.split(", ").filter(Boolean) : [];
+            const acts = activities ? activities.split(", ").filter(Boolean) : [];
 
             const response = await fetch("/api/add-trip", {
                 method: "POST",
@@ -73,7 +86,17 @@ export default function AddTrip() {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + token
                 },
-                body: JSON.stringify({ email, destination, startDate, endDate, numTravelers, travEmails, flight, hotel, activities }),
+                body: JSON.stringify({
+                    email,
+                    destination,
+                    startDate,
+                    endDate,
+                    amtTravelers: numTravelers,
+                    travelers: emails,
+                    flight,
+                    hotel,
+                    activities: acts,
+                }),
             });
 
             const data = await response.json();
@@ -93,6 +116,7 @@ export default function AddTrip() {
         <main className="page auth-page">
             <form className="form-card auth-card" onSubmit={handleSubmit}>
                 <h1>Add Trip</h1>
+                {error && <p>{error}</p>}
                 <label className="field">
                     <span>Destination*</span>
                     <input
