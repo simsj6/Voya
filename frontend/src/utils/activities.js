@@ -1,3 +1,5 @@
+const IMAGE_NAME_PREFIX = "en.wikivoyage.org/wiki/File:";
+
 export default async function getActivities(cityName) {
     const url = new URL("https://en.wikivoyage.org/w/api.php");
     url.search = new URLSearchParams({
@@ -13,8 +15,23 @@ export default async function getActivities(cityName) {
     const data = await res.json();
     const page = data.query.pages[Object.keys(data.query.pages)[0]].revisions[0]["*"];
     
-    const sections = [parseDoSection(page), parseSeeSection(page)];
-    return sections;
+    console.log(page);
+
+    const destination = {
+        title: cityName,
+        subtitle: getSubtitle(page),
+        image: await getImage(page),
+        description: getDescription(page),
+        activities: [
+            "tmp activity1",
+            "tmp activity2",
+        ],
+        safety: "tmp safety",
+    };
+
+    console.log(destination);
+
+    return destination;
 }
 
 function getSection(page, section) {
@@ -22,34 +39,36 @@ function getSection(page, section) {
     return page.match(regex);
 }
 
-function parseDoSection(page) {
-    const doSection = getSection(page, "Do")[0];
-    console.log(doSection);
-    const regex = new RegExp("(?<====\\[\\[)[^\\]]*(?=\\]\\]===)");
-    const heading = doSection.match(regex);
-    console.log(heading[0]);
-    return ([
-        {
-            title: "Beachcombing",
-            body: "They have a nice beach.",
-        },
-        {
-            title: "Camping",
-            body: "They have a nice campground.",
-        },
-    ]);
+function getTitle(page) {
+    const regex = new RegExp("'''([^']+)'''");
+    return page.match(regex)[1];
 }
 
-function parseSeeSection(page) {
-    const seeSection = getSection(page, "See");
-    return ([
-        {
-            title: "Ocean",
-            body: "They have good views of the ocean.",
-        },
-        {
-            title: "Forest",
-            body: "They forest is thick and pretty.",
-        },
-    ]);
+function getSubtitle(page) {
+    const regex = new RegExp("'''[^']+'''([^\n]*)")
+    return page.match(regex)[0];
+}
+
+async function getImage(page) {
+    const regex = /(?<=\|)[\s\S]*?(?=\|)/;
+    const imageName = page.match(regex)[0];
+
+    const url = new URL("https://www.wikidata.org/w/api.php");
+    url.search = new URLSearchParams({
+        action: "query",
+        titles: `File:${imageName}`,
+        prop: "imageinfo",
+        iiprop: "url",
+        format: "json",
+        origin: "*",
+    });
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data?.query?.pages[Object.keys(data.query.pages)[0]]?.imageinfo[0]?.url);
+    return data?.query?.pages[Object.keys(data.query.pages)[0]]?.imageinfo[0]?.url;
+}
+
+function getDescription(page) {
+    const regex = new RegExp("'''([^']+)'''");
+    return page.match(regex);
 }

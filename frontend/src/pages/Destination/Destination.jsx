@@ -5,10 +5,11 @@ import { assets } from "../../constants/assets";
 import SectionHeading from "../../components/SectionHeading/SectionHeading";
 import TourCard from "../../components/TourCard/TourCard";
 import getDestinations from '../../utils/wikitravel';
+import getActivities from "../../utils/activities";
 
 // note: activities is just tours of destination page on wikitravel
 // this is just placeholder until we get api calls working
-const destination = {
+const destination2 = {
   "title": "Seattle",
   "subtitle": "Seattle is a huge city with several district articles containing sightseeing, restaurant, nightlife and accommodation listings — have a look at each of them.",
   "image": "https://wikitravel.org/upload/shared//5/51/Seattle_banner.jpg",
@@ -28,7 +29,7 @@ const destination = {
 
 export default function Destination() {
   const { destinationId } = useParams();
-  // const [destination, setDestination] = useState(null);
+  const [destination, setDestination] = useState({});
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -48,24 +49,28 @@ export default function Destination() {
   }, [destinationId]);
 
   // get destination info from wikivoyage
-  // useEffect(() => {
-  //   const fetchDestination = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const response = await fetch(`https://en.wikivoyage.org/w/api.php?action=parse&page=${destinationId}&prop=tocdata&format=json`);
-  //       const data = await response.json();
+  useEffect(() => {
+    const fetchDestination = async () => {
+      // try {
+      //   setLoading(true);
+      //   const response = await fetch(`https://en.wikivoyage.org/w/api.php?action=parse&page=${destinationId}&prop=tocdata&format=json`);
+      //   const data = await response.json();
 
-  //       // use multiple state variables/api calls to populate page
-  //       setDestination(data);
-  //     } catch (error) {
-  //       console.error("Error fetching destination:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+      //   // use multiple state variables/api calls to populate page
+      //   setDestination(data);
+      // } catch (error) {
+      //   console.error("Error fetching destination:", error);
+      // } finally {
+      //   setLoading(false);
+      // }
+      const destination = await getActivities("Seattle");
+      const estination = await getActivities("Ocean City (Washington)");
+      console.log(destination);
+      setDestination(destination);
+    };
 
-  //   fetchDestination();
-  // }, [destinationId]);
+    fetchDestination();
+  }, [destinationId]);
 
   const handleClick = () => {
     navigate('/plan-a-trip', {state: destination.title});
@@ -83,6 +88,7 @@ export default function Destination() {
         </div>
       </section>
       <section className="gallery">
+        {console.log(destination.image)}
         <img
           className="main-photo"
           src={destination.image}
