@@ -70,16 +70,18 @@ function getActivities(page) {
     const regex = /==\s*Do\s*==([\s\S]*?)(?=={2,}[^=]*?)/;
     const doSection = page.match(regex)[0];
 
-    const activitiesRegex = /(?<=\*)[\s\S]*?(?=[\n])/g;
+    const activitiesRegex = /(?<=\*)[^ ][\s\S]*?(?=[\n])/g;
     const activities = [...doSection.matchAll(activitiesRegex)];
 
     return activities;
-    // return ([
-    //     "activity 1",
-    //     "activity 2",
-    // ]);
 }
 
 function getSafety(page) {
+    const regex = /(?<==\s*Stay safe\s*==)[\s\S]*?(?===)/;
+    const safeSection = page.match(regex)[0];
+    console.log(safeSection);
+
+    return safeSection;
+
     return "tmp safety";
 }
