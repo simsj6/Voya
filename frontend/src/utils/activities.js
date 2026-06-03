@@ -1,3 +1,5 @@
+import { Activity } from "react";
+
 const IMAGE_NAME_PREFIX = "en.wikivoyage.org/wiki/File:";
 
 export default async function getDestination(cityName) {
@@ -64,7 +66,13 @@ async function getImage(page) {
 function getDescription(page) {
     // Each wikivoyage page starts with '''CityName'''. This captures everything from that to the first newline.
     const regex = /'''[^']+'''([^\n]*)/;
-    const description = page.match(regex);
+    let description = page.match(regex);
+
+    if (description.length == 0) {
+        return null;
+    }
+
+    description = description[0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ");
 
     return description;
 }
@@ -78,16 +86,27 @@ function getActivities(page) {
     const activitiesRegex = /(?<=\*)(?!\s*\{\{)[^\n]+/g;
     const activities = [...doSection.matchAll(activitiesRegex)];
 
+    // If there are no activities, return null instead of an empty array to remove the activity heading
+    if (activities.length == 0) {
+        return null;
+    }
+
+    for (let i = 0; i < activities.length; i++) {
+        activities[i] = activities[i][0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ");
+    }
+
     return activities;
 }
 
 function getSafety(page) {
     // Caputer everything following ==Stay safe== and ending at the next "=" starting tag
     const regex = /(?<==\s*Stay safe\s*==)[\s\S]*?(?===)/;
-    const safeSection = page.match(regex);
+    let safeSection = page.match(regex);
     
     if (safeSection == null) {
         return null;
-    } 
+    }
+
+    safeSection = safeSection[0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ");
     return safeSection;
 }
