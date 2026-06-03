@@ -15,6 +15,8 @@ export default async function getActivities(cityName) {
     const data = await res.json();
     const page = data.query.pages[Object.keys(data.query.pages)[0]].revisions[0]["*"];
 
+    console.log(page);
+
     const destination = {
         title: cityName,
         subtitle: getSubtitle(page),
@@ -37,14 +39,11 @@ function getSection(page, section) {
     return page.match(regex);
 }
 
-function getTitle(page) {
-    const regex = new RegExp("'''([^']+)'''");
-    return page.match(regex)[1];
-}
-
 function getSubtitle(page) {
-    const regex = new RegExp("'''[^']+'''([^\n]*)")
-    return page.match(regex)[0];
+    const regex = /(?<!')''([^']+?)''(?!')/;
+    let subtitle = page.match(regex)[0];
+    subtitle = subtitle.replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ");
+    return subtitle;
 }
 
 async function getImage(page) {
@@ -66,6 +65,6 @@ async function getImage(page) {
 }
 
 function getDescription(page) {
-    const regex = new RegExp("'''([^']+)'''");
+    const regex = /'''[^']+'''([^\n]*)/;
     return page.match(regex);
 }
