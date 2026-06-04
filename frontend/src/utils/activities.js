@@ -17,14 +17,13 @@ export default async function getDestination(cityName) {
     const data = await res.json();
     const page = data.query.pages[Object.keys(data.query.pages)[0]].revisions[0]["*"];
 
-    console.log(page);
-
     const destination = {
         title: cityName,
         subtitle: getSubtitle(page),
         image: await getImage(page),
         description: getDescription(page),
         activities: getActivities(page),
+        seeList: getSee(page),
         safety: getSafety(page),
     };
 
@@ -39,7 +38,7 @@ function getSubtitle(page) {
     if (subtitle == null) {
         return null;
     }
-    subtitle = subtitle[1].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ");
+    subtitle = subtitle[1].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ").replaceAll(/(\([\s\S]+?\))/g, "");
     return subtitle;
 }
 
@@ -72,7 +71,7 @@ function getDescription(page) {
         return null;
     }
 
-    description = description[0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ");
+    description = description[0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ").replaceAll(/(\([\s\S]+?\))/g, "");
 
     return description;
 }
@@ -94,13 +93,35 @@ function getActivities(page) {
     for (let i = 0; i < activities.length; i++) {
         activities[i] = activities[i][0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ");
         activities[i] = activities[i].replaceAll(/(?<=\[)(http[^\s]+)/g, "").replaceAll("[", "").replaceAll("]", "");
+        activities[i] = activities[i].replaceAll(/([\S]+?)(?=\|)/g, "").replaceAll("|", "").replaceAll(/(\([\s\S]+?\))/g, "");
     }
 
     return activities;
 }
 
+function getSee(page) {
+    
+    const regex = /(?<==\s*See\s*==)[\s\S]*?(?===)/;
+    const seeSection = page.match(regex)[0];
+
+    const listRegex = /(?<=\*)(?!\s*\{\{)[^\n]+/g;
+    const seeList = [...seeSection.matchAll(listRegex)];
+
+    if (seeList.length == 0) {
+        return null;
+    }
+
+    for (let i = 0; i < seeList.length; i++) {
+        seeList[i] = seeList[i][0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ");
+        seeList[i] = seeList[i].replaceAll(/(?<=\[)(http[^\s]+)/g, "").replaceAll("[", "").replaceAll("]", "");
+        seeList[i] = seeList[i].replaceAll(/([\S]+?)(?=\|)/g, "").replaceAll("|", "").replaceAll(/(\([\s\S]+?\))/g, "");
+    }
+
+    return seeList;
+}
+
 function getSafety(page) {
-    // Caputer everything following ==Stay safe== and ending at the next "=" starting tag
+    // Capture everything following ==Stay safe== and ending at the next "=" starting tag
     const regex = /(?<==\s*Stay safe\s*==)[\s\S]*?(?===)/;
     let safeSection = page.match(regex);
     
@@ -108,6 +129,6 @@ function getSafety(page) {
         return null;
     }
 
-    safeSection = safeSection[0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ");
+    safeSection = safeSection[0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ").replaceAll(/(\([\s\S]+?\))/g, "");
     return safeSection;
 }

@@ -23,7 +23,7 @@ export default function PlanTrip() {
   const [travelers, setTravelers] = useState(1);
   const [pace, setPace] = useState("Balanced");
   const [itineraries, setItineraries] = useState([]);
-  const [activities, setActivites] = useState([[], []]);
+  const [activities, setActivites] = useState({});
 
   const handleDestinationChange = (event) => {
     setDestination(event.target.value);
@@ -78,20 +78,12 @@ export default function PlanTrip() {
       </section>
 
       <section className={styles.section}>
-      {activities[0].length > 0 && <SectionHeading title="Things to do..." />}
-      {activities[0].map((activity) => 
-        <ActivityCard title={activity.title} body={activity.body} />)}
-      {activities[1].length > 0 && <SectionHeading title="Things to see..." />}
-      {activities[1].map((activity) => 
-        <ActivityCard title={activity.title} body={activity.body} />)}
-      </section>
-
-      <section className={styles.section}>
-        <SectionHeading title="Suggested Itineraries" />
-        <div className={styles.itineraryGrid}>
-          {itineraries.map((itinerary) => 
-            <ImageOverlay image={itinerary.image} duration={itinerary.duration} title={itinerary.title} text={itinerary.text} />)}
-        </div>
+      {activities.activities != null && <SectionHeading title="Things to do..." />}
+      {activities.activities != null && activities.activities.map((activity) => 
+        <ActivityCard body={activity} />)}
+      {activities.seeList != null && <SectionHeading title="Things to see..." />}
+      {activities.seeList != null && activities.seeList.map((see) => 
+        <ActivityCard body={see} />)}
       </section>
     </main>
   );
