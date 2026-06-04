@@ -69,12 +69,7 @@ export default function PlanTrip() {
           </label>
           <button className={styles.primary} onClick={handleOnSubmit}>Find Your Next Adventure</button>
         </div>
-        <div className={styles.chips}>
-          <strong>Pace & Budget:</strong>
-          <button className={pace === "Relaxed" ? `${styles.selected}` : ""} onClick={() => handlePaceChange("Relaxed")}>Relaxed</button>
-          <button className={pace === "Balanced" ? `${styles.selected}` : ""} onClick={() => handlePaceChange("Balanced")}>Balanced</button>
-          <button className={pace === "Luxury" ? `${styles.selected}` : ""} onClick={() => handlePaceChange("Luxury")}>Luxury</button>
-        </div>
+
       </section>
 
       <section className={styles.section}>
