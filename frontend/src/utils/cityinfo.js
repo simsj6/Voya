@@ -1,8 +1,7 @@
-import { Activity } from "react";
-
 const IMAGE_NAME_PREFIX = "en.wikivoyage.org/wiki/File:";
 
-export default async function getDestination(cityName) {
+export default async function getCityInfo(cityName) {
+    // Build the search path and fetch its data
     const url = new URL("https://en.wikivoyage.org/w/api.php");
     url.search = new URLSearchParams({
         action: "query",
@@ -12,22 +11,22 @@ export default async function getDestination(cityName) {
         format: "json",
         origin: "*",
     });
-
     const res = await fetch(url);
     const data = await res.json();
+
+    // Get the entire page from the response
     const page = data.query.pages[Object.keys(data.query.pages)[0]].revisions[0]["*"];
 
-    const destination = {
+    // Return all the city page info needed in an object
+    return ({
         title: cityName,
         subtitle: getSubtitle(page),
         image: await getImage(page),
         description: getDescription(page),
-        activities: getActivities(page),
-        seeList: getSee(page),
+        activities: getActivities(page), // array
+        see: getSee(page), // array
         safety: getSafety(page),
-    };
-
-    return destination;
+    });
 }
 
 function getSubtitle(page) {
@@ -100,7 +99,6 @@ function getActivities(page) {
 }
 
 function getSee(page) {
-    
     const regex = /(?<==\s*See\s*==)[\s\S]*?(?===)/;
     const seeSection = page.match(regex)[0];
 

@@ -9,7 +9,7 @@ import { parseDate } from "@internationalized/date";
 import InputNumber from "@rc-component/input-number";
 import "../../styles.css";
 import styles from "./PlanTrip.module.css";
-import getActivities from "../../utils/activities";
+import getCityInfo from "../../utils/cityinfo";
 import ActivityCard from "../../components/ActivityCard/ActivityCard";
 
 export default function PlanTrip() {
@@ -44,7 +44,7 @@ export default function PlanTrip() {
     }
     // This is where data would be given to an api
     async function loadActivities() {
-      const returnedActivities = await getActivities(destination);
+      const returnedActivities = await getCityInfo(destination);
       setActivites(returnedActivities);
     };
     loadActivities();
@@ -76,8 +76,8 @@ export default function PlanTrip() {
       {activities.activities != null && <SectionHeading title="Things to do..." />}
       {activities.activities != null && activities.activities.map((activity) => 
         <ActivityCard body={activity} />)}
-      {activities.seeList != null && <SectionHeading title="Things to see..." />}
-      {activities.seeList != null && activities.seeList.map((see) => 
+      {activities.see != null && <SectionHeading title="Things to see..." />}
+      {activities.see != null && activities.see.map((see) => 
         <ActivityCard body={see} />)}
       </section>
     </main>
