@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { apiUrl } from "../../utils/api";
-import ProfilePanel from "../../components/ProfilePanel/ProfilePanel";
-import Field from "../../components/Field/Field";
 import Trip from "../../components/Trip/Trip";
 import { assets } from "../../constants/assets";
 import "./Profile.css";
@@ -19,42 +17,18 @@ export default function SharedTrips({ active }) {
     password: "",
     confirmPassword: "",
   });
-
-  const allTrips = [
-    {
-      "destination": "Alaska, USA",
-      "start": "1/1/2001",
-      "end": "1/2/2001",
-      "flight": "Alaska Airlines 227",
-      "hotel": "Holiday Inn",
-      "num_travelers": 2,
-      "is_shared": false,
-      "emails": "",
-      "activities": "sledding, hiking"
-    },
-    {
-      "destination": "Alaska, USA",
-      "start": "1/1/2001",
-      "end": "1/2/2001",
-      "flight": "Alaska Airlines 227",
-      "hotel": "Holiday Inn",
-      "num_travelers": 3,
-      "is_shared": true,
-      "emails": "email@gmail.com, email@gmail.com",
-      "activities": "sledding, hiking"
-    }
-  ]
-
-  const trips = allTrips.filter(trip => trip.is_shared === true);
+  const [trips, setTrips] = useState([]);
 
   useEffect(() => {
-    const raw = localStorage.getItem("User");
-    if (!raw) {
+    const user_item = localStorage.getItem("User");
+    const token = localStorage.getItem("token");
+
+    if (!user_item || !token) {
       navigate("/signin");
       return;
     }
 
-    const user = JSON.parse(raw);
+    const user = JSON.parse(user_item);
     setProfile({
       name: user.name || "",
       location: user.location || "",
@@ -65,19 +39,40 @@ export default function SharedTrips({ active }) {
       password: "",
       confirmPassword: "",
     });
+
+    const getTrips = async () => {
+      try {
+        const response = await fetch(apiUrl("/api/profile/shared-itinerary"), {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          console.error(data.error || "Couldnt load shared trips.");
+          return;
+        }
+        const sharedTrips = (data.itns || []).map((trip) => ({
+          _id: trip._id,
+          destination: trip.destination,
+          start: trip.startDate,
+          end: trip.endDate,
+          flight: trip.flight,
+          hotel: trip.hotel,
+          num_travelers: trip.amtTravelers,
+          is_shared: Array.isArray(trip.travelers) && trip.travelers.length > 0,
+          emails: Array.isArray(trip.travelers) ? trip.travelers.join(", ") : "",
+          activities: Array.isArray(trip.activities) ? trip.activities.join(", ") : "",
+        }));
+
+        setTrips(sharedTrips);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    getTrips();
   }, [navigate]);
-
-  const handleChange = (key, value) => {
-    setProfile((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const handleSave = () => {
-    console.log("Saved profile:", profile);
-    //when we have the backend we save it there later
-  };
 
   const handleLogout = async () => {
     const token = localStorage.getItem("token");
@@ -120,12 +115,9 @@ export default function SharedTrips({ active }) {
       <section className="profile-main">
         <h1>Shared Trips</h1>
         <p>Manage your shared trips.</p>
-        {trips.map((trip) => {
-          console.log(trip)
-          return (
-            <Trip key={trip} trip={trip} />
-          )
-        })}
+        {trips.map((trip) => (
+          <Trip key={trip._id} trip={trip} />
+        ))}
       </section>
     </main>
   );

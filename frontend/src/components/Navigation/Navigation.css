@@ -4,10 +4,10 @@
     display: flex;
     justify-content: space-between;
     left: 0;
-    padding: 32px 40px;
-    position: relative;
+    padding: 14px 40px;
+    position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
 }
 
 .brand {
@@ -46,7 +46,7 @@
     background: var(--gold);
     border-radius: 4px;
     font-weight: 700;
-    padding: 12px 32px;
+    padding: 8px 24px;
 }
 
 .nav-links .signup {
@@ -54,5 +54,5 @@
     color: white;
     border-radius: 4px;
     font-weight: 700;
-    padding: 12px 32px;
+    padding: 8px 24px;
 }

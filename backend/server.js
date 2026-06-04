@@ -398,30 +398,19 @@ app.put("/api/profile/update-security", async (req, res) => { // updating from p
 // GET /api/profile/my-trips
 // ============================================================
 app.get("/api/profile/my-trips", async (req, res) => { // Pulls all trips the user made
-  const { email } = req.body;
   const auth = req.headers.authorization;
 
   try {
-    const user = await User.findOne({ email });
-
-    if (!user) { // Verify that the user exists in the first place
-      return res.status(401).json({ error: "No such user exists." });
-    }
-
     if (!auth || !auth.startsWith("Bearer ")) { // See if the token was passed in header
       return res.status(401).json({ error: "Missing or invalid token." });
     }
 
-    try { // verify user with token passed in header.
-      const token = req.headers.authorization.split(' ')[1];
-      const decode = jwt.verify(token, process.env.JWT_SECRET);
+    const token = auth.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
 
-      if (!(user._id = decode.id)) { // User id is not the same as the one in the token given
-        return res.status(401).json({ error: "Invalid token." }) // 401 or 409?
-      }
-    } catch (error) {
-      console.error("Profile - My Trips: Token verification error:", error);
-      return res.status(500).json({ error: "Server error." });
+    if (!user) { // Verify that the user exists in the first place
+      return res.status(401).json({ error: "No such user exists." });
     }
 
     const trips = await Trip.find({ email: user.email });
@@ -465,7 +454,7 @@ app.put("/api/profile/my-trips", async (req, res) => { // Updating a single trip
       const token = req.headers.authorization.split(' ')[1];
       const decode = jwt.verify(token, process.env.JWT_SECRET);
 
-      if (!(user._id = decode.id)) { // User id is not the same as the one in the token given
+      if (user._id.toString() !== decode.id) { // User id is not the same as the one in the token given
         return res.status(401).json({ error: "Invalid token." }) // 401 or 409?
       }
     } catch (error) {
@@ -474,7 +463,21 @@ app.put("/api/profile/my-trips", async (req, res) => { // Updating a single trip
     }
 
     // edit trip from database with new info
-    const trip = Trip.findOneAndUpdate({ id }, { destination, startDate, endDate, numTravelers, travelers, flight, hotel, activities });
+    const trip = await Trip.findOneAndUpdate(
+      {
+        _id: id,
+        $or: [
+          { email: user.email },
+          { travelers: user.email },
+        ],
+      },
+      { destination, startDate, endDate, amtTravelers: numTravelers, travelers, flight, hotel, activities },
+      { returnDocument: "after" }
+    );
+
+    if (!trip) {
+      return res.status(404).json({ error: "No trip found." });
+    }
 
     return res.status(200).json({
       message: "Updated trip successfully.",
@@ -490,33 +493,25 @@ app.put("/api/profile/my-trips", async (req, res) => { // Updating a single trip
 // GET /api/profile/shared-itinerary
 // ============================================================
 app.get("/api/profile/shared-itinerary", async (req, res) => { // Pulls all trips that have user as a traveller
-  const { email } = req.body;
   const auth = req.headers.authorization;
 
   try {
-    const user = await User.findOne({ email });
+    if (!auth || !auth.startsWith("Bearer ")) { // See if the token was passed in header
+      return res.status(401).json({ error: "Missing or invalid token." });
+    }
+
+    const token = auth.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
 
     if (!user) { // Verify that the user exists in the first place
       return res.status(401).json({ error: "No such user exists." });
     }
 
-    if (!auth || !auth.startsWith("Bearer ")) { // See if the token was passed in header
-      return res.status(401).json({ error: "Missing or invalid token." });
-    }
-
-    try { // verify user with token passed in header.
-      const token = req.headers.authorization.split(' ')[1];
-      const decode = jwt.verify(token, process.env.JWT_SECRET);
-
-      if (!(user._id = decode.id)) { // User id is not the same as the one in the token given
-        return res.status(401).json({ error: "Invalid token." }) // 401 or 409?
-      }
-    } catch (error) {
-      console.error("Profile - Shared Itinerary: Token verification error:", error);
-      return res.status(500).json({ error: "Server error." });
-    }
-
-    const itns = await Trip.find({ travelers: user.email });
+    const itns = await Trip.find({
+      email: { $ne: user.email },
+      travelers: user.email,
+    });
 
     if (!itns) {
       return res.status(404).json({ error: "No shared trips found." });
@@ -527,7 +522,7 @@ app.get("/api/profile/shared-itinerary", async (req, res) => { // Pulls all trip
       itns: itns,
     });
   } catch (error) {
-    console.error("Profile - Shared Itinerary error:", error);
+    console.error("Profile: Shared Itinerary error:", error);
     return res.status(500).json({ error: "Server error." });
   }
 });
