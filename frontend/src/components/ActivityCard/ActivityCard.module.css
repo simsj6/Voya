@@ -23,7 +23,7 @@
   color: var(--ink);
   line-height: 1.5;
   margin-top: 10;
-  max-width: 420px;
+  /* max-width: 420px; */
 }
 
 .split {
