@@ -8,11 +8,14 @@ import getDestinations from "../../utils/wikitravel";
 
 export default function PopularDestinations() {
 	const [popularDestinations, setPopularDestinations] = useState([]);
-	
+	const [loading, setLoading] = useState(true);
+
 	useEffect(() => {
 		async function loadDestination() {
+			setLoading(true);
 			const destinations = await getDestinations(null, 4);
 			setPopularDestinations(destinations);
+			setLoading(false);
 		};
 		loadDestination();
 	}, []);
@@ -32,30 +35,39 @@ export default function PopularDestinations() {
 					<button>All Categories</button>
 				</div>
 			</section>
-			<section className="section">
-				<SectionHeading title="Places To Go" />
-				<div className="destination-grid">
-					{/* shows first three cards */}
-					{popularDestinations.slice(0, 3).map((city, index) => (
-						<TourCard key={index} title={city.title} image={city.thumbnail} country={city.country} />
-					))}
-				</div>
-			</section>
-			<section className="section">
-				<SectionHeading title="Outside The City Specials" />
-				<div className="chips">
-					<button className="selected teal">Water Activities</button>
-					<button>Special Foods</button>
-					<button>River Activity</button>
-					<button>Historical Tours</button>
-				</div>
-				<div className="destination-grid four">
-					{/* shows cards after first three */}
-					{popularDestinations.slice(3).map((city, index) => (
-							<TourCard key={index} title={city.title} image={city.thumbnail} country={city.country} />
-						))}
-				</div>
-			</section>
+
+			{loading ?
+				<>
+					<section className="section">
+						<SectionHeading title="Loading..." />
+					</section>
+				</> :
+				<>
+					<section className="section">
+						<SectionHeading title="Places To Go" />
+						<div className="destination-grid">
+							{/* shows first three cards */}
+							{popularDestinations.slice(0, 3).map((city, index) => (
+								<TourCard key={index} title={city.title} image={city.thumbnail} country={city.country} />
+							))}
+						</div>
+					</section>
+					<section className="section">
+						<SectionHeading title="Outside The City Specials" />
+						<div className="chips">
+							<button className="selected teal">Water Activities</button>
+							<button>Special Foods</button>
+							<button>River Activity</button>
+							<button>Historical Tours</button>
+						</div>
+						<div className="destination-grid four">
+							{/* shows cards after first three */}
+							{popularDestinations.slice(3).map((city, index) => (
+								<TourCard key={index} title={city.title} image={city.thumbnail} country={city.country} />
+							))}
+						</div>
+					</section>
+				</>}
 		</main>
 	);
 }
