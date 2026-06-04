@@ -34,7 +34,7 @@ export default async function getDestinations(cityName, requestedCities) {
             return cities;
         }
 
-    } else if (Array.isArray(cityName)) { // Give just the specific city requested
+    } else if (Array.isArray(cityName)) { // If multiple city names were requested, return an array of city objects
         let cities = [];
         for (let i = 0; i < cityName.length; i++) {
             cities[i] = getCity(cityName[i]);
