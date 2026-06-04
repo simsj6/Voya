@@ -17,19 +17,10 @@ export default function HomePage() {
 
     useEffect(() => {
         async function loadDestination() {
-            const popular = await Promise.all([
-                getDestinations(null, 1),
-                getDestinations(null, 1),
-                getDestinations(null, 1),
-                getDestinations(null, 1)
-            ]);
+            const popular = await getDestinations(null, 4);
             setPopularDestinations(popular);
 
-            const destinations = await Promise.all([
-                getDestinations("London", 0),
-                getDestinations("NYC", 0),
-                getDestinations("Tokyo", 0)
-            ]);
+            const destinations = await getDestinations(["London", "NYC", "Tokyo"]);
             setFeaturedDestinations(destinations);
         };
         loadDestination();

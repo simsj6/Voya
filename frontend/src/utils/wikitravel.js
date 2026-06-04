@@ -19,96 +19,93 @@ const BASE_URL = "https://en.wikivoyage.org/w/api.php";
 
 export default async function getDestinations(cityName, requestedCities) {
     if (cityName == null) { // Give requestedCities number of random cities
-        const cities = [];
+        let cities = [];
         for (let i = 0; i < requestedCities; i++) {
-            const search_path = CITY_BASE + randomCities[Math.floor(Math.random() * randomCities.length)];
-            const res = await fetch(search_path);
-            const data = await res.json();
-            cities[i] = {
-                description: data.description,
-                extract: data.extract,
-                thumbnail: data?.thumbnail?.source,
-                title: data.title,
-                pageId: data.wikibase_item,
-            };
-            cities[i] = await getCountry(cities[i]);
+            const randomCity = randomCities[Math.floor(Math.random() * randomCities.length)];
+            cities[i] = getCity(randomCity);
         }
+
+        cities = await Promise.all(cities);
+
+        // If only one city was requested, don't return it in an array. Just return the city object
         if (requestedCities == 1) {
             return cities[0];
         } else {
             return cities;
         }
-    } else { // Only give info on the specific city
-        const search_path = CITY_BASE + cityName;
-        const res = await fetch(search_path);
-        const data = await res.json();
-        const city = {
-            description: data.description,
-            extract: data.extract,
-            thumbnail: data.thumbnail.source,
-            title: data.title,
-            pageId: data.wikibase_item,
-        };
-        return getCountry(city);
+
+    } else if (Array.isArray(cityName)) { // Give just the specific city requested
+        let cities = [];
+        for (let i = 0; i < cityName.length; i++) {
+            cities[i] = getCity(cityName[i]);
+        }
+
+        cities = await Promise.all(cities);
+
+        return cities;
+    } else {
+        return getCity(cityName);
     }
 }
 
-// Add the country name to the city object
-async function getCountry(city) {
-    // Look up the cities associated pages
-    let props = "claims";
+async function getCity(cityName) {
+    // Build the search path and fetch its data
+    const searchPath = CITY_BASE + cityName;
+    const res = await fetch(searchPath);
+    const data = await res.json();
+
+    // Get the country associated with this cities pageId
+    const country = await getCountryByCityId(data.wikibase_item);
+
+    return ({
+        description: data.description,
+        extract: data.extract,
+        thumbnail: data.thumbnail.source,
+        title: data.title,
+        pageId: data.wikibase_item,
+        country: country,
+    });
+}
+
+// Given a pageId, attempts to find a country associated with it. If none is found, or none is higher ranking than the others, return null.
+// Otherwise, return the country name as a string.
+async function getCountryByCityId(pageId) {
+    // Build the search path and get its data
     let url = new URL("https://www.wikidata.org/w/api.php");
     url.search = new URLSearchParams({
         action: "wbgetentities",
-        ids: city.pageId,
-        props: props,
+        ids: pageId,
+        props: "claims",
         format: "json",
         origin: "*",
     });
     let res = await fetch(url);
     let data = await res.json();
-    // Pull the countryId number from the associated pages
-    const cityId = Object.keys(data.entities)[0];
-    const countryList = data.entities[Object.keys(data.entities)[0]].claims.P17;
-    let countryId = null
+
+    // Pull the countryId number from the pages
+    const countryList = data.entities[pageId].claims.P17; // Bracket notation because pageId is a string; P17 is where country associations are stored
+    let countryId = null;
+
     if (countryList?.length == 1) {
         countryId = countryList[0].mainsnak.datavalue.value.id;
-    } else {
-        countryId = countryList?.find(country => country.rank === "preferred")?.mainsnak.datavalue.value.id;
+    } else if (countryList?.length > 1) { // If there is more than one country listed, find one marked "preferred"
+        countryId = countryList.find(country => country.rank === "preferred")?.mainsnak.datavalue.value.id;
+    } else { // If there is more than one country listed and none are marked "preferred", return null
+        return null;
     }
 
-    if (countryId == null) {
-        return {
-            description: city.description,
-            extract: city.extract,
-            thumbnail: city.thumbnail,
-            title: city.title,
-            pageId: city.wikibase_item,
-            country: null,
-        };
-    }
-
-    // Get the country page from the countryId
-    props = "sitelinks";
+    // Search for pages associated with the countryId
     url = new URL("https://www.wikidata.org/w/api.php");
     url.search = new URLSearchParams({
         action: "wbgetentities",
         ids: countryId,
-        props: props,
+        props: "sitelinks",
         format: "json",
         origin: "*",
     });
     res = await fetch(url);
     data = await res.json();
-    const countryName = data.entities[Object.keys(data.entities)[0]].sitelinks.enwiki.title;
-    
-    // Return a city object with country name added
-    return {
-        description: city.description,
-        extract: city.extract,
-        thumbnail: city.thumbnail,
-        title: city.title,
-        pageId: city.wikibase_item,
-        country: countryName,
-    };
+
+    const countryName = data.entities[countryId].sitelinks.enwiki.title;
+    return countryName;
 }
