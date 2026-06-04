@@ -25,12 +25,13 @@ export default function AddTrip() {
         if (!endDate) {
             return "Please enter a valid end date";
         }
-        if (!numTravelers) {
+        if (!numTravelers || numTravelers >= 1) {
             return "Please enter a valid number of travelers";
         }
-        if (!travelers && numTravelers > 0) {
-            return "Please enter a valid number of travelers";
+        if (!travelers) {
+            return "Please enter travelers to add to the trip.";
         }
+
         if (numTravelers > 0) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const emails = travelers.split(", ");
@@ -41,16 +42,20 @@ export default function AddTrip() {
             }
             setTravEmails(emails);
         }
+        
         if (!flight) {
             return "Please enter a valid flight.";
         }
         if (!hotel) {
             return "Please enter a valid hotel.";
         }
-        if (activities) { // does a user need to add activities?
-            const acts = activities.split(", ");
-            setListActivities(acts);
+        if (!activities) { // does a user need to add activities?
+           return "Please enter activities."; 
         }
+
+        const acts = activities.split(", ");
+        setListActivities(acts);
+
         return "";
     };
 
@@ -86,6 +91,7 @@ export default function AddTrip() {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + token
                 },
+<<<<<<< HEAD
                 body: JSON.stringify({
                     email,
                     destination,
@@ -97,6 +103,9 @@ export default function AddTrip() {
                     hotel,
                     activities: acts,
                 }),
+=======
+                body: JSON.stringify({ email, destination, startDate, endDate, numTravelers, travEmails, flight, hotel, listActivities }),
+>>>>>>> 9028494 (Made changes to profile)
             });
 
             const data = await response.json();

@@ -7,12 +7,16 @@ import "./Profile.css";
 
 export default function Profile({ active }) {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const [profile, setProfile] = useState({
     name: "",
     location: "",
     birthday: "",
     dateOfBirth: "",
     phone: "",
+  });
+
+  const [security, setSecurity] = useState({
     email: "",
     password: "",
     confirmPassword: "",
@@ -32,10 +36,13 @@ export default function Profile({ active }) {
       birthday: user.birthday || "",
       dateOfBirth: user.dateOfBirth || "",
       phone: user.phone || "",
+    });
+
+    setSecurity({
       email: user.email || "",
       password: "",
       confirmPassword: "",
-    });
+    })
   }, [navigate]);
 
   const handleChange = (key, value) => {
@@ -45,10 +52,90 @@ export default function Profile({ active }) {
     }));
   };
 
-  const handleSave = () => {
+  const handleSaveProfile = async (event) => {
     console.log("Saved profile:", profile);
-    //when we have the backend we save it there later
+    // change just the profile information
+
+    event.preventDefault();
+    setError("");
+
+    try {
+      // use email to link to user as the creator of trip and get token to verify authentication
+      const user = localStorage.getItem("User");
+      const email = user.email;
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("/api/profile/update-profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        },
+        body: JSON.stringify( email, profile.name, profile.dateOfBirth, profile.phone, profile.location ),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.error || "Security change failed.");
+        return;
+      }
+
+    } catch (err) {
+      console.error(err);
+      setError("Network error. Is the server running?");
+    }
   };
+
+  const validateInputs = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!security.email || !emailRegex.test(security.email)) {
+      return "Please enter a valid email address.";
+    }
+    if (!security.password || security.password.length < 8) {
+      return "Password must be at least 8 characters.";
+    }
+    if (security.password !== security.confirmPassword) {
+      return "Passwords do not match.";
+    }
+    return "";
+  }
+
+  const handleSaveSecurity = async (event) => {
+    // change 
+    event.preventDefault();
+    setError("");
+
+    const validationError = validateInputs();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    try {
+      // use email to link to user as the creator of trip and get token to verify authentication
+      const user = localStorage.getItem("User");
+      const email = user.email;
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("/api/profile/update-security", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        },
+        body: JSON.stringify( email, security.email, security.confirmPassword ),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.error || "Security change failed.");
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Network error. Is the server running?");
+    }
+  }
 
   const handleLogout = async () => {
     const token = localStorage.getItem("token");
@@ -88,7 +175,8 @@ export default function Profile({ active }) {
         </Link>
         <button type="button" onClick={handleLogout}>Logout</button>
       </aside>
-      <section className="profile-main">
+
+      <form className="profile-main" onSubmit={handleSaveProfile}>
         <h1>My Profile</h1>
         <p>Manage your travel preferences and personal details.</p>
         <ProfilePanel title="Personal Information">
@@ -96,60 +184,81 @@ export default function Profile({ active }) {
             <Field
               label="Name"
               value={profile.name}
-              onChange={(value) => handleChange("name", value)}
+              onChange={(event) => {
+                setProfile({ name: event.target.value });
+              }}
             />
-            <Field
+            <input
+              type="date"
               label="Date of Birth"
               value={profile.dateOfBirth}
-              onChange={(value) => handleChange("dateOfBirth", value)}
+              onChange={(event) => {
+                setProfile({ dateOfBirth: event.target.value });
+              }}
             />
           </div>
 
           <div className="two-col">
-            <Field
+            <input
+              type="phone"
               label="Phone"
               value={profile.phone}
-              onChange={(value) => handleChange("phone", value)}
+              onChange={(event) => {
+                setProfile({ phone: event.target.value });
+              }}
             />
             <Field
               label="Location"
               value={profile.location}
-              onChange={(value) => handleChange("location", value)}
+              onChange={(event) => {
+                setProfile({ location: event.target.value });
+              }}
             />
           </div>
 
-          <button className="primary small" onClick={handleSave}>
+          <button className="primary small" type="submit">
             Save
           </button>
         </ProfilePanel>
+      </form>
 
+      <form className="profile-security" onSubmit={handleSaveSecurity}>
         <ProfilePanel title="Security">
           <div className="one-col">
-            <Field
-              label="Email Address"
-              value={profile.email}
-              onChange={(value) => handleChange("email", value)}
+            <input
+              type="email"
+              placeholder="YourEmail@email.com"
+              value={security.email}
+              onChange={(event) => {
+                setSecurity({ email: event.target.value });
+              }}
             />
           </div>
 
           <div className="two-col">
-            <Field
-              label="Password"
-              value={profile.password}
-              onChange={(value) => handleChange("password", value)}
+            <input
+              type="password"
+              placeholder="Password"
+              value={security.password}
+              onChange={(event) => {
+                setSecurity({ password: event.target.value });
+              }}
             />
-            <Field
-              label="Confirm Password"
-              value={profile.confirmPassword}
-              onChange={(value) => handleChange("confirmPassword", value)}
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={security.confirmPassword}
+              onChange={(event) => {
+                setSecurity({ confirmPassword: event.target.value });
+              }}
             />
           </div>
 
-          <button className="primary small" onClick={handleSave}>
+          <button className="primary small" type="submit">
             Save
           </button>
         </ProfilePanel>
-      </section>
+      </form>
     </main>
   );
 }

@@ -539,7 +539,7 @@ app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
     time: new Date().toISOString(),
-    mongo: mongoose.connection.readState === 1,
+    mongo: mongoose.connection.readyState === 1,
   });
 });
 
