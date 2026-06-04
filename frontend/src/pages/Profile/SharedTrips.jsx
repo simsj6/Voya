@@ -114,7 +114,7 @@ export default function SharedTrips({ active }) {
       </aside>
       <section className="profile-main">
         <h1>Shared Trips</h1>
-        <p>Manage your shared trips.</p>
+        <p>Manage trips shared with you.</p>
         {trips.map((trip) => (
           <Trip key={trip._id} trip={trip} />
         ))}

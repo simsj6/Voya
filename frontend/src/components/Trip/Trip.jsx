@@ -59,7 +59,7 @@ export default function Trip ({ trip }) {
   };
 
   return (
-    <ProfilePanel title={`Going to ${form.destination}`}>
+    <ProfilePanel title={`Going to: ${form.destination}`}>
       <form onSubmit={handleSave}>
       <div className="two-col">
         <Field
