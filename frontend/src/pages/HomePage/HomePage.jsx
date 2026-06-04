@@ -10,6 +10,7 @@ import getDestinations from '../../utils/wikitravel';
 export default function HomePage() {
     const [popularDestinations, setPopularDestinations] = useState([]);
     const [featuredDestinations, setFeaturedDestinations] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // array of booleans to show popular destinations
     // const [isHovered, setIsHovered] = useState(new Array(4).fill(false));
@@ -17,11 +18,13 @@ export default function HomePage() {
 
     useEffect(() => {
         async function loadDestination() {
+            setLoading(true);
             const popular = await getDestinations(null, 4);
             setPopularDestinations(popular);
 
             const destinations = await getDestinations(["London", "NYC", "Tokyo"]);
             setFeaturedDestinations(destinations);
+            setLoading(false);
         };
         loadDestination();
     }, []);
@@ -40,7 +43,14 @@ export default function HomePage() {
                 <div className={styles.blob}><img src={assets.beach} alt="Beach sunset" /></div>
             </section>
 
-            <section className={styles.section} style={{marginBottom: "5em"}}>
+            {loading ? 
+                <>
+                    <section className={styles.section} style={{marginBottom: "5em"}, {backgroundColor: "var(--bg"}}>
+                        <SectionHeading title="Loading..." />
+                    </section>
+                </> : 
+                <>
+                    <section className={styles.section} style={{marginBottom: "5em"}}>
                 <SectionHeading title="Explore Popular Cities" text="Curated experiences from around the world" />
                 <div className={`${styles.cityGrid} ${styles.staggered}`}>
                     {popularDestinations.map((city, index) => <Card key={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} country={city.country} />)}
@@ -60,6 +70,7 @@ export default function HomePage() {
                     {featuredDestinations.map((city, index) => <WideCard key={index} title={city.title} image={city.thumbnail} country={city.country} />)}
                 </div>
             </section>
+                </>}
         </main>
     );
 }
