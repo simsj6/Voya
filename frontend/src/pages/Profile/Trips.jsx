@@ -45,7 +45,7 @@ export default function Trips({ active }) {
     }
   ]
 
-  const trips = allTrips.filter(trip => trip.is_shared === false);
+  const trips = allTrips;
 
   // useEffect(() => {
   //   const raw = localStorage.getItem("User");

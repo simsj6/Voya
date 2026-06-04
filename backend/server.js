@@ -11,14 +11,14 @@ const PORT = process.env.PORT || 3000;
 // ------ Middleware ------
 app.use(cors());
 
-// app.use(cors({
-//   origin: [
-//     "http://localhost:5173",
-//     "http://voya.vercel.app",
-//     /\.vercel\.app$/,
-//   ],
-//   credentials: true,
-// }));
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "http://voya-travel-planner.vercel.app",
+    /\.vercel\.app$/,
+  ],
+  credentials: true,
+}));
 
 app.use(express.json());
 
