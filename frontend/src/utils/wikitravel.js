@@ -13,9 +13,7 @@ const randomCities = [
     "Boxmeer", "Barnsley", "Iasi", "Maryland", "Laufenburg", "Shimla", "Lubin", "Jvari", "Capul", "Asti", "Sassari", "Vernet-les-Bains", "Kvam", "Trbovlje"
 ];
 
-const RANDOM = "https://en.wikivoyage.org/api/rest_v1/page/random/summary/";
 const CITY_BASE = "https://en.wikivoyage.org/api/rest_v1/page/summary/";
-const BASE_URL = "https://en.wikivoyage.org/w/api.php";
 
 export default async function getDestinations(cityName, requestedCities) {
     if (cityName == null) { // Give requestedCities number of random cities
