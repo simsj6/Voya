@@ -131,6 +131,7 @@ export default function AddTrip() {
                     <label className="field">
                         <span>Start Date*</span>
                         <input
+                            type='date'
                             placeholder="07/24/26"
                             value={startDate}
                             onChange={(event) => {
@@ -141,6 +142,7 @@ export default function AddTrip() {
                     <label className="field">
                         <span>End Date*</span>
                         <input
+                            type='date'
                             placeholder="08/01/26"
                             value={endDate}
                             onChange={(event) => {
@@ -152,6 +154,7 @@ export default function AddTrip() {
                 <label className="field">
                     <span>Number Of Travelers*</span>
                     <input
+                        type='number'
                         placeholder="2"
                         value={numTravelers}
                         onChange={(event) => {
