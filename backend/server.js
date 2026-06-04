@@ -14,7 +14,7 @@ app.use(cors());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "http://voya-travel-planner.vercel.app",
+    "https://voya-travel-planner.vercel.app",
     /\.vercel\.app$/,
   ],
   credentials: true,

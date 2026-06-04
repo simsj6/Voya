@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { apiUrl } from '../utils/api';
 import './Form.css'
 
 export default function SignInForm() {
@@ -25,7 +26,7 @@ export default function SignInForm() {
         }
 
         try {
-            const response = await fetch("/api/login", {
+            const response = await fetch(apiUrl("/api/login"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),

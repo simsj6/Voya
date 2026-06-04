@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../utils/api';
 
 export default function AddTrip() {
     const navigate = useNavigate();
@@ -85,13 +86,12 @@ export default function AddTrip() {
             const emails = travelers ? travelers.split(", ").filter(Boolean) : [];
             const acts = activities ? activities.split(", ").filter(Boolean) : [];
 
-            const response = await fetch("/api/add-trip", {
+            const response = await fetch(apiUrl("/api/add-trip"), {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + token
                 },
-<<<<<<< HEAD
                 body: JSON.stringify({
                     email,
                     destination,
@@ -103,9 +103,6 @@ export default function AddTrip() {
                     hotel,
                     activities: acts,
                 }),
-=======
-                body: JSON.stringify({ email, destination, startDate, endDate, numTravelers, travEmails, flight, hotel, listActivities }),
->>>>>>> 9028494 (Made changes to profile)
             });
 
             const data = await response.json();

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { apiUrl } from "../../utils/api";
 import ProfilePanel from "../../components/ProfilePanel/ProfilePanel";
 import Field from "../../components/Field/Field";
 import { assets } from "../../constants/assets";
@@ -65,7 +66,7 @@ export default function Profile({ active }) {
       const email = user.email;
       const token = localStorage.getItem("token");
 
-      const response = await fetch("/api/profile/update-profile", {
+      const response = await fetch(apiUrl("/api/profile/update-profile"), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -117,7 +118,7 @@ export default function Profile({ active }) {
       const email = user.email;
       const token = localStorage.getItem("token");
 
-      const response = await fetch("/api/profile/update-security", {
+      const response = await fetch(apiUrl("/api/profile/update-security"), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -141,7 +142,7 @@ export default function Profile({ active }) {
     const token = localStorage.getItem("token");
 
     try {
-      await fetch("/api/logout", {
+      await fetch(apiUrl("/api/logout"), {
         method: "POST",
         headers: {
           Authorization: "Bearer " + token,

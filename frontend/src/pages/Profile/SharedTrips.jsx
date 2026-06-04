@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { apiUrl } from "../../utils/api";
 import ProfilePanel from "../../components/ProfilePanel/ProfilePanel";
 import Field from "../../components/Field/Field";
 import Trip from "../../components/Trip/Trip";
@@ -82,7 +83,7 @@ export default function SharedTrips({ active }) {
     const token = localStorage.getItem("token");
 
     try {
-      await fetch("/api/logout", {
+      await fetch(apiUrl("/api/logout"), {
         method: "POST",
         headers: {
           Authorization: "Bearer " + token,
