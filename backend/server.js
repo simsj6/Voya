@@ -95,7 +95,7 @@ const tripSchema = new mongoose.Schema({
   endDate: {
     type: Date
   },
-  amtTravelers: {
+  numTravelers: {
     type: Number,
     default: null,
   },
@@ -238,7 +238,7 @@ app.post("/api/logout", (req, res) => {
 // POST /api/add-trip
 // ============================================================
 app.post("/api/add-trip", async (req, res) => {
-  const { email, destination, startDate, endDate, amtTravelers, travelers, flight, hotel, activities } = req.body; // email used to identify user creating trip
+  const { email, destination, startDate, endDate, numTravelers, travelers, flight, hotel, activities } = req.body; // email used to identify user creating trip
   const auth = req.headers.authorization;
 
   try {
@@ -270,7 +270,7 @@ app.post("/api/add-trip", async (req, res) => {
       destination,
       startDate,
       endDate,
-      amtTravelers,
+      numTravelers,
       travelers,
       flight,
       hotel,
@@ -291,7 +291,7 @@ app.post("/api/add-trip", async (req, res) => {
 // PUT /api/profile/update-profile
 // ============================================================
 app.put("/api/profile/update-profile", async (req, res) => { // updating from profile, should this be two different endpoints? (Edit basic info and edit password/email?)
-  const { email, name, dateOfBirth, phone, location } = req.body;
+  const { email, name, birthday, dateOfBirth, phone, location } = req.body;
   const auth = req.headers.authorization;
 
   try {
@@ -317,7 +317,7 @@ app.put("/api/profile/update-profile", async (req, res) => { // updating from pr
       return res.status(500).json({ error: "Server error." });
     }
 
-    user = await User.findOneAndUpdate({ email }, { name, dateOfBirth, phone, location }, {
+    user = await User.findOneAndUpdate({ email }, { name, birthday, dateOfBirth, phone, location }, {
       returnDocument: "after"
     });
 
@@ -447,7 +447,7 @@ app.get("/api/profile/my-trips", async (req, res) => { // Pulls all trips the us
 // PUT /api/profile/my-trips
 // ============================================================
 app.put("/api/profile/my-trips", async (req, res) => { // Updating a single trip on my trips section of profile
-  const { email, id, destination, startDate, endDate, amtTravelers, travelers, flight, hotel, activities } = req.body;
+  const { email, id, destination, startDate, endDate, numTravelers, travelers, flight, hotel, activities } = req.body;
   const auth = req.headers.authorization;
 
   try {
@@ -474,7 +474,7 @@ app.put("/api/profile/my-trips", async (req, res) => { // Updating a single trip
     }
 
     // edit trip from database with new info
-    const trip = Trip.findOneAndUpdate({ id }, { destination, startDate, endDate, amtTravelers, travelers, flight, hotel, activities });
+    const trip = Trip.findOneAndUpdate({ id }, { destination, startDate, endDate, numTravelers, travelers, flight, hotel, activities });
 
     return res.status(200).json({
       message: "Updated trip successfully.",

@@ -8,12 +8,10 @@ export default function AddTrip() {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [numTravelers, setNumTravelers] = useState();
-    const [travelers, setTravelers] = useState("")
-    const [travEmails, setTravEmails] = useState([]);
+    const [travelers, setTravelers] = useState("");
     const [flight, setFlight] = useState("");
     const [hotel, setHotel] = useState("");
     const [activities, setActivities] = useState("");
-    const [listActivities, setListActivities] = useState([]);
     const [error, setError] = useState("");
 
     const validateInputs = () => {
@@ -33,17 +31,6 @@ export default function AddTrip() {
             return "Please enter travelers to add to the trip.";
         }
 
-        if (numTravelers > 0) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const emails = travelers.split(", ");
-            for (let i = 0; i < emails.length; i++) {
-                if (!emailRegex.test(emails[i])) {
-                    return "One or more email addresses is invalid."
-                }
-            }
-            setTravEmails(emails);
-        }
-        
         if (!flight) {
             return "Please enter a valid flight.";
         }
@@ -53,9 +40,6 @@ export default function AddTrip() {
         if (!activities) { // does a user need to add activities?
            return "Please enter activities."; 
         }
-
-        const acts = activities.split(", ");
-        setListActivities(acts);
 
         return "";
     };
@@ -86,7 +70,7 @@ export default function AddTrip() {
             const emails = travelers ? travelers.split(", ").filter(Boolean) : [];
             const acts = activities ? activities.split(", ").filter(Boolean) : [];
 
-            const response = await fetch(apiUrl("/api/add-trip"), {
+            const response = await fetch("/api/add-trip", {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",

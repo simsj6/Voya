@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { apiUrl } from "../../utils/api";
+import toast from "react-hot-toast";
 import ProfilePanel from "../../components/ProfilePanel/ProfilePanel";
 import Field from "../../components/Field/Field";
 import { assets } from "../../constants/assets";
@@ -8,7 +9,8 @@ import "./Profile.css";
 
 export default function Profile({ active }) {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [profileError, setProfileError] = useState("");
+  const [securityError, setSecurityError] = useState("");
   const [profile, setProfile] = useState({
     name: "",
     location: "",
@@ -58,7 +60,7 @@ export default function Profile({ active }) {
     // change just the profile information
 
     event.preventDefault();
-    setError("");
+    setProfileError("");
 
     try {
       // use email to link to user as the creator of trip and get token to verify authentication
@@ -72,18 +74,31 @@ export default function Profile({ active }) {
           "Content-Type": "application/json",
           Authorization: "Bearer " + token
         },
-        body: JSON.stringify( email, profile.name, profile.dateOfBirth, profile.phone, profile.location ),
+        body: JSON.stringify({
+          email,
+          name: profile.name,
+          birthday: profile.birthday,
+          dateOfBirth: profile.dateOfBirth,
+          phone: profile.phone,
+          location: profile.location
+        }),
       });
 
       const data = await response.json();
       if (!response.ok) {
-        setError(data.error || "Security change failed.");
+        const message = data.error || "Profile update failed.";
+        setProfileError(message);
+        toast.error(message);
         return;
       }
 
+      localStorage.setItem("User", JSON.stringify(data.user));
+      toast.success(data.message || "Profile update successful.");
     } catch (err) {
       console.error(err);
-      setError("Network error. Is the server running?");
+      const message = "Network error. Is the server running?";
+      setProfileError(message);
+      toast.error(message);
     }
   };
 
@@ -104,11 +119,12 @@ export default function Profile({ active }) {
   const handleSaveSecurity = async (event) => {
     // change 
     event.preventDefault();
-    setError("");
+    setSecurityError("");
 
     const validationError = validateInputs();
     if (validationError) {
-      setError(validationError);
+      setSecurityError(validationError);
+      toast.error(validationError);
       return;
     }
 
@@ -124,17 +140,29 @@ export default function Profile({ active }) {
           "Content-Type": "application/json",
           Authorization: "Bearer " + token
         },
-        body: JSON.stringify( email, security.email, security.confirmPassword ),
+        body: JSON.stringify({
+          email,
+          newEmail: security.email,
+          newPassword: security.confirmPassword
+        }),
       });
 
       const data = await response.json();
       if (!response.ok) {
-        setError(data.error || "Security change failed.");
+        const message = data.error || "Security update failed.";
+        setSecurityError(message);
+        toast.error(message);
         return;
       }
+
+      localStorage.setItem("User", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+      toast.success(data.message || "Security update successful.")
     } catch (err) {
       console.error(err);
-      setError("Network error. Is the server running?");
+      const message = "Network error. Is the server running?";
+      setSecurityError(message);
+      toast.error(message);
     }
   }
 
@@ -153,6 +181,7 @@ export default function Profile({ active }) {
     } finally {
       localStorage.removeItem("User");
       localStorage.removeItem("token");
+      toast("Logged out.");
       navigate("/");
     }
   };
@@ -182,6 +211,7 @@ export default function Profile({ active }) {
         <p>Manage your travel preferences and personal details.</p>
         <ProfilePanel title="Personal Information">
           <div className="two-col">
+            {profileError && <p className="Profile-form-error">{profileError}</p>}
             <Field
               label="Name"
               value={profile.name}
@@ -194,7 +224,7 @@ export default function Profile({ active }) {
               label="Date of Birth"
               value={profile.dateOfBirth}
               onChange={(event) => {
-                setProfile({ dateOfBirth: event.target.value });
+                setProfile({ birthday: event.target.value, dateOfBirth: event.target.value });
               }}
             />
           </div>
@@ -226,6 +256,7 @@ export default function Profile({ active }) {
       <form className="profile-security" onSubmit={handleSaveSecurity}>
         <ProfilePanel title="Security">
           <div className="one-col">
+            {securityError && <p className="Security-form-error">{securityError}</p>}
             <input
               type="email"
               placeholder="YourEmail@email.com"
