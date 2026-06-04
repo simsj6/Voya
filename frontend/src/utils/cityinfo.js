@@ -23,11 +23,11 @@ export default async function getCityInfo(cityName) {
         includeScore: true,
     });
     const result = fuse.search(cityName)[0];
-    console.log(result);
     if (result.score > 0.3) { // adjust this to change what "close enough" means
         return null;
     }
     cityName = result.item;
+    console.log(cityName);
 
     // Build the search path and fetch its data
     const url = new URL("https://en.wikivoyage.org/w/api.php");

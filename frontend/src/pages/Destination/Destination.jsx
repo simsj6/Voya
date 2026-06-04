@@ -64,7 +64,7 @@ export default function Destination() {
     <main className="page activity">
       <section className="activity-header">
         <div>
-          <h1>{destinationId}</h1>
+          <h1>{destination.title}</h1>
           <p>{destination.subtitle}</p>
         </div>
         <div className="booking-mini">
