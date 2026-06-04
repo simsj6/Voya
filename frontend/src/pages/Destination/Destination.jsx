@@ -48,6 +48,18 @@ export default function Destination() {
     navigate('/plan-a-trip', {state: destination.title});
   }
 
+  if (destination == null) {
+    return (
+      <main className="page activity">
+        <section className="activity-header">
+          <div>
+            <h1>City not found...</h1>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
   return (
     <main className="page activity">
       <section className="activity-header">

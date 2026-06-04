@@ -73,11 +73,11 @@ export default function PlanTrip() {
       </section>
 
       <section className={styles.section}>
-      {activities.activities != null && <SectionHeading title="Things to do..." />}
-      {activities.activities != null && activities.activities.map((activity) => 
+      {activities?.activities != null && <SectionHeading title="Things to do..." />}
+      {activities?.activities != null && activities.activities.map((activity) => 
         <ActivityCard body={activity} />)}
-      {activities.see != null && <SectionHeading title="Things to see..." />}
-      {activities.see != null && activities.see.map((see) => 
+      {activities?.see != null && <SectionHeading title="Things to see..." />}
+      {activities?.see != null && activities.see.map((see) => 
         <ActivityCard body={see} />)}
       </section>
     </main>
