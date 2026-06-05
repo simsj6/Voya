@@ -1,4 +1,5 @@
 #check {
     width: 25px;
     justify-self: center;
+    accent-color: var(--teal);
 }
