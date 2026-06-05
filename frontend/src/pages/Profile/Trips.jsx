@@ -55,8 +55,8 @@ export default function Trips({ active }) {
         const ownedTrips = (data.trips || []).map((trip) => ({
           _id: trip._id,
           destination: trip.destination,
-          start: trip.startDate,
-          end: trip.endDate,
+          start: new Date(trip.startDate).toLocaleDateString(),
+          end: new Date(trip.endDate).toLocaleDateString(),
           flight: trip.flight,
           hotel: trip.hotel,
           num_travelers: trip.amtTravelers,
