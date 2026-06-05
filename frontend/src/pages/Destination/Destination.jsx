@@ -60,6 +60,18 @@ export default function Destination() {
     )
   }
 
+  if (Array.isArray(destination)) {
+    return (
+      <main className="page activity">
+        <section className="activity-header">
+          <div>
+            <h1>Multiple cities found...</h1>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
   return (
     <main className="page activity">
       <section className="activity-header">
