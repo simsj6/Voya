@@ -8,7 +8,7 @@ import "./Profile.css";
 export default function Trips({ active }) {
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
-      name: "",
+      pname: "",
       location: "",
       birthday: "",
       dateOfBirth: "",
@@ -30,7 +30,7 @@ export default function Trips({ active }) {
 
     const user = JSON.parse(user_item);
     setProfile({
-      name: user.name || "",
+      pname: user.pname || "",
       location: user.location || "",
       birthday: user.birthday || "",
       dateOfBirth: user.dateOfBirth || "",
@@ -97,7 +97,7 @@ export default function Trips({ active }) {
     <main className="profile-page">
       <aside className="profile-side">
         <img src={assets.profile} alt="Profile" />
-        <h2>{profile.name}</h2>
+        <h2>{profile.pname}</h2>
         <p>{profile.location}</p>
         <p>{profile.birthday}</p>
 

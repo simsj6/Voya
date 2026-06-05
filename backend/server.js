@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 8,
   },
-  name: {
+  pname: {
     type: String,
     default: "",
     trim: true,
@@ -120,7 +120,7 @@ const tripSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 const Trip = mongoose.model("Trip", tripSchema);
 
-function validateInputs({ email, password }) {
+function validateInputs(email, password) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
     return "Please enter a valid email address.";
@@ -134,7 +134,7 @@ function validateInputs({ email, password }) {
 function getPublicUser(user) {
   return {
     email: user.email,
-    name: user.name,
+    pname: user.pname,
     location: user.location,
     birthday: user.birthday,
     dateOfBirth: user.dateOfBirth,
@@ -146,7 +146,7 @@ function getPublicUser(user) {
 // POST /api/register
 // ============================================================
 app.post("/api/register", async (req, res) => {
-  const { email, password, name, location, birthday, dateOfBirth, phone } = req.body;
+  const { email, password, pname, location, birthday, dateOfBirth, phone } = req.body;
 
   const validationError = validateInputs({ email, password });
   if (validationError) {
@@ -164,7 +164,7 @@ app.post("/api/register", async (req, res) => {
     const newUser = await User.create({
       email,
       password: hash,
-      name,
+      pname,
       location,
       birthday,
       dateOfBirth,
@@ -291,7 +291,7 @@ app.post("/api/add-trip", async (req, res) => {
 // PUT /api/profile/update-profile
 // ============================================================
 app.put("/api/profile/update-profile", async (req, res) => { // updating from profile, should this be two different endpoints? (Edit basic info and edit password/email?)
-  const { email, name, birthday, dateOfBirth, phone, location } = req.body;
+  const { email, pname, birthday, dateOfBirth, phone, location } = req.body;
   const auth = req.headers.authorization;
 
   try {
@@ -317,13 +317,13 @@ app.put("/api/profile/update-profile", async (req, res) => { // updating from pr
       return res.status(500).json({ error: "Server error." });
     }
 
-    user = await User.findOneAndUpdate({ email }, { name, birthday, dateOfBirth, phone, location }, {
-      returnDocument: "after"
+    const updatedUser = await User.findOneAndUpdate({ email }, { $set: { pname: pname, birthday: birthday, dateOfBirth: dateOfBirth, phone: phone, location: location } }, {
+      returnDocument: 'after'
     });
 
     return res.status(200).json({
       message: "Profile updated successfully.",
-      user: user,
+      user: getPublicUser(updatedUser),
     });
   } catch (error) {
     console.error("Profile - Update Profile error:", error);
@@ -339,7 +339,7 @@ app.put("/api/profile/update-security", async (req, res) => { // updating from p
   const auth = req.headers.authorization;
 
   // validate email and password?
-  const validationError = validateInputs({ newEmail, newPassword });
+  const validationError = validateInputs(newEmail, newPassword);
   if (validationError) {
     return res.status(400).json({ error: validationError });
   }
@@ -375,17 +375,17 @@ app.put("/api/profile/update-security", async (req, res) => { // updating from p
     // hash password, and create new token
     const hash = await bcrypt.hash(newPassword, 10);
 
-    user = await User.findOneAndUpdate({ email }, { email: newEmail, password: hash }, {
+    const updatedUser = await User.findOneAndUpdate({ email },{ $set: { email: newEmail, password: hash }}, {
       returnDocument: 'after',
     });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: updatedUser._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
     return res.status(200).json({
       message: "Security updated successfully",
-      user: getPublicUser(user),
+      user: getPublicUser(updatedUser),
       token: token,
     });
   } catch (error) {

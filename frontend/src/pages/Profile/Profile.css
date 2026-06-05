@@ -34,3 +34,29 @@
 .activities {
     margin-top: 1em;
 }
+
+
+
+.field-in {
+  display: grid;
+  gap: 8px;
+}
+
+.field-in span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.field-in input,
+.booking-mini select {
+  background: var(--bg);
+  border: 1px solid #bec8ca;
+  border-radius: 8px;
+  color: var(--muted);
+  min-height: 48px;
+  padding: 0 16px;
+  width: 100%;
+}

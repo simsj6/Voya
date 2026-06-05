@@ -12,7 +12,7 @@ export default function Profile({ active }) {
   const [profileError, setProfileError] = useState("");
   const [securityError, setSecurityError] = useState("");
   const [profile, setProfile] = useState({
-    name: "",
+    pname: "",
     location: "",
     birthday: "",
     dateOfBirth: "",
@@ -34,7 +34,7 @@ export default function Profile({ active }) {
 
     const user = JSON.parse(raw);
     setProfile({
-      name: user.name || "",
+      pname: user.pname || "",
       location: user.location || "",
       birthday: user.birthday || "",
       dateOfBirth: user.dateOfBirth || "",
@@ -48,8 +48,15 @@ export default function Profile({ active }) {
     })
   }, [navigate]);
 
-  const handleChange = (key, value) => {
+  const handleProfileChange = (key, value) => {
     setProfile((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleSecurityChange = (key, value) => {
+    setSecurity((prev) => ({
       ...prev,
       [key]: value,
     }));
@@ -64,7 +71,7 @@ export default function Profile({ active }) {
 
     try {
       // use email to link to user as the creator of trip and get token to verify authentication
-      const user = localStorage.getItem("User");
+      const user = JSON.parse(localStorage.getItem("User"));
       const email = user.email;
       const token = localStorage.getItem("token");
 
@@ -75,8 +82,8 @@ export default function Profile({ active }) {
           Authorization: "Bearer " + token
         },
         body: JSON.stringify({
-          email,
-          name: profile.name,
+          email: email,
+          pname: profile.pname,
           birthday: profile.birthday,
           dateOfBirth: profile.dateOfBirth,
           phone: profile.phone,
@@ -130,7 +137,7 @@ export default function Profile({ active }) {
 
     try {
       // use email to link to user as the creator of trip and get token to verify authentication
-      const user = localStorage.getItem("User");
+      const user = JSON.parse(localStorage.getItem("User"));
       const email = user.email;
       const token = localStorage.getItem("token");
 
@@ -141,7 +148,7 @@ export default function Profile({ active }) {
           Authorization: "Bearer " + token
         },
         body: JSON.stringify({
-          email,
+          email: email,
           newEmail: security.email,
           newPassword: security.confirmPassword
         }),
@@ -190,7 +197,7 @@ export default function Profile({ active }) {
     <main className="profile-page">
       <aside className="profile-side">
         <img src={assets.profile} alt="Profile" />
-        <h2>{profile.name}</h2>
+        <h2>{profile.pname}</h2>
         <p>{profile.location}</p>
         <p>{profile.birthday}</p>
 
@@ -206,91 +213,100 @@ export default function Profile({ active }) {
         <button type="button" onClick={handleLogout}>Logout</button>
       </aside>
 
-      <form className="profile-main" onSubmit={handleSaveProfile}>
-        <h1>My Profile</h1>
-        <p>Manage your travel preferences and personal details.</p>
-        <ProfilePanel title="Personal Information">
-          <div className="two-col">
-            {profileError && <p className="Profile-form-error">{profileError}</p>}
-            <Field
-              label="Name"
-              value={profile.name}
-              onChange={(event) => {
-                setProfile({ name: event.target.value });
-              }}
-            />
-            <input
-              type="date"
-              label="Date of Birth"
-              value={profile.dateOfBirth}
-              onChange={(event) => {
-                setProfile({ birthday: event.target.value, dateOfBirth: event.target.value });
-              }}
-            />
-          </div>
+      <main className="profile-main">
+        <form className="profile-main" onSubmit={handleSaveProfile}>
+          <h1>My Profile</h1>
+          <p>Manage your travel preferences and personal details.</p>
+          <ProfilePanel title="Personal Information">
+            <div className="field-in">
+              {profileError && <p className="Profile-form-error">{profileError}</p>}
+              <span>pName</span>
+              <input
+                placeholder={profile.pname || "John Doe"}
+                value={profile.pname}
+                onChange={(event) => {
+                  handleProfileChange('pname', event.target.value);
+                }}
+              />
+              <span>Date of Birth</span>
+              <input
+                type="date"
+                value={profile.dateOfBirth}
+                onChange={(event) => {
+                  handleProfileChange('birthday', event.target.value);
+                  handleProfileChange('dateOfBirth', event.target.value);
+                }}
+              />
+            </div>
 
-          <div className="two-col">
-            <input
-              type="phone"
-              label="Phone"
-              value={profile.phone}
-              onChange={(event) => {
-                setProfile({ phone: event.target.value });
-              }}
-            />
-            <Field
-              label="Location"
-              value={profile.location}
-              onChange={(event) => {
-                setProfile({ location: event.target.value });
-              }}
-            />
-          </div>
+            <div className="field-in">
+              <span>Phone</span>
+              <input
+                type="phone"
+                placeholder={profile.phone || "111-111-1111"}
+                value={profile.phone}
+                onChange={(event) => {
+                  handleProfileChange('phone', event.target.value);
+                }}
+              />
+              <span>Location</span>
+              <input
+                placeholder={profile.location || "City, State/Country"}
+                value={profile.location}
+                onChange={(event) => {
+                  handleProfileChange('location', event.target.value);
+                }}
+              />
+            </div>
 
-          <button className="primary small" type="submit">
-            Save
-          </button>
-        </ProfilePanel>
-      </form>
+            <button className="primary small" type="submit">
+              Save
+            </button>
+          </ProfilePanel>
+        </form>
 
-      <form className="profile-security" onSubmit={handleSaveSecurity}>
-        <ProfilePanel title="Security">
-          <div className="one-col">
-            {securityError && <p className="Security-form-error">{securityError}</p>}
-            <input
-              type="email"
-              placeholder="YourEmail@email.com"
-              value={security.email}
-              onChange={(event) => {
-                setSecurity({ email: event.target.value });
-              }}
-            />
-          </div>
+        <form className="profile-main" onSubmit={handleSaveSecurity}>
+          <ProfilePanel title="Security">
+            <div className="field-in">
+              {securityError && <p className="Security-form-error">{securityError}</p>}
+              <span>Email</span>
+              <input
+                type="email"
+                placeholder={security.email || "JohnDoe@email.com"}
+                value={security.email}
+                onChange={(event) => {
+                  handleSecurityChange('email', event.target.value);
+                }}
+              />
+            </div>
 
-          <div className="two-col">
-            <input
-              type="password"
-              placeholder="Password"
-              value={security.password}
-              onChange={(event) => {
-                setSecurity({ password: event.target.value });
-              }}
-            />
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={security.confirmPassword}
-              onChange={(event) => {
-                setSecurity({ confirmPassword: event.target.value });
-              }}
-            />
-          </div>
+            <div className="field-in">
+              <span>Password</span>
+              <input
+                type="password"
+                placeholder="********"
+                value={security.password}
+                onChange={(event) => {
+                  handleSecurityChange('password', event.target.value);
+                }}
+              />
+              <span>Confirm Password</span>
+              <input
+                type="password"
+                placeholder="********"
+                value={security.confirmPassword}
+                onChange={(event) => {
+                  handleSecurityChange('confirmPassword', event.target.value);
+                }}
+              />
+            </div>
 
-          <button className="primary small" type="submit">
-            Save
-          </button>
-        </ProfilePanel>
-      </form>
+            <button className="primary small" type="submit">
+              Save
+            </button>
+          </ProfilePanel>
+        </form>
+      </main>
     </main>
   );
 }
