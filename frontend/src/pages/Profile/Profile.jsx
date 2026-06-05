@@ -218,8 +218,9 @@ export default function Profile({ active }) {
           <h1>My Profile</h1>
           <p>Manage your travel preferences and personal details.</p>
           <ProfilePanel title="Personal Information">
+            {profileError && <p className="form-error">{profileError}</p>}
             <div className="two-col">
-              {profileError && <p className="form-error">{profileError}</p>}
+
               <label className="field">
                 <span>Name</span>
                 <input
@@ -275,8 +276,8 @@ export default function Profile({ active }) {
 
         <form className="profile-main" onSubmit={handleSaveSecurity}>
           <ProfilePanel title="Security">
+            {securityError && <p className="form-error">{securityError}</p>}
             <div className="one-col">
-              {securityError && <p className="form-error">{securityError}</p>}
               <label className="field">
                 <span>Email</span>
                 <input
