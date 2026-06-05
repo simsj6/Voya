@@ -220,7 +220,7 @@ export default function Profile({ active }) {
           <ProfilePanel title="Personal Information">
             <div className="field-in">
               {profileError && <p className="Profile-form-error">{profileError}</p>}
-              <span>pName</span>
+              <span>Name</span>
               <input
                 placeholder={profile.pname || "John Doe"}
                 value={profile.pname}
