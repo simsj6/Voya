@@ -41,8 +41,14 @@ export default async function getCityInfo(cityName) {
     if (multipleOptions(page)) {
         // select closest and continue, or return list of options
         const regex = /(?<=\*)\s*\[\[([\s\S]+?)(?=\]\])/g;
-        const cityList = [...page.matchAll(regex)].map(match => match[1]);
-        return getCityInfo(cityList);
+        let cityList = [...page.matchAll(regex)].map(match => match[1]);
+        cityList = await removeDeadPages(cityList);
+        if (cityList.length == 0) {
+            return null;
+        } else if (cityList.length > 1) {
+            return cityList;
+        }
+        return getCityInfo(cityList[0]);
     } else if (!isCity(page)) {
         return null;
     }
@@ -108,7 +114,12 @@ function getDescription(page) {
 function getActivities(page) {
     // Caputure everything starting at ==Do== and ending at the next "=" starting tag
     const regex = /==\s*Do\s*==([\s\S]*?)(?=={2,}[^=]*?)/;
-    const doSection = page.match(regex)[0];
+    let doSection = page.match(regex);
+    
+    if (doSection == null) {
+        return null;
+    }
+    doSection = doSection[0];
 
     // Caputure every item starting with a *, which does not contain the {{do}} tag and return as an array
     const activitiesRegex = /(?<=\*)(?!\s*\{\{)[^\n]+/g;
@@ -130,7 +141,12 @@ function getActivities(page) {
 
 function getSee(page) {
     const regex = /(?<==\s*See\s*==)[\s\S]*?(?===)/;
-    const seeSection = page.match(regex)[0];
+    let seeSection = page.match(regex);
+
+    if (seeSection == null) {
+        return null;
+    }
+    seeSection = seeSection[0];
 
     const listRegex = /(?<=\*)(?!\s*\{\{)[^\n]+/g;
     const seeList = [...seeSection.matchAll(listRegex)];
@@ -196,4 +212,18 @@ function isCity(page) {
     // This checks for a flag {{isPartOf|[LOCATION]}}, which appears in articles about cities and states
     const regex = /(?<=\{\{isPartOf\|)[\s\S]+?(?=\}\})/i;
     return page.match(regex);
+}
+
+async function removeDeadPages(cityList) {
+    let deadCityList = cityList.map(city => getCityName(city));
+    deadCityList = await Promise.all(deadCityList);
+    const trueCityList = [];
+
+    for (let i = 0; i < cityList.length; i++) {
+        if (deadCityList[i] == cityList[i]) {
+            trueCityList.push(cityList[i]);
+        }
+    }
+
+    return trueCityList;
 }
