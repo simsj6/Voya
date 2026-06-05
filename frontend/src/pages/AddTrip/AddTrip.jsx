@@ -1,6 +1,7 @@
 import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiUrl } from '../../utils/api';
+import './AddTrip.css'
 
 export default function AddTrip() {
     const navigate = useNavigate();
@@ -8,6 +9,7 @@ export default function AddTrip() {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [numTravelers, setNumTravelers] = useState();
+    const [isShared, setIsShared] = useState(false);
     const [travelers, setTravelers] = useState("");
     const [flight, setFlight] = useState("");
     const [hotel, setHotel] = useState("");
@@ -27,18 +29,8 @@ export default function AddTrip() {
         if (!numTravelers || numTravelers < 1) {
             return "Please enter a valid number of travelers";
         }
-        if (!travelers) {
-            return "Please enter travelers to add to the trip.";
-        }
-
-        if (!flight) {
-            return "Please enter a valid flight.";
-        }
-        if (!hotel) {
-            return "Please enter a valid hotel.";
-        }
-        if (!activities) { // does a user need to add activities?
-           return "Please enter activities."; 
+        if (isShared && !travelers) {
+            return "Please enter travelers to share the trip.";
         }
 
         return "";
@@ -95,7 +87,11 @@ export default function AddTrip() {
                 return;
             }
 
-            navigate("/profile"); // navigate to my trips?
+            if (isShared) {
+                navigate("/shared-trips");
+            } else {
+                navigate("/trips");
+            }
         } catch (err) {
             console.error(err);
             setError("Network error. Is the server running?");
@@ -152,18 +148,33 @@ export default function AddTrip() {
                         }}
                     />
                 </label>
+                <div className="flex gap-5">
+                    <label className="field">
+                        <span>Share Trip?</span>
+                        <input
+                            type="checkbox"
+                            id="check"
+                            value={isShared}
+                            onClick={(event) => {
+                                setIsShared(!isShared)
+                            }}
+                        />
+                    </label>
+                    {isShared && 
+                        <label className="field flex-1">
+                            <span>Travelers*</span>
+                            <input
+                                placeholder="travelerOne@gmail.com, travelerTwo@gmail.com"
+                                value={travelers}
+                                onChange={(event) => {
+                                    setTravelers(event.target.value)
+                                }}
+                            />
+                        </label>
+                    }
+                </div>
                 <label className="field">
-                    <span>Travelers*</span>
-                    <input
-                        placeholder="travelerOne@gmail.com, travelerTwo@gmail.com"
-                        value={travelers}
-                        onChange={(event) => {
-                            setTravelers(event.target.value)
-                        }}
-                    />
-                </label>
-                <label className="field">
-                    <span>Flight*</span>
+                    <span>Flight</span>
                     <input
                         placeholder="Alaska Airlines 227"
                         value={flight}
@@ -173,7 +184,7 @@ export default function AddTrip() {
                     />
                 </label>
                 <label className="field">
-                    <span>Hotel*</span>
+                    <span>Hotel</span>
                     <input
                         placeholder="Holiday Inn"
                         value={hotel}
@@ -183,7 +194,7 @@ export default function AddTrip() {
                     />
                 </label>
                 <label className="field">
-                    <span>Activities*</span>
+                    <span>Activities</span>
                     <input
                         placeholder="Sledding, hiking"
                         value={activities}

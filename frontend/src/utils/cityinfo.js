@@ -173,7 +173,7 @@ async function getCityName(cityName) {
     const res = await fetch(url);
     const data = await res.json();
 
-    if (data.query.search.length > 1) {
+    if (data.query.search.length >= 1) {
         // Fetch the page associated with search[0].title
         return data.query.search[0].title;
     } else if (data.query.searchinfo?.suggestion != null) {
