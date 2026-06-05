@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { apiUrl } from "../../utils/api";
+import toast from "react-hot-toast";
 import Field from "../Field/Field";
 import ProfilePanel from "../../components/ProfilePanel/ProfilePanel";
 import "../../pages/Profile/Profile.css";
@@ -25,6 +26,7 @@ export default function Trip ({ trip }) {
     const token = localStorage.getItem("token");
 
     if (!user || !token) {
+      toast.error("Sign in before updating a trip.");
       return;
     }
 
@@ -51,10 +53,15 @@ export default function Trip ({ trip }) {
 
       const data = await response.json();
       if (!response.ok) {
-        console.error(data.error || "Trip update failed.");
+        const message = data.error || "Trip update failed.";
+        toast.error(message);
+        return;
       }
+      toast.success(data.message || "Trip update successful.");
     } catch (err) {
       console.error(err);
+      const message = "Network error. Is the server running?";
+      toast.error(message);
     }
   };
 

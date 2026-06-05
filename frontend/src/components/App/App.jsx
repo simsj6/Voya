@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Navigation from '../Navigation/Navigation';
 import Footer from '../Footer/Footer';
 import HomePage from '../../pages/HomePage/HomePage';
@@ -24,6 +25,7 @@ export default function App() {
     
     return (
         <div className="App">
+            <Toaster />
             <Navigation active={location.pathname}/>
 
             <div className="content">
