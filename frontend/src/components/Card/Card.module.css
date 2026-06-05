@@ -1,5 +1,6 @@
 .card {
   min-width: 0;
+  transition: transform 0.5s;
 }
 
 .card img {
@@ -30,4 +31,6 @@
 
 .card:hover {
   cursor: pointer;
+  transform: translate(0px, -10px);
+  transition: transform 0.5s;
 }
