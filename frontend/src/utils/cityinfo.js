@@ -19,15 +19,14 @@ const IMAGE_NAME_PREFIX = "en.wikivoyage.org/wiki/File:";
 
 export default async function getCityInfo(cityName) {
     // Compares what was input (cityName) to the list of randomCities. If one is close enough, continue. If not, return null
-    const fuse = new Fuse(randomCities, {
-        includeScore: true,
-    });
-    const result = fuse.search(cityName)[0];
-    if (result.score > 0.3) { // adjust this to change what "close enough" means
-        return null;
-    }
-    cityName = result.item;
-    console.log(cityName);
+    // const fuse = new Fuse(randomCities, {
+    //     includeScore: true,
+    // });
+    // const result = fuse.search(cityName)[0];
+    // if (result.score > 0.3) { // adjust this to change what "close enough" means
+    //     return null;
+    // }
+    // cityName = result.item;
 
     // Build the search path and fetch its data
     const url = new URL("https://en.wikivoyage.org/w/api.php");
@@ -42,8 +41,30 @@ export default async function getCityInfo(cityName) {
     const res = await fetch(url);
     const data = await res.json();
 
+    // If data.query.pages has a -1 first, there wasn't a city found
+    if (Object.keys(data.query.pages)[0] == "-1") {
+        return null;
+    }
+
     // Get the entire page from the response
     const page = data.query.pages[Object.keys(data.query.pages)[0]].revisions[0]["*"];
+
+    // If there are multiple cities with this name, return a list of their names
+    if (multipleOptions(page)) {
+        const regex = /(?<=\* \[\[)([\s\S]+?)(?=\]\])/g;
+        console.log(page.match(regex));
+        return 
+    }
+
+    // If the article fetched isn't a city, check if it is multiple cities. Return that list if it is, or null if not
+    if (!isCity(page)) {
+        if (multipleOptions(page)) {
+            const regex = /(?<=\* \[\[)([\s\S]+?)(?=\]\])/g;
+            console.log(page.match(regex));
+            return page.match(regex);
+        }
+        return null;
+    }
 
     // Return all the city page info needed in an object
     return ({
@@ -157,4 +178,16 @@ function getSafety(page) {
 
     safeSection = safeSection[0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ").replaceAll(/(\([\s\S]+?\))/g, "");
     return safeSection;
+}
+
+function multipleOptions(page) {
+    // the {{disamb}} only appears when a page returned is trying to clarify which city to go to
+    const regex = /({{disamb}})/;
+    return page.match(regex);
+}
+
+function isCity(page) {
+    // This checks for a flag {{isPartOf|[LOCATION]}}, which appears in articles about cities and states
+    const regex = /(?<=\{\{isPartOf\|)[\s\S]+?(?=\}\})/i;
+    return page.match(regex);
 }
