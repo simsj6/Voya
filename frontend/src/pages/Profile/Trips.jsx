@@ -93,6 +93,10 @@ export default function Trips({ active }) {
     }
   };
 
+  const handleDeleteTrip = (id) => {
+    setTrips((prev) => prev.filter((trip) => trip._id !== id));
+  };
+
   return (
     <main className="profile-page">
       <aside className="profile-side">
@@ -116,7 +120,7 @@ export default function Trips({ active }) {
         <h1>Trips</h1>
         <p>Manage your trips.</p>
         {trips.map((trip) => (
-          <Trip key={trip._id} trip={trip} />
+          <Trip key={trip._id} trip={trip} onDelete={handleDeleteTrip} />
         ))}
       </section>
     </main>

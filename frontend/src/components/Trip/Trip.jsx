@@ -5,7 +5,7 @@ import Field from "../Field/Field";
 import ProfilePanel from "../../components/ProfilePanel/ProfilePanel";
 import "../../pages/Profile/Profile.css";
 
-export default function Trip ({ trip }) {
+export default function Trip ({ trip, onDelete }) {
   const [form, setForm] = useState(trip);
 
   useEffect(() => {
@@ -61,6 +61,43 @@ export default function Trip ({ trip }) {
     } catch (err) {
       console.error(err);
       const message = "Network error. Is the server running?";
+      toast.error(message);
+    }
+  };
+
+  const handleDelete = async () => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const token = localStorage.getItem("token");
+
+    if (!user || !token) {
+      toast.error("Sign in before deleting a trip.");
+      return;
+    }
+
+    try {
+      const response = await fetch(apiUrl("/api/profile/my-trips"), {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          email: user.email,
+          id: form._id,
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        const message = data.error || "Trip delete failed.";
+        toast.error(message);
+        return;
+      }
+      toast.success(data.message || "Trip deleted successfully.");
+      onDelete(form._id);
+    } catch (err) { 
+      console.error(err); 
+      const message = "Network error. Is the server runing?";
       toast.error(message);
     }
   };
@@ -129,9 +166,14 @@ export default function Trip ({ trip }) {
         />
       </div>
 
-      <button className="primary small" type="submit">
-        Save
-      </button>
+      <div style={{ display: "flex", gap: "8px" }}>
+        <button className="primary small" type="submit">
+          Save
+        </button>
+        <button className="primary small" type="button" onClick={handleDelete}>
+          Delete
+        </button>
+      </div>
       </form>
     </ProfilePanel>
     )

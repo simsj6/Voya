@@ -497,6 +497,61 @@ app.put("/api/profile/my-trips", async (req, res) => { // Updating a single trip
 });
 
 // ============================================================
+// DELETE /api/profile/my-trips
+// ============================================================
+app.delete("/api/profile/my-trips", async (req, res) => {
+  const { email, id } = req.body;
+  const auth = req.headers.authorization;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ error: "No such user exists." });
+    }
+
+    if (!auth || !auth.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Missing or invalid token." });
+    }
+
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+      const decode = jwt.verify(token, process.env.JWT_SECRET);
+
+      if (user._id.toString() !== decode.id) {
+        return res.status(401).json({ error: "Invalid token." })
+      }
+    } catch (error) {
+      console.error("Profile - My Trips: Token verification error:", error);
+      return res.status(500).json({ error: "Server error." });
+    }
+
+    const trip = await Trip.findOne({
+      _id: id,
+      $or: [
+        { email: user.email },
+        { travelers: user.email },
+      ],
+    });
+
+    if (!trip) {
+      return res.status(404).json({ error: "No trip found." });
+    }
+
+    if (trip.email === user.email) {
+      await Trip.findByIdAndDelete(id);
+      return res.status(200).json({ message: "Trip deleted successfully." });
+    }
+
+    await Trip.findByIdAndUpdate(id, { $pull: { travelers: user.email } });
+    return res.status(200).json({ message: "Shared trip removed successfully." });
+  } catch (error) {
+    console.error("Profile - Delete Trip error:", error);
+    return res.status(500).json({ error: "Server error." });
+  }
+});
+
+// ============================================================
 // GET /api/profile/shared-itinerary
 // ============================================================
 app.get("/api/profile/shared-itinerary", async (req, res) => { // Pulls all trips that have user as a traveller

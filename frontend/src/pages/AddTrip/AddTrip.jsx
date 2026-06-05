@@ -73,7 +73,7 @@ export default function AddTrip() {
                     destination,
                     startDate,
                     endDate,
-                    amtTravelers: numTravelers,
+                    numTravelers,
                     travelers: emails,
                     flight,
                     hotel,
