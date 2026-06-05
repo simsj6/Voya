@@ -59,7 +59,7 @@ export default function SharedTrips({ active }) {
           end: trip.endDate,
           flight: trip.flight,
           hotel: trip.hotel,
-          num_travelers: trip.amtTravelers,
+          num_travelers: trip.numTravelers,
           is_shared: Array.isArray(trip.travelers) && trip.travelers.length > 0,
           emails: Array.isArray(trip.travelers) ? trip.travelers.join(", ") : "",
           activities: Array.isArray(trip.activities) ? trip.activities.join(", ") : "",

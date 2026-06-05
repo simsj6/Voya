@@ -218,45 +218,53 @@ export default function Profile({ active }) {
           <h1>My Profile</h1>
           <p>Manage your travel preferences and personal details.</p>
           <ProfilePanel title="Personal Information">
-            <div className="field-in">
-              {profileError && <p className="Profile-form-error">{profileError}</p>}
-              <span>pName</span>
-              <input
-                placeholder={profile.pname || "John Doe"}
-                value={profile.pname}
-                onChange={(event) => {
-                  handleProfileChange('pname', event.target.value);
-                }}
-              />
-              <span>Date of Birth</span>
-              <input
-                type="date"
-                value={profile.dateOfBirth}
-                onChange={(event) => {
-                  handleProfileChange('birthday', event.target.value);
-                  handleProfileChange('dateOfBirth', event.target.value);
-                }}
-              />
+            <div className="two-col">
+              {profileError && <p className="form-error">{profileError}</p>}
+              <label className="field">
+                <span>Name</span>
+                <input
+                  placeholder={profile.pname || "John Doe"}
+                  value={profile.pname}
+                  onChange={(event) => {
+                    handleProfileChange('pname', event.target.value);
+                  }}
+                />
+              </label>
+              <label className="field">
+                <span>Date of Birth</span>
+                <input
+                  type="date"
+                  value={profile.dateOfBirth}
+                  onChange={(event) => {
+                    handleProfileChange('birthday', event.target.value);
+                    handleProfileChange('dateOfBirth', event.target.value);
+                  }}
+                />
+              </label>
             </div>
 
-            <div className="field-in">
-              <span>Phone</span>
-              <input
-                type="phone"
-                placeholder={profile.phone || "111-111-1111"}
-                value={profile.phone}
-                onChange={(event) => {
-                  handleProfileChange('phone', event.target.value);
-                }}
-              />
-              <span>Location</span>
-              <input
-                placeholder={profile.location || "City, State/Country"}
-                value={profile.location}
-                onChange={(event) => {
-                  handleProfileChange('location', event.target.value);
-                }}
-              />
+            <div className="two-col">
+              <label className="field">
+                <span>Phone</span>
+                <input
+                  type="phone"
+                  placeholder={profile.phone || "111-111-1111"}
+                  value={profile.phone}
+                  onChange={(event) => {
+                    handleProfileChange('phone', event.target.value);
+                  }}
+                />
+              </label>
+              <label className="field">
+                <span>Location</span>
+                <input
+                  placeholder={profile.location || "City, State/Country"}
+                  value={profile.location}
+                  onChange={(event) => {
+                    handleProfileChange('location', event.target.value);
+                  }}
+                />
+              </label>
             </div>
 
             <button className="primary small" type="submit">
@@ -267,38 +275,44 @@ export default function Profile({ active }) {
 
         <form className="profile-main" onSubmit={handleSaveSecurity}>
           <ProfilePanel title="Security">
-            <div className="field-in">
-              {securityError && <p className="Security-form-error">{securityError}</p>}
-              <span>Email</span>
-              <input
-                type="email"
-                placeholder={security.email || "JohnDoe@email.com"}
-                value={security.email}
-                onChange={(event) => {
-                  handleSecurityChange('email', event.target.value);
-                }}
-              />
+            <div className="one-col">
+              {securityError && <p className="form-error">{securityError}</p>}
+              <label className="field">
+                <span>Email</span>
+                <input
+                  type="email"
+                  placeholder={security.email || "JohnDoe@email.com"}
+                  value={security.email}
+                  onChange={(event) => {
+                    handleSecurityChange('email', event.target.value);
+                  }}
+                />
+              </label>
             </div>
 
-            <div className="field-in">
-              <span>Password</span>
-              <input
-                type="password"
-                placeholder="********"
-                value={security.password}
-                onChange={(event) => {
-                  handleSecurityChange('password', event.target.value);
-                }}
-              />
-              <span>Confirm Password</span>
-              <input
-                type="password"
-                placeholder="********"
-                value={security.confirmPassword}
-                onChange={(event) => {
-                  handleSecurityChange('confirmPassword', event.target.value);
-                }}
-              />
+            <div className="two-col">
+              <label className="field">
+                <span>Password</span>
+                <input
+                  type="password"
+                  placeholder="********"
+                  value={security.password}
+                  onChange={(event) => {
+                    handleSecurityChange('password', event.target.value);
+                  }}
+                />
+              </label>
+              <label className="field">
+                <span>Confirm Password</span>
+                <input
+                  type="password"
+                  placeholder="********"
+                  value={security.confirmPassword}
+                  onChange={(event) => {
+                    handleSecurityChange('confirmPassword', event.target.value);
+                  }}
+                />
+              </label>
             </div>
 
             <button className="primary small" type="submit">

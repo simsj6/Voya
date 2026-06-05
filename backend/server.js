@@ -172,7 +172,7 @@ app.post("/api/register", async (req, res) => {
     });
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
 
     return res.status(201).json({
@@ -208,7 +208,7 @@ app.post("/api/login", async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
 
     return res.status(200).json({
@@ -380,7 +380,7 @@ app.put("/api/profile/update-security", async (req, res) => { // updating from p
     });
 
     const token = jwt.sign({ id: updatedUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
 
     return res.status(200).json({
@@ -471,7 +471,7 @@ app.put("/api/profile/my-trips", async (req, res) => { // Updating a single trip
           { travelers: user.email },
         ],
       },
-      { destination, startDate, endDate, amtTravelers: numTravelers, travelers, flight, hotel, activities },
+      { destination, startDate, endDate, numTravelers, travelers, flight, hotel, activities },
       { returnDocument: "after" }
     );
 

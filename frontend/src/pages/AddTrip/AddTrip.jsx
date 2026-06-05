@@ -24,7 +24,7 @@ export default function AddTrip() {
         if (!endDate) {
             return "Please enter a valid end date";
         }
-        if (!numTravelers || numTravelers >= 1) {
+        if (!numTravelers || numTravelers < 1) {
             return "Please enter a valid number of travelers";
         }
         if (!travelers) {

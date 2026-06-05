@@ -35,8 +35,7 @@
     margin-top: 1em;
 }
 
-
-
+/* Modifies just the input boxes themselves */
 .field-in {
   display: grid;
   gap: 8px;
@@ -59,4 +58,20 @@
   min-height: 48px;
   padding: 0 16px;
   width: 100%;
+}
+
+/* used specifically for email in security */
+
+.one-col {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+/* used to designate text as an error message */
+
+.form-error {
+    color: #FF0000;
+    font-size: 14px;
+    font-weight: 700;
 }
