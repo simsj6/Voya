@@ -148,7 +148,7 @@ function getPublicUser(user) {
 app.post("/api/register", async (req, res) => {
   const { email, password, pname, location, birthday, dateOfBirth, phone } = req.body;
 
-  const validationError = validateInputs({ email, password });
+  const validationError = validateInputs(email, password);
   if (validationError) {
     return res.status(400).json({ error: validationError });
   }
@@ -372,10 +372,17 @@ app.put("/api/profile/update-security", async (req, res) => { // updating from p
       return res.status(500).json({ error: "Server error." });
     }
 
+    // check if password is the same
+    const passwordMatches = user && (await bcrypt.compare(newPassword, user.password));
+
+    if (passwordMatches) {
+      return res.status(401).json({ error: "Your new password cannot be the same as old password." });
+    }
+
     // hash password, and create new token
     const hash = await bcrypt.hash(newPassword, 10);
 
-    const updatedUser = await User.findOneAndUpdate({ email },{ $set: { email: newEmail, password: hash }}, {
+    const updatedUser = await User.findOneAndUpdate({ email }, { $set: { email: newEmail, password: hash } }, {
       returnDocument: 'after',
     });
 

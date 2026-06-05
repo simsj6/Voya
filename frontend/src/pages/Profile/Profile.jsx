@@ -292,7 +292,7 @@ export default function Profile({ active }) {
 
             <div className="two-col">
               <label className="field">
-                <span>Password</span>
+                <span>New Password</span>
                 <input
                   type="password"
                   placeholder="********"
@@ -303,7 +303,7 @@ export default function Profile({ active }) {
                 />
               </label>
               <label className="field">
-                <span>Confirm Password</span>
+                <span>Confirm New Password</span>
                 <input
                   type="password"
                   placeholder="********"
