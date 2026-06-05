@@ -18,6 +18,7 @@ const randomCities = [
 const IMAGE_NAME_PREFIX = "en.wikivoyage.org/wiki/File:";
 
 export default async function getCityInfo(cityName) {
+    console.log(cityName);
     // Get the true city name. This corrects for slight misspelling and weird wikivoyage title names
     cityName = await getCityName(cityName);
 
@@ -35,6 +36,7 @@ export default async function getCityInfo(cityName) {
     const data = await res.json();
 
     // Get the entire page from the response
+    console.log(cityName);
     const page = data.query.pages[Object.keys(data.query.pages)[0]].revisions[0]["*"];
 
     // If there are multiple cities with this name, return a list of their names
@@ -46,6 +48,9 @@ export default async function getCityInfo(cityName) {
         if (cityList.length == 0) {
             return null;
         } else if (cityList.length > 1) {
+            console.log(cityList);
+            cityList =  cityList.map(city => getCityInfo(city));
+            cityList = await Promise.all(cityList);
             return cityList;
         }
         return getCityInfo(cityList[0]);
@@ -94,7 +99,12 @@ async function getImage(page) {
     });
     const res = await fetch(url);
     const data = await res.json();
-    return data?.query?.pages[Object.keys(data.query.pages)[0]]?.imageinfo[0]?.url;
+    
+    const imageinfo = data?.query?.pages[Object.keys(data.query.pages)[0]]?.imageinfo;
+    if (imageinfo == undefined) {
+        return null;
+    }
+    return imageinfo[0].url;
 }
 
 function getDescription(page) {

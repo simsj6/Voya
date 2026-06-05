@@ -64,8 +64,11 @@ export default function Destination() {
     return (
       <main className="page activity">
         <section className="activity-header">
-          <div>
-            <h1>Multiple cities found...</h1>
+          <SectionHeading title="Multiple Cities found" />
+          <div className="destination-grid four">
+            {console.log(destination)}
+            {destination.map((city, index) => 
+            <TourCard key={index} title={city.title} image={city.image} />)}
           </div>
         </section>
       </main>
