@@ -124,7 +124,6 @@
 .wildlife p {
   color: var(--muted);
   line-height: 1.7;
-  max-width: 540px;
 }
 
 .roundImage {

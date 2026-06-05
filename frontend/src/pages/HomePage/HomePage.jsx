@@ -11,10 +11,7 @@ export default function HomePage() {
     const [popularDestinations, setPopularDestinations] = useState([]);
     const [featuredDestinations, setFeaturedDestinations] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    // array of booleans to show popular destinations
-    // const [isHovered, setIsHovered] = useState(new Array(4).fill(false));
-    // setIsHovered()
+    const [hoverIndex, setHoverIndex] = useState(0);
 
     useEffect(() => {
         async function loadDestination() {
@@ -53,14 +50,14 @@ export default function HomePage() {
                     <section className={styles.section} style={{marginBottom: "5em"}}>
                 <SectionHeading title="Explore Popular Cities" text="Curated experiences from around the world" />
                 <div className={`${styles.cityGrid} ${styles.staggered}`}>
-                    {popularDestinations.map((city, index) => <Card key={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} country={city.country} />)}
+                    {popularDestinations.map((city, index) => <Card key={index} title={city.title} image={city.thumbnail} tall={index % 2 === 1} country={city.country} onMouseEnter={() => setHoverIndex(index)} />)}
                 </div>
             </section>
 
-            <section className={`${styles.section} ${styles.split} ${styles.wildlife}`}>
+            <section className={`${styles.section} ${styles.wildlife}`}>
                 <div>
-                    <h2>About {popularDestinations[0]?.title}</h2>
-                    <p>{popularDestinations[0]?.extract}</p>
+                    <h2>About {popularDestinations[hoverIndex]?.title}</h2>
+                    <p>{popularDestinations[hoverIndex]?.extract}</p>
                 </div>
             </section>
 
