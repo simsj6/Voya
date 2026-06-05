@@ -18,15 +18,8 @@ const randomCities = [
 const IMAGE_NAME_PREFIX = "en.wikivoyage.org/wiki/File:";
 
 export default async function getCityInfo(cityName) {
-    // Compares what was input (cityName) to the list of randomCities. If one is close enough, continue. If not, return null
-    // const fuse = new Fuse(randomCities, {
-    //     includeScore: true,
-    // });
-    // const result = fuse.search(cityName)[0];
-    // if (result.score > 0.3) { // adjust this to change what "close enough" means
-    //     return null;
-    // }
-    // cityName = result.item;
+    // Get the true city name. This corrects for slight misspelling and weird wikivoyage title names
+    cityName = await getCityName(cityName);
 
     // Build the search path and fetch its data
     const url = new URL("https://en.wikivoyage.org/w/api.php");
@@ -41,28 +34,16 @@ export default async function getCityInfo(cityName) {
     const res = await fetch(url);
     const data = await res.json();
 
-    // If data.query.pages has a -1 first, there wasn't a city found
-    if (Object.keys(data.query.pages)[0] == "-1") {
-        return null;
-    }
-
     // Get the entire page from the response
     const page = data.query.pages[Object.keys(data.query.pages)[0]].revisions[0]["*"];
 
     // If there are multiple cities with this name, return a list of their names
     if (multipleOptions(page)) {
-        const regex = /(?<=\* \[\[)([\s\S]+?)(?=\]\])/g;
-        console.log(page.match(regex));
-        return 
-    }
-
-    // If the article fetched isn't a city, check if it is multiple cities. Return that list if it is, or null if not
-    if (!isCity(page)) {
-        if (multipleOptions(page)) {
-            const regex = /(?<=\* \[\[)([\s\S]+?)(?=\]\])/g;
-            console.log(page.match(regex));
-            return page.match(regex);
-        }
+        // select closest and continue, or return list of options
+        const regex = /(?<=\*)\s*\[\[([\s\S]+?)(?=\]\])/g;
+        const cityList = [...page.matchAll(regex)].map(match => match[1]);
+        return getCityInfo(cityList);
+    } else if (!isCity(page)) {
         return null;
     }
 
@@ -178,6 +159,31 @@ function getSafety(page) {
 
     safeSection = safeSection[0].replaceAll("'''", "").replaceAll("[[", "").replaceAll("]]", "").replaceAll("&nbsp;", " ").replaceAll(/(\([\s\S]+?\))/g, "");
     return safeSection;
+}
+
+async function getCityName(cityName) {
+    const url = new URL("https://en.wikivoyage.org/w/api.php");
+    url.search = new URLSearchParams({
+        action: "query",
+        list: "search",
+        srsearch: `intitle:${cityName}`,
+        format: "json",
+        origin: "*",
+    });
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.query.search.length > 1) {
+        // Fetch the page associated with search[0].title
+        return data.query.search[0].title;
+    } else if (data.query.searchinfo?.suggestion != null) {
+        // Fetch the page associated with searchinfo.suggestion
+        const regex = /(?<=:)([\s\S]+)/;
+        return data.query.searchinfo.suggestion.match(regex)[1];
+    } else {
+        // There is no close match
+        return null;
+    }
 }
 
 function multipleOptions(page) {
