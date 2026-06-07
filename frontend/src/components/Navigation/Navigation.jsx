@@ -8,7 +8,6 @@ export default function Navigation({ active }) {
       <Link className="brand" to="/">VOYA</Link>
       <nav className="nav-links" aria-label="Main navigation">
         <Link className={active === "/" ? "active" : ""} to="/">Home</Link>
-        <Link className={active === "/popular-destinations" ? "active" : ""} to="/popular-destinations">Popular Destinations</Link>
         <Link className={active === "/plan-a-trip" ? "active" : ""} to="/plan-a-trip">Plan A Trip</Link>
         <Link className={active === "/add-trip" ? "active" : ""} to="/add-trip">Add Trip</Link>
         {localStorage.getItem("User") ?
