@@ -6,9 +6,9 @@ import './AddTrip.css'
 export default function AddTrip() {
     const navigate = useNavigate();
     const [destination, setDestination] = useState("");
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-    const [numTravelers, setNumTravelers] = useState();
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [numTravelers, setNumTravelers] = useState("");
     const [isShared, setIsShared] = useState(false);
     const [travelers, setTravelers] = useState("");
     const [flight, setFlight] = useState("");
