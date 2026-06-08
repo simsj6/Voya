@@ -49,7 +49,7 @@ export default function SharedTrips({ active }) {
         });
         const data = await response.json();
         if (!response.ok) {
-          console.error(data.error || "Couldnt load shared trips.");
+          console.error(data.error || "Couldn't load shared trips.");
           return;
         }
         const sharedTrips = (data.itns || []).map((trip) => ({

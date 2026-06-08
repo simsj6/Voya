@@ -59,7 +59,7 @@ export default function AddTrip() {
                 setError("Please sign in before adding a trip.");
                 return;
             }
-            const emails = travelers ? travelers.split(", ").filter(Boolean) : [];
+            const emails = travelers ? [user.email, ...travelers.split(", ")].filter(Boolean) : [];
             const acts = activities ? activities.split(", ").filter(Boolean) : [];
 
             const response = await fetch(apiUrl("/api/add-trip"), {
@@ -151,7 +151,7 @@ export default function AddTrip() {
                             type="checkbox"
                             id="check"
                             checked={isShared}
-                            onClick={(event) => {
+                            onChange={(event) => {
                                 setIsShared(!isShared)
                             }}
                         />

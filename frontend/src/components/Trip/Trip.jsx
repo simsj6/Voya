@@ -8,10 +8,14 @@ import "../../pages/Profile/Profile.css";
 export default function Trip ({ trip, onDelete }) {
   const [form, setForm] = useState(trip);
   const [isShared, setIsShared] = useState(false);
+  const [emails, setEmails] = useState("");
 
   useEffect(() => {
     setForm(trip);
     setIsShared(form.is_shared);
+    const user = JSON.parse(localStorage.getItem("User"));
+    const splitEmails = typeof trip.emails === "string" ? trip.emails.split(", ") : "";
+    setEmails(splitEmails.filter(Boolean).filter((email) => email !== user.email).join(", "));
   }, [trip]);
 
   const handleChange = (key, value) => {
@@ -32,7 +36,7 @@ export default function Trip ({ trip, onDelete }) {
       return;
     }
 
-    if (form.is_shared && !form.emails) {
+    if (form.is_shared && !emails) {
       const message = "Please enter email to share trip.";
       toast.error(message);
       return;
@@ -52,7 +56,7 @@ export default function Trip ({ trip, onDelete }) {
           startDate: form.start,
           endDate: form.end,
           numTravelers: form.num_travelers,
-          travelers: form.emails ? form.emails.split(", ").filter(Boolean) : [],
+          travelers: form.emails ? [user.email, ...emails.split(", ")].filter(Boolean) : [],
           flight: form.flight,
           hotel: form.hotel,
           activities: form.activities ? form.activities.split(", ").filter(Boolean) : [],
@@ -163,8 +167,11 @@ export default function Trip ({ trip, onDelete }) {
           form.is_shared &&
           <Field
             label="Other Travelers"
-            value={form.emails || ""}
-            onChange={(value) => handleChange("emails", value)}
+            value={emails}
+            onChange={(value) => {
+              handleChange("emails", value);
+              setEmails(value);
+            }}
             style={{
               width: "100%",
               backgroundColor: "black"
