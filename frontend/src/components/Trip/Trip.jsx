@@ -7,9 +7,11 @@ import "../../pages/Profile/Profile.css";
 
 export default function Trip ({ trip, onDelete }) {
   const [form, setForm] = useState(trip);
+  const [isShared, setIsShared] = useState(false);
 
   useEffect(() => {
     setForm(trip);
+    setIsShared(form.is_shared);
   }, [trip]);
 
   const handleChange = (key, value) => {
@@ -27,6 +29,12 @@ export default function Trip ({ trip, onDelete }) {
 
     if (!user || !token) {
       toast.error("Sign in before updating a trip.");
+      return;
+    }
+
+    if (form.is_shared && !form.emails) {
+      const message = "Please enter email to share trip.";
+      toast.error(message);
       return;
     }
 
@@ -138,11 +146,18 @@ export default function Trip ({ trip, onDelete }) {
             value={form.num_travelers || ""}
             onChange={(value) => handleChange("num_travelers", value)}
           />
-          <Field
-            label="Shared?"
-            value={form.is_shared ? "Yes" : "No"}
-            onChange={(value) => handleChange("is_shared", value === "Yes")}
-          />
+          <label className="field">
+            <span>Shared?</span>
+            <input
+              type="checkbox"
+              id="check"
+              checked={form.is_shared}
+              onChange={() => {
+                setIsShared(!isShared);
+                handleChange("is_shared", !form.is_shared);
+              }}
+            />
+          </label>
         </div>
         {
           form.is_shared &&

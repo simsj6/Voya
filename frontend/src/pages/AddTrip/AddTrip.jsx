@@ -150,7 +150,7 @@ export default function AddTrip() {
                         <input
                             type="checkbox"
                             id="check"
-                            value={isShared}
+                            checked={isShared}
                             onClick={(event) => {
                                 setIsShared(!isShared)
                             }}
