@@ -35,3 +35,38 @@ To run our project, run `npm install`, then `npm run dev` to see it locally.
 
 `*` - Page Not Found
 - A 404 page for any other URL
+
+## Live URLs:
+- Vercel deployment: https://voya-travel-planner.vercel.app/
+- Render: https://voya-3gua.onrender.com
+
+## Tech stack list:
+
+### Frontend:
+- React
+- Vite
+- React Router
+- JavaScript / JSX
+- CSS, CSS Modules, Tailwind CSS
+- React Hot Toast
+
+### Backend:
+- Node.js
+- Express.js
+- REST API
+- Mongoose
+- bcrypt
+- JWT
+
+### Database:
+- MongoDB
+- MongoDB Atlas
+
+### Deployment:
+- Vercel
+- Render
+- MongoDB Atlas
+
+### Development:
+- Git + GitHub
+- Figma
