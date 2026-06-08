@@ -86,12 +86,8 @@ export default function AddTrip() {
                 setError(data.error || "Trip adding failed.");
                 return;
             }
-
-            if (isShared) {
-                navigate("/shared-trips");
-            } else {
-                navigate("/trips");
-            }
+            
+            navigate("/trips");
         } catch (err) {
             console.error(err);
             setError("Network error. Is the server running?");
