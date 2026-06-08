@@ -72,3 +72,8 @@ To run our project locally, run `npm install`, then `npm run dev` to see it loca
 ### Development:
 - Git + GitHub
 - Figma
+
+
+## What we Learned:
+
+We learned what goes into building a full stack application, both frontend and backend design and implementation. This includes how to design our site in figma and then use AI to turn that into a base we can start with, how to design and implement a database, and connect it to our frontend, how to make reusable and dynamic react components, how to fetch and parse API data, and how to manage and divide tasks efficiently. We learned how to work in a group towards a goal and change project scope as needed.
